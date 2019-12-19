@@ -1,0 +1,2 @@
+# E-magine
+Simple app
