@@ -2,13 +2,16 @@ import React from 'react';
 import './App.css';
 import './index.css';
 import Feed from './Feed';
+import Explore from './Explore';
+import Streams from './Streams';
+import Profile from './Profile';
 import { Menu, Icon, Layout, Input, Button, Avatar } from 'antd';
+import { Link, Switch, Route } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -69,23 +72,31 @@ class App extends React.Component {
         */}
 
             <Menu.Item key="Feed" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Icon type="home" theme="twoTone" />
-              <span>Home</span>
+              <Link to="/">
+                <Icon type="home" theme="twoTone" />
+                <span>Home</span>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="Explore" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Icon type="appstore" theme="twoTone" />
-              <span>Explore</span>
+              <Link to="/Explore">
+                <Icon type="appstore" theme="twoTone" />
+                <span>Explore</span>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="Streams" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Icon type="play-square" theme="twoTone" />
-              <span>Streams</span>
+              <Link to="/Streams">
+                <Icon type="play-square" theme="twoTone" />
+                <span>Streams</span>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="Profile" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-            <Icon type="contacts" theme="twoTone" />
-              <span>Profile</span>
+              <Link to="/Profile">
+                <Icon type="contacts" theme="twoTone" />
+                <span>Profile</span>
+              </Link>
             </Menu.Item>
 
           </Menu>
@@ -108,7 +119,12 @@ class App extends React.Component {
           <br></br>
 
           <Content style={{ margin: '0 16px' }}>
-            <Feed></Feed>
+            <Switch>
+              <Route exact path='/' component={Feed} />
+              <Route exact path='/Explore' component={Explore} />
+              <Route exact path='/Streams' component={Streams} />
+              <Route exact path='/Profile' component={Profile} />
+            </Switch>
           </Content>
 
         </Layout>

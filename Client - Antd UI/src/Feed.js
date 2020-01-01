@@ -47,7 +47,7 @@ class Feed extends React.Component {
         });
 
         if (this.state.data.length > 50) { //Limit number of posts displayed
-            message.warning({ content: "Oops, we ran out of posts for now..."});
+            message.warning({ content: "Oops, we ran out of posts for now..." });
             this.setState({
                 hasMore: false,
                 loading: false,
@@ -78,32 +78,39 @@ class Feed extends React.Component {
                     <List
                         grid={{ gutter: 20, column: 2 }}
                         dataSource={this.state.data}
+                        locale={{
+                            emptyText: (
+                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                    <Spin size="large" />
+                                </div>
+                            )
+                        }}
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <div onClick={this.cardClick} key={item.id}>
-                                <Card
-                                    hoverable
-                                    type="inner"
-                                    bordered={false}
-                                    title="Mathematics - Differential Equations"
-                                    headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                    bodyStyle={{ backgroundColor: "#001529" }}
-                                    style={{ boxShadow: "8px 0px 12px" }}
-                                    cover={<img alt="example" src={require('./questionexample.jpeg')} />}
-                                >
-                                    <Meta
-                                        title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                        description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                    />
-                                </Card>
+                                    <Card
+                                        hoverable
+                                        type="inner"
+                                        bordered={false}
+                                        title="Mathematics - Differential Equations"
+                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                        style={{ boxShadow: "8px 0px 12px" }}
+                                        cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                    >
+                                        <Meta
+                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                        />
+                                    </Card>
                                 </div>
                             </List.Item>
                         )}
                     />
 
                     {this.state.loading && this.state.hasMore && (
-                        <div className="demo-loading-container" style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                            <Spin size="large"/>
+                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                            <Spin size="large" />
                         </div>
                     )}
                 </InfiniteScroll>
