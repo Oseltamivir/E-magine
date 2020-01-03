@@ -1,3 +1,6 @@
+# Thumbnailer
+The only thing this python code can do is interact with S3 buckets. Other backend databases need extra programming
+
 # Instructions for installation on AWS Lambda
 AWS Lambda has no 'pip install', so packges have to be attached to Lambda manually.
 
