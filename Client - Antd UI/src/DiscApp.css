@@ -1,0 +1,148 @@
+.DiscApp {
+  text-align: center;
+  background-color: #00ff00;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.DiscApp-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.DiscApp-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#Status {
+  display:inline-block;
+    position:absolute;
+    right:0;
+    margin-right:8px;
+}
+
+#Category {
+  text-shadow: aqua;
+  color: red;
+}
+.liner {
+  clear: both;
+  margin-top: 10px;
+  color:blue;
+  background-color: #1890ff;
+  border-color: blue;
+  border-width: 6px;
+}
+
+#Postnote {
+  width: 1450px;
+  height: 500px;
+  font-size: 23px;
+}
+
+#PostTitle {
+  width: 1450px;
+  height: 100px;
+  font-weight: bold ;
+  font-size: 50px
+ 
+}
+
+
+#pfp {
+  height: 50px;
+  width: 50px;
+  margin-right: 15px;
+  border-color: black;
+  border-radius: 50%;
+  background-image: url('http://pm1.narvii.com/7037/d9c8e27a4a7989491ff83d5d0ce75ee7c219c582r1-811-682v2_uhq.jpg');
+  background-size: cover;
+}
+
+
+#addButton{
+  right: 0;
+  bottom: 0;
+  position: relative;
+  border-radius: 40px;
+  
+  
+}
+
+
+#header{
+  background-color:#002140
+}
+#postright {
+  text-align: 'right';
+}
+#spaceOut {
+  margin:5px
+}
+
+#postall {
+  background-color: #0f534f;
+}
+
+.exampl {
+  color: #1890ff;
+}
+.todolist{
+  background-color: #1919ff ;
+}
+#listdesign{
+  background-color: #1900ff;
+
+}
+.c-search-results__item:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+#Messaging{
+  width:72.5%;
+  height:50px;
+  border-radius:4em;
+  resize: none;
+  margin-top: 20em;
+  margin-right: 10px;
+}
+.listpart{
+  border: 2px solid  #1890ff;
+  padding: 10px;
+  border-radius: 2em/2em;
+  background-color: #8f7f;
+  display: inline-block;
+}
+
+#Postbar{
+  bottom:0;
+  position:fixed;
+  width: 100%
+}
+#Post{
+display: inline-block;
+margin-bottom: 10px;
+}

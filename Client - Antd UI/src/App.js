@@ -5,6 +5,8 @@ import Feed from './Feed';
 import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
+import Topics from './Topics';
+import DiscApp from './DiscApp.js'
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
 import { Link, Switch, Route } from 'react-router-dom';
 const { Header, Content, Sider } = Layout;
@@ -140,6 +142,12 @@ class App extends React.Component {
                 <span>Profile</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key = "Topics" className = 'Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+              <Link to='/Topics'>
+                <Icon type = "edit" theme = "twoTone"/>
+                <span>Topics</span>
+              </Link>
+            </Menu.Item>
 
           </Menu>
 
@@ -172,6 +180,8 @@ class App extends React.Component {
               <Route exact path='/Explore' component={Explore} />
               <Route exact path='/Streams' component={Streams} />
               <Route exact path='/Profile' component={Profile} />
+              <Route exact path= '/Topics' component={Topics}/>
+              <Route exact path= '/DiscApp' component={DiscApp}/>
             </Switch>
           </Content>
 
