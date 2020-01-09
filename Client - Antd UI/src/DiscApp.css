@@ -48,14 +48,7 @@
 #Category {
   text-shadow: aqua;
   color: red;
-}
-.liner {
-  clear: both;
-  margin-top: 10px;
-  color:blue;
-  background-color: #1890ff;
-  border-color: blue;
-  border-width: 6px;
+  font-size: 280%;
 }
 
 #Postnote {
@@ -64,13 +57,7 @@
   font-size: 23px;
 }
 
-#PostTitle {
-  width: 1450px;
-  height: 100px;
-  font-weight: bold ;
-  font-size: 50px
- 
-}
+
 
 
 #pfp {
@@ -101,7 +88,7 @@
   text-align: 'right';
 }
 #spaceOut {
-  margin:5px
+  margin:0px
 }
 
 #postall {
@@ -143,7 +130,7 @@
   position:fixed;
   width: 100%
 }
-#Post{
+#posttwo{
 display: inline-block;
 margin-bottom: 10px;
 }

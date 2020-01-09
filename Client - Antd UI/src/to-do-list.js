@@ -27,7 +27,7 @@ const { TextArea } = Input
                 <Listmaker entries = {this.state.items} deleteItem = {this.deleteItem}/>
                 <div id = 'Postbar'>
                     <TextArea id = 'Messaging' placeholder = 'Type something here'  value = {this.state.currentText} onChange = {this.handleItem}></TextArea>
-                    <Button id = 'Post' size = 'large' type = 'primary' onClick = {this.addItem}>Post</Button>
+                    <Button id = 'posttwo' size = 'large' type = 'primary' onClick = {this.addItem}>Post</Button>
                 </div>
                </form>
             </div>

@@ -28,8 +28,7 @@ class DiscApp extends Component{
       <Button type = 'primary' size = 'small' id = 'pfp' onClick = {this.changeUser = () =>{
         this.state.user === 'user'? this.setState({user:'YEET6'}):this.setState({user:'user'})
       ;alert('User Changed')
-      }}></Button>
-       <Notes notifications = {this.state.notifications}/>      
+      }}></Button>   
       </span>
       </h1>
       <br/>

@@ -144,7 +144,7 @@ class App extends React.Component {
             </Menu.Item>
             <Menu.Item key = "Topics" className = 'Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
               <Link to='/Topics'>
-                <Icon type = "edit" theme = "twoTone"/>
+                <Icon type="edit" theme="twoTone" />
                 <span>Topics</span>
               </Link>
             </Menu.Item>
