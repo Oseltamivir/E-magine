@@ -105,7 +105,7 @@
 }
 
 #postall {
-  background-color: #0f534f;
+  background-color: #1919ff;
 }
 
 .exampl {
@@ -116,7 +116,8 @@
 }
 #listdesign{
   background-color: #1900ff;
-
+  position: relative;
+  margin-bottom: 100px;
 }
 .c-search-results__item:not(:last-child) {
   margin-bottom: 1.5rem;
@@ -130,11 +131,11 @@
   margin-right: 10px;
 }
 .listpart{
+  width: 98%;
   border: 2px solid  #1890ff;
   padding: 10px;
   border-radius: 2em/2em;
   background-color: #8f7f;
-  display: inline-block;
 }
 
 #Postbar{
@@ -145,4 +146,8 @@
 #Post{
 display: inline-block;
 margin-bottom: 10px;
+}
+.timetext{
+  color: #5f5f5f;
+  font-size: 75%;
 }
