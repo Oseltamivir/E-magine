@@ -6,9 +6,11 @@ import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
 import Topics from './Topics';
-import DiscApp from './DiscApp.js'
+import DiscApp from './DiscApp.js';
+import Topicpage from './Topicpage';
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
 import { Link, Switch, Route } from 'react-router-dom';
+
 const { Header, Content, Sider } = Layout;
 
 const data = [
@@ -182,6 +184,7 @@ class App extends React.Component {
               <Route exact path='/Profile' component={Profile} />
               <Route exact path= '/Topics' component={Topics}/>
               <Route exact path= '/DiscApp' component={DiscApp}/>
+              <Route exact path = '/Topicpage' component = {Topicpage}/>
             </Switch>
           </Content>
 

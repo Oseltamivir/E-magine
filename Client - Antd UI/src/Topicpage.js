@@ -1,9 +1,8 @@
 import React from 'react';
-import { Card, message, Spin, List } from 'antd';
+import { Card, message, Spin, List,Icon } from 'antd';
 import './index.css';
-
+import './topicpage.css'
 import InfiniteScroll from 'react-infinite-scroller';
-
 const { Meta } = Card;
 
 //CSS and cards will be like Kai Xiang's, where clicking on cards will link to that discussion page.
@@ -21,9 +20,19 @@ const { Meta } = Card;
 export default class Topicpage  extends React.Component {
     constructor(props){
         super(props)
-        this.state = {pageName:'',
+        this.state = {pageName: this.props.location.state.topicName,
                     items:[],
-                    currentState ={user:'',time:''}
+                    currentState:{user:'',time:''}
         }
     }
-}
+        render(){
+            return(
+                <div>
+                    <div>
+                        <h1 id = 'bigmargin'><Icon type="laptop"/>{this.state.pageName}</h1>
+
+                    </div>
+                </div>
+            )
+        }
+    }

@@ -20,7 +20,11 @@ class Topics extends React.Component {
             <Link to='/DiscApp'>
             <h1 style = {this.state.container}>Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)</h1>
             </Link> 
+            <Link to ={{ pathname: '/Topicpage',
+                        state:{topicName:'Computing'}
+                }}>
             <h1 style = {this.state.container}>Computing</h1>
+            </Link>
             <h1 style = {this.state.container}>Maths</h1>
             <h1 style = {this.state.container}>Chemistry</h1>
             <h1 style = {this.state.container}>Physics</h1>
