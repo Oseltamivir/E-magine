@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, message, Spin, List } from 'antd';
+import { Card, message, Spin, List, Divider, Button, Icon } from 'antd';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -14,6 +14,7 @@ class Feed extends React.Component {
 
         this.state = {
             data: [],
+            yourPostsData: [],
             hasMore: true,
             loading: false,
         };
@@ -36,6 +37,10 @@ class Feed extends React.Component {
                 const currentData = this.state.data
                 this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
+
+                if (this.state.yourPostsData.length === 0) {
+                    this.setState({ yourPostsData: retrievedData })
+                }
             })
     }
 
@@ -62,12 +67,60 @@ class Feed extends React.Component {
 
     render() {
         return (
-            <div id="feedContainer" style={{
+            <div className="feedContainer" style={{
                 overflow: "auto",
                 height: "85vh",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
             }}>
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Your Questions </span>
+                    <Icon type="user"></Icon>
+                </Divider>
+                <div id="yourPostsContainer" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+
+                    <List
+                        grid={{ gutter: 20, column: 5 }}
+                        itemLayout={"vertical"}
+                        dataSource={this.state.yourPostsData}
+                        locale={{
+                            emptyText: (
+                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", marginRight: "10vw" }}>
+                                    <Spin size="large" />
+                                </div>
+                            )
+                        }}
+                        style={{ marginRight: "-5vw" }}
+                        renderItem={item => (
+                            <List.Item key={item.id}>
+                                <div onClick={this.cardClick} key={item.id}>
+                                    <Card
+                                        hoverable
+                                        type="inner"
+                                        bordered={false}
+                                        title="Mathematics - Differential Equations"
+                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                        style={{ boxShadow: "8px 0px 12px" }}
+                                        cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                    >
+                                        <Meta
+                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                        />
+                                    </Card>
+                                </div>
+                            </List.Item>
+                        )}
+                    />
+                    <Button type="primary" shape="round" icon="right" size="large" style={{ marginLeft: "-5vw" }}>
+                        Show All
+                    </Button>
+                </div>
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Recommended Questions </span>
+                    <Icon type="question-circle"></Icon>
+                </Divider>
                 <InfiniteScroll
                     initialLoad={false}
                     pageStart={0}

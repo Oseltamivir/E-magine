@@ -22,7 +22,14 @@ body {
   -ms-overflow-style: none;
 }
 
-#feedContainer::-webkit-scrollbar {
+.feedContainer::-webkit-scrollbar {
   display: none;
+}
+
+.followersstyle {
+  color: "#cccccc";
+  margin-right: 1vw;
+  font-size: 1.4vw;
+  font-weight: bold;
 }
 
