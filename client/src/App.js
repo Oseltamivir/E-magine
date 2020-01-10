@@ -103,7 +103,7 @@ class App extends React.Component {
     return (
       <Layout style={{ minHeight: '100vh' }}>
 
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width={200} style={{ boxShadow: "3px 0px 10px" }}>
+        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -176,7 +176,7 @@ class App extends React.Component {
 
           <br></br>
 
-          <Content style={{ margin: '0px 16px' }}>
+          <Content style={{ margin: '0px 16px', width: "82vw" }}>
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/Explore' component={Explore} />
