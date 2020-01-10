@@ -176,7 +176,7 @@ class App extends React.Component {
 
           <br></br>
 
-          <Content style={{ margin: '0px 16px', width: "82vw" }}>
+          <Content style={{ margin: '0px 16px', width: "82vw"}}>
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/Explore' component={Explore} />

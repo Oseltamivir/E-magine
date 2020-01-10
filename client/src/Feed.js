@@ -70,8 +70,10 @@ class Feed extends React.Component {
             <div className="feedContainer" style={{
                 overflow: "auto",
                 height: "85vh",
+                width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
+                overflowX: "hidden",
             }}>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Your Questions </span>

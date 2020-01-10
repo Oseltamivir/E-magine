@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs} from 'antd';
+import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -86,8 +86,10 @@ class Profile extends React.Component {
             <div id="feedContainer" className="feedContainer" style={{
                 overflow: "auto",
                 height: "85vh",
+                width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
+                overflowX: "hidden",
             }}>
                 <div id="TopBox" style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: "90vh" }}>
                     <div id="AvatarHolder" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "20vw", height: "90vh" }}>
@@ -166,133 +168,133 @@ class Profile extends React.Component {
                     </div>
                 </div>
 
-                        <Tabs defaultActiveKey="1" size="large" tabBarStyle={{ color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }}>
-                            <TabPane tab={
-                                <span>
-                                    <Icon type="question-circle" theme="twoTone" />
-                                    Questions
+                <Tabs defaultActiveKey="1" size="large" tabBarStyle={{ color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }}>
+                    <TabPane tab={
+                        <span>
+                            <Icon type="question-circle" theme="twoTone" />
+                            Questions
                         </span>
-                            }
-                                key="1">
-                                <div>
+                    }
+                        key="1">
+                        <div>
 
-                                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                        <span>Questions Posted </span>
-                                        <Icon type="question-circle"></Icon>
-                                    </Divider>
-                                    <InfiniteScroll
-                                        initialLoad={false}
-                                        pageStart={0}
-                                        loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                                        hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                                        useWindow={false}
-                                        getScrollParent={() => document.getElementById('feedContainer')}
-                                    >
-                                        <List
-                                            grid={{ gutter: 20, column: 2 }}
-                                            dataSource={this.state.data}
-                                            locale={{
-                                                emptyText: (
-                                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Spin size="large" />
-                                                    </div>
-                                                )
-                                            }}
-                                            renderItem={item => (
-                                                <List.Item key={item.id}>
-                                                    <div onClick={this.cardClick} key={item.id}>
-                                                        <Card
-                                                            hoverable
-                                                            type="inner"
-                                                            bordered={false}
-                                                            title="Mathematics - Differential Equations"
-                                                            headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                                            bodyStyle={{ backgroundColor: "#001529" }}
-                                                            style={{ boxShadow: "8px 0px 12px" }}
-                                                            cover={<img alt="example" src={require('./questionexample.jpeg')} />}
-                                                        >
-                                                            <Meta
-                                                                title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                                description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                                            />
-                                                        </Card>
-                                                    </div>
-                                                </List.Item>
-                                            )}
-                                        />
-
-                                        {this.state.loading && this.state.hasMore && (
-                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                <Spin size="large" />
-                                            </div>
-                                        )}
-                                    </InfiniteScroll>
-                                </div>
-                            </TabPane>
-                            <TabPane tab={
-                                <span>
-                                    <Icon type="check-circle" theme="twoTone" />
-                                    Solutions
-                        </span>
-                            }
-                                key="2"
+                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                <span>Questions Posted </span>
+                                <Icon type="question-circle"></Icon>
+                            </Divider>
+                            <InfiniteScroll
+                                initialLoad={false}
+                                pageStart={0}
+                                loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                                hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                                useWindow={false}
+                                getScrollParent={() => document.getElementById('feedContainer')}
                             >
-                                <div>
-
-                                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                        <span>Solutions </span>
-                                        <Icon type="check-circle"></Icon>
-                                    </Divider>
-                                    <InfiniteScroll
-                                        initialLoad={false}
-                                        pageStart={0}
-                                        loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                                        hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                                        useWindow={false}
-                                        getScrollParent={() => document.getElementById('feedContainer')}
-                                    >
-                                        <List
-                                            grid={{ gutter: 20, column: 2 }}
-                                            dataSource={this.state.data}
-                                            locale={{
-                                                emptyText: (
-                                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Spin size="large" />
-                                                    </div>
-                                                )
-                                            }}
-                                            renderItem={item => (
-                                                <List.Item key={item.id}>
-                                                    <div onClick={this.cardClick} key={item.id}>
-                                                        <Card
-                                                            hoverable
-                                                            type="inner"
-                                                            bordered={false}
-                                                            title="Mathematics - Differential Equations"
-                                                            headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                                            bodyStyle={{ backgroundColor: "#001529" }}
-                                                            style={{ boxShadow: "8px 0px 12px" }}
-                                                            cover={<img alt="example" src={require('./questionexample.jpeg')} />}
-                                                        >
-                                                            <Meta
-                                                                title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                                description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                                            />
-                                                        </Card>
-                                                    </div>
-                                                </List.Item>
-                                            )}
-                                        />
-
-                                        {this.state.loading && this.state.hasMore && (
+                                <List
+                                    grid={{ gutter: 20, column: 2 }}
+                                    dataSource={this.state.data}
+                                    locale={{
+                                        emptyText: (
                                             <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                                                 <Spin size="large" />
                                             </div>
-                                        )}
-                                    </InfiniteScroll>
-                                </div>
-                            </TabPane>
-                        </Tabs>
+                                        )
+                                    }}
+                                    renderItem={item => (
+                                        <List.Item key={item.id}>
+                                            <div onClick={this.cardClick} key={item.id}>
+                                                <Card
+                                                    hoverable
+                                                    type="inner"
+                                                    bordered={false}
+                                                    title="Mathematics - Differential Equations"
+                                                    headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                                    bodyStyle={{ backgroundColor: "#001529" }}
+                                                    style={{ boxShadow: "8px 0px 12px" }}
+                                                    cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                                >
+                                                    <Meta
+                                                        title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                                        description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                    />
+                                                </Card>
+                                            </div>
+                                        </List.Item>
+                                    )}
+                                />
+
+                                {this.state.loading && this.state.hasMore && (
+                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                        <Spin size="large" />
+                                    </div>
+                                )}
+                            </InfiniteScroll>
+                        </div>
+                    </TabPane>
+                    <TabPane tab={
+                        <span>
+                            <Icon type="check-circle" theme="twoTone" />
+                            Solutions
+                        </span>
+                    }
+                        key="2"
+                    >
+                        <div>
+
+                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                <span>Solutions </span>
+                                <Icon type="check-circle"></Icon>
+                            </Divider>
+                            <InfiniteScroll
+                                initialLoad={false}
+                                pageStart={0}
+                                loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                                hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                                useWindow={false}
+                                getScrollParent={() => document.getElementById('feedContainer')}
+                            >
+                                <List
+                                    grid={{ gutter: 20, column: 2 }}
+                                    dataSource={this.state.data}
+                                    locale={{
+                                        emptyText: (
+                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                                <Spin size="large" />
+                                            </div>
+                                        )
+                                    }}
+                                    renderItem={item => (
+                                        <List.Item key={item.id}>
+                                            <div onClick={this.cardClick} key={item.id}>
+                                                <Card
+                                                    hoverable
+                                                    type="inner"
+                                                    bordered={false}
+                                                    title="Mathematics - Differential Equations"
+                                                    headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                                    bodyStyle={{ backgroundColor: "#001529" }}
+                                                    style={{ boxShadow: "8px 0px 12px" }}
+                                                    cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                                >
+                                                    <Meta
+                                                        title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                                        description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                    />
+                                                </Card>
+                                            </div>
+                                        </List.Item>
+                                    )}
+                                />
+
+                                {this.state.loading && this.state.hasMore && (
+                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                        <Spin size="large" />
+                                    </div>
+                                )}
+                            </InfiniteScroll>
+                        </div>
+                    </TabPane>
+                </Tabs>
 
             </div>
 
