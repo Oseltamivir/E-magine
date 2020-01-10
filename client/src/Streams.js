@@ -4,6 +4,7 @@ import CarouselSlide from "./CauroselSlide"
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
+import StreamsCategories from './StreamsCategories';
 
 const { Meta } = Card;
 
@@ -71,6 +72,7 @@ class Streams extends React.Component {
                 msOverflowStyle: "none",
                 overflowX: "hidden",
             }}>
+
                 <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
                     <Carousel dotPosition="right">
                         <div>
@@ -87,6 +89,15 @@ class Streams extends React.Component {
                         </div>
                     </Carousel>
                 </div>
+
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Categories </span>
+                    <Icon type="unordered-list"></Icon>
+                </Divider>
+                <div id="Category">
+                    <StreamsCategories />
+                </div>
+                
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Popular Streams </span>
@@ -121,7 +132,7 @@ class Streams extends React.Component {
                                         headStyle={{ backgroundColor: "#1890ff", color: "white", }}
                                         bodyStyle={{ backgroundColor: "#001529" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
                                             title={
