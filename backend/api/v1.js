@@ -14,7 +14,7 @@ router.post('/auth/login', (req, res) => {
 
   // TODO: Implement database backed authentication
   if (username == 'tkaixiang' || username == 'willi123yao') {
-    const token = signer.sign(Buffer.from(username).toString('base64'));
+    const token = signer.sign(Buffer.from(username).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
     res.json({success: true, token});
   }
   else {
