@@ -104,7 +104,7 @@ class Feed extends React.Component {
                                         headStyle={{ backgroundColor: "#1890ff", color: "white" }}
                                         bodyStyle={{ backgroundColor: "#001529" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                        cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
                                             title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
@@ -151,7 +151,7 @@ class Feed extends React.Component {
                                         headStyle={{ backgroundColor: "#1890ff", color: "white" }}
                                         bodyStyle={{ backgroundColor: "#001529" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./questionexample.jpeg')} />}
+                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
                                             title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
