@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const RD = require('reallydangerous');
-const signer = new RD.TimestampSigner();
+const signer = new RD.TimestampSigner('my-secret');
 
 router.get('/version', (req, res) => {
   res.json({version: 1});
 });
 
 router.post('/auth/login', (req, res) => {
-  const username = req.username;
-  const password = req.password;
+  const username = req.body.username;
+  const password = req.body.password;
 
   // TODO: Implement database backed authentication
   if (username == 'tkaixiang' || username == 'willi123yao') {
