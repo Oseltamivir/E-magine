@@ -94,6 +94,7 @@ class Streams extends React.Component {
                     <span>Categories </span>
                     <Icon type="unordered-list"></Icon>
                 </Divider>
+                
                 <div id="Category">
                     <StreamsCategories />
                 </div>
