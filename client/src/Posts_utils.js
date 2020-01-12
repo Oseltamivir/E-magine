@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import Todo from './to-do-list'
 import {Button} from 'antd';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
@@ -54,7 +55,7 @@ class Post extends Component{
           return(
           <div id = 'postall'>
             <Tabs defaultActiveKey="1" onChange={callback}>
-              <TabPane tab  ='Posting' key = '1'>
+              <TabPane className = 'white' tab  ='Posting' key = '1'>
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
                 <div className = 'exampl'>
                 </div>   
@@ -64,14 +65,23 @@ class Post extends Component{
                 </form>
                 {ifPosted}
             </TabPane>
-            <TabPane tab = 'Preview' key = '2'></TabPane>
+            <TabPane tab = 'Preview' className=  'white' key = '2'>
+              <h1 className = 'white'>This is preview mode</h1>
+              <br/>
+              <h1 className = 'white'>Here is your code:</h1>
+              <br/>
+              <div dangerouslySetInnerHTML = {{__html: this.state.post}} className = 'white'></div>
+              </TabPane>
            </Tabs>
           </div>
      
         )
         }
       else{
-        return(<div></div>)
+        return(
+        <div>
+            <Todo user = {this.state.user}/>
+        </div>)
       }
     }
 }
