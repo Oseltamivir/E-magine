@@ -28,11 +28,11 @@ class Post extends Component{
     postOrEdit = () =>{this.state.postState === 'Post!'? this.setState({postState: "Edit!"}):this.setState({postState: "Post!"})}
     componentDidMount(){
       var self = this;
-      this.editor = new window.FroalaEditor('.exampl', {
+      this.editor = new window.FroalaEditor('#exampl', {
         events: {
           contentChanged: function() {
             self.setState({post: this.html.get()});
-          }
+          },
         },
         attribution: false
       })
@@ -40,8 +40,19 @@ class Post extends Component{
     componentDidUpdate(){
       // create a variable to check if the thingy is open
       // if it is not and user is poster, create editor
-      if (this.props.user === this.props.poster) this.editor = new window.FroalaEditor('.exampl')
+      if (this.props.user === this.props.poster){
+        var self = this;
+      this.editor = new window.FroalaEditor('#exampl', 
+      {
+        events: {
+          contentChanged: function() {
+            self.setState({post: this.html.get()});
+          },
+        },
+        attribution: false
+      })
     }
+      }
     render(){
         let ifPosted = ''
         let d = new Date()
@@ -69,9 +80,9 @@ class Post extends Component{
               </Divider>
               
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
-                <div className = 'exampl'></div>  
+                <div id = 'exampl'></div>  
                 <br/>
-                <Button id = 'spaceOut' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
+                <Button id = 'spaceout' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
                 {ifPosted}
                 </form>
                 
@@ -97,7 +108,17 @@ class Post extends Component{
       else{
         return(
         <div>
-            <Todo user = {this.state.user}/>
+           <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Question </span>
+                    <Icon type="question-circle" theme="twoTone" />
+
+          </Divider>
+          <div dangerouslySetInnerHTML = {{__html: this.state.post}} className = 'preview'></div>
+          <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Replies</span>
+                    <Icon type="edit" theme="twoTone" />
+          </Divider>
+          <Todo user = {this.props.user}/>
         </div>)
       }
     }
