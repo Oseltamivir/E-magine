@@ -1,3 +1,4 @@
+#!/bin/bash
 #helper functions
 errpt(){ echo -en '\033[1;31m';echo -n "$1";echo -e '\033[0;0m'; }
 c_or_d(){ #confirm-or-die
