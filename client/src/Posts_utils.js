@@ -5,7 +5,7 @@ import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list'
 import {Button} from 'antd';
-import { Tabs, Icon } from 'antd';
+import { Tabs, Icon, Divider } from 'antd';
 const { TabPane } = Tabs;
 function callback(key) {
   console.log(key);
@@ -46,7 +46,7 @@ class Post extends Component{
         let ifPosted = ''
         let d = new Date()
         if  (this.state.postState === 'Edit!'){
-          ifPosted = <p id = 'postright'>Posted by {this.props.poster} on {d.toDateString()}</p>
+          ifPosted = <p className = 'whiteright'>Posted by {this.props.poster} on {d.toDateString()}</p>
           }
             else{
                ifPosted = '';
@@ -63,12 +63,16 @@ class Post extends Component{
                 </span>
                         } 
                         key = '1'>
+               <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Your post</span>
+                    <Icon type="edit" theme = 'twoTone'></Icon>
+              </Divider>
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
-                <div className = 'exampl'>
-                </div>   
+                <div className = 'exampl'></div>  
                 <Button id = 'spaceOut' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
-                </form>
                 {ifPosted}
+                </form>
+                
             </TabPane>
             <TabPane tab = { 
             <span>

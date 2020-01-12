@@ -84,12 +84,6 @@
 #header{
   background-color:#002140
 }
-#postright {
-  text-align: 'right';
-}
-#spaceOut {
-  margin:0px
-}
 
 #postall {
   background-color: #002140;
@@ -141,4 +135,12 @@ margin-bottom: 10px;
 
 .white{
   color: #ffffff;
+}
+.whiteright {
+  color: #ffffff;
+  text-align: right;
+  margin-top: -15px;
+}
+#postdetails {
+  display:  inline;
 }
