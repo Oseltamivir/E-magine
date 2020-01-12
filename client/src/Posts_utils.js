@@ -70,6 +70,7 @@ class Post extends Component{
               
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
                 <div className = 'exampl'></div>  
+                <br/>
                 <Button id = 'spaceOut' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
                 {ifPosted}
                 </form>
