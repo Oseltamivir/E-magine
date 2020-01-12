@@ -67,8 +67,6 @@ class Post extends Component{
                 <div className = 'exampl'>
                 </div>   
                 <Button id = 'spaceOut' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
-                <div dangerouslySetInnerHTML={{__html: this.state.post}}></div> {/* might want to remove later */}
-
                 </form>
                 {ifPosted}
             </TabPane>
