@@ -24,7 +24,7 @@ const { TextArea } = Input
         return(
             <div class = 'todolist' >
                <form onSubmit = {this.addItem}>
-                <Listmaker entries = {this.state.items} deleteItem = {this.deleteItem}/>
+                <Listmaker entries = {this.state.items} deleteItem = {this.deleteItem} user = {this.props.user}/>
                 <div id = 'Postbar'>
                     <TextArea id = 'Messaging' placeholder = 'Type something here'  value = {this.state.currentText} onChange = {this.handleItem}></TextArea>
                     <Button id = 'posttwo' size = 'large' type = 'primary' onClick = {this.addItem}>Post</Button>
