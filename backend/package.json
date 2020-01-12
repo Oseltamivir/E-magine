@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/8man4life/E-magine#readme",
   "dependencies": {
+    "aws-sdk": "^2.601.0",
     "express": "^4.17.1",
     "reallydangerous": "^2.0.0"
   }
