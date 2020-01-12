@@ -5,7 +5,7 @@ import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list'
 import {Button} from 'antd';
-import { Tabs } from 'antd';
+import { Tabs, Icon } from 'antd';
 const { TabPane } = Tabs;
 function callback(key) {
   console.log(key);
@@ -21,6 +21,7 @@ class Post extends Component{
 
 
                   } //For storing text for post
+        this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
         this.editorOpen = true;
     }
     changeText = (ev) =>{let val = ev.target.value;let nam =ev.target.name;this.setState({[nam]: val})}
@@ -54,8 +55,14 @@ class Post extends Component{
         {
           return(
           <div id = 'postall'>
-            <Tabs defaultActiveKey="1" onChange={callback}>
-              <TabPane className = 'white' tab  ='Posting' key = '1'>
+            <Tabs defaultActiveKey="1" onChange={callback} tabBarStyle={this.tabcontainer}>
+              <TabPane  tab  ={
+                <span>
+                  <Icon type="edit" theme="twoTone" />
+                   Posting
+                </span>
+                        } 
+                        key = '1'>
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
                 <div className = 'exampl'>
                 </div>   
@@ -65,7 +72,12 @@ class Post extends Component{
                 </form>
                 {ifPosted}
             </TabPane>
-            <TabPane tab = 'Preview' className=  'white' key = '2'>
+            <TabPane tab = { 
+            <span>
+              <Icon type="camera" theme="twoTone" />
+              Preview
+            </span>} 
+            key = '2'>
               <h1 className = 'white'>This is preview mode</h1>
               <br/>
               <h1 className = 'white'>Here is your code:</h1>
