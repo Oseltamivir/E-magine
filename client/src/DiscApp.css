@@ -144,3 +144,10 @@ margin-bottom: 10px;
 #postdetails {
   display:  inline;
 }
+.preview {
+  color: white;
+  border: 2px;
+  background-color: #001529;
+  padding-bottom: 15px;
+  padding-left:10px
+}

@@ -67,6 +67,7 @@ class Post extends Component{
                     <span>Your post</span>
                     <Icon type="edit" theme = 'twoTone'></Icon>
               </Divider>
+              
               <form id = 'post' onSubmit = {this.func = (ev) => {ev.preventDefault();alert('Posted!')}}>
                 <div className = 'exampl'></div>  
                 <Button id = 'spaceOut' type = 'primary' onClick = {this.postOrEdit}>{this.state.postState}</Button>
@@ -80,11 +81,12 @@ class Post extends Component{
               Preview
             </span>} 
             key = '2'>
-              <h1 className = 'white'>This is preview mode</h1>
-              <br/>
-              <h1 className = 'white'>Here is your code:</h1>
-              <br/>
-              <div dangerouslySetInnerHTML = {{__html: this.state.post}} className = 'white'></div>
+               <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Preview </span>
+                    <Icon type="camera" theme = 'twoTone'></Icon>
+              </Divider>
+              
+              <div dangerouslySetInnerHTML = {{__html: this.state.post}} className = 'preview'></div>
               </TabPane>
            </Tabs>
           </div>
