@@ -1,13 +1,39 @@
 import React from 'react';
-import { Card, message, Spin, List, Divider, Button, Icon } from 'antd';
+import { Card, message, Spin, List, Divider, Button, Icon, Avatar } from 'antd';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
 const { Meta } = Card;
 
+const Categories = {
+    "Maths": {
+        cover: (require(".//assets/maths.jpeg")),
+        fullName: "Mathematics Streams"
+    },
+    "Physics": {
+        cover: (require(".//assets/physics.jpeg")),
+        fullName: "Physics Streams"
+    },
+    "Chemistry": {
+        cover: (require(".//assets/chem.jpeg")),
+        fullName: "Chemistry Streams"
+    },
+    "Computing": {
+        cover: (require(".//assets/comp.jpeg")),
+        fullName: "Computing Streams"
+    },
+    "Economics": {
+        cover: (require(".//assets/economics.jpg")),
+        fullName: "Economics Streams"
+    },
 
-class Feed extends React.Component {
+};
+
+var currentPage = "";
+
+
+class streamsTopicPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,8 +50,9 @@ class Feed extends React.Component {
         alert("Live chat in development...")
     }
 
-    componentDidMount() { //Fetch data once first when component loads
+    componentWillMount() { //Fetch data once
         this.fetchData();
+        currentPage = this.props.match.params.topic;
     }
 
     fetchData() {
@@ -75,54 +102,17 @@ class Feed extends React.Component {
                 msOverflowStyle: "none",
                 overflowX: "hidden",
             }}>
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Your Questions </span>
-                    <Icon type="user"></Icon>
-                </Divider>
-                <div id="yourPostsContainer" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-
-                    <List
-                        grid={{ gutter: 20, column: 5 }}
-                        itemLayout={"vertical"}
-                        dataSource={this.state.yourPostsData}
-                        locale={{
-                            emptyText: (
-                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", marginRight: "10vw" }}>
-                                    <Spin size="large" />
-                                </div>
-                            )
-                        }}
-                        style={{ marginRight: "-5vw" }}
-                        renderItem={item => (
-                            <List.Item key={item.id}>
-                                <div onClick={this.cardClick} key={item.id}>
-                                    <Card
-                                        hoverable
-                                        type="inner"
-                                        bordered={false}
-                                        title="Mathematics - Differential Equations"
-                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                        bodyStyle={{ backgroundColor: "#001529" }}
-                                        style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
-                                    >
-                                        <Meta
-                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                        />
-                                    </Card>
-                                </div>
-                            </List.Item>
-                        )}
-                    />
-                    <Button type="primary" shape="round" icon="right" size="large" style={{ marginLeft: "-5vw" }}>
-                        Show All
-                    </Button>
+                <div id="Header" style={{ positon: "relative", width: "82vw", height: "50vh", textAlign: "center", borderStyle: "solid", borderWidth: "0px 0px 3px 0px", borderColor: "#1890ff", boxShadow: "0px 10px 10px #0a0a0a", marginBottom: "5vh" }}>
+                    <img alt="Banner" style={{ width: "100%", height: "100%" }} src={Categories[currentPage].cover} />
+                    <h1 style={{
+                        color: "white",
+                        position: "relative",
+                        bottom: "60%",
+                        fontSize: "3vw",
+                        backgroundColor: "rgba(0, 21, 41, 0.90)",
+                    }}>{Categories[currentPage].fullName} <Icon type="play-square" theme="twoTone" /></h1>
                 </div>
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Recommended Questions </span>
-                    <Icon type="question-circle"></Icon>
-                </Divider>
+
                 <InfiniteScroll
                     initialLoad={false}
                     pageStart={0}
@@ -130,8 +120,9 @@ class Feed extends React.Component {
                     hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
                     useWindow={false}
                 >
+
                     <List
-                        grid={{ gutter: 20, column: 2 }}
+                        grid={{ gutter: 20, column: 3 }}
                         dataSource={this.state.data}
                         locale={{
                             emptyText: (
@@ -147,15 +138,28 @@ class Feed extends React.Component {
                                         hoverable
                                         type="inner"
                                         bordered={false}
-                                        title="Mathematics - Differential Equations"
-                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                        title="Video Title"
+                                        headStyle={{ backgroundColor: "#1890ff", color: "white", }}
                                         bodyStyle={{ backgroundColor: "#001529" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
                                         cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
-                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                            title={
+                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                        Tkai
+                                                    </Avatar>
+                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
+                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                </div>
+                                            }
+                                            description={
+                                                <div id="Description">
+                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                    <p style={{ color: "white" }}>{item.name.title}</p>
+                                                </div>
+                                            }
                                         />
                                     </Card>
                                 </div>
@@ -174,4 +178,4 @@ class Feed extends React.Component {
     }
 }
 
-export default Feed;
+export default streamsTopicPage;

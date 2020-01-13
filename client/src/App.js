@@ -8,10 +8,12 @@ import Profile from './Profile';
 import Topics from './Topics';
 import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
+import streamsTopicPage from './streamsTopicPage';
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
-import { Link, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
+
 
 const data = [
   {
@@ -37,7 +39,7 @@ const notification = (
     }
     style={{ backgroundColor: "#001529", boxShadow: "3px 3px 10px", borderRadius: "10px", paddingRight: "3vw", paddingLeft: "1vw" }}
     renderItem={item => (
-      <List.Item style={{ color: "white", borderStyle: "solid" ,borderWidth: "0px 0px 1px 0px", borderColor: "white"}}>
+      <List.Item style={{ color: "white", borderStyle: "solid", borderWidth: "0px 0px 1px 0px", borderColor: "white" }}>
         <List.Item.Meta
           avatar={
             <Avatar style={{ verticalAlign: 'middle', backgroundColor: "#1890ff" }} size="large">
@@ -45,10 +47,10 @@ const notification = (
             </Avatar>
           } //Notification type
           title={
-            <h3 style={{color: "#cccccc"}}>New post from Tkai</h3>
+            <h3 style={{ color: "#cccccc" }}>New post from Tkai</h3>
           }
           description={
-              <p style={{color: "#949494"}}>{item.title}</p>
+            <p style={{ color: "#949494" }}>{item.title}</p>
           }
         />
       </List.Item>
@@ -57,9 +59,12 @@ const notification = (
 
 );
 
+var previousLocation = "";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
+
 
     this.state = {
       current: "Feed",
@@ -68,13 +73,42 @@ class App extends React.Component {
     };
   }
 
-  handleClick = (e) => {
-    console.log('click ', e);
+  componentDidUpdate() {
+    const path = this.props.location.pathname;
+    const page = path.split("/")[1];
 
+    if (page !== previousLocation) {
+      previousLocation = page;
+
+      if (page === "") {
+        this.setState({
+          current: "Feed"
+        })
+      }
+      else {
+      this.setState({
+        current: page
+      })
+      }
+    }
+  }
+
+  componentDidMount() {
+    const path = this.props.location.pathname;
+    const page = path.split("/")[1];
+
+    previousLocation = page;
+    if (page === "") {
+      this.setState({
+        current: "Feed"
+      })
+    }
+    else {
     this.setState({
-      current: e.key,
-    });
-  };
+      current: page
+    })
+    }
+  }
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
@@ -103,7 +137,7 @@ class App extends React.Component {
     return (
       <Layout style={{ minHeight: '100vh' }}>
 
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width={200} style={{ boxShadow: "3px 0px 10px" }}>
+        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -118,37 +152,37 @@ class App extends React.Component {
         */}
 
             <Menu.Item key="Feed" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to="/">
+              <NavLink to="/">
                 <Icon type="home" theme="twoTone" />
                 <span>Home</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
 
             <Menu.Item key="Explore" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to="/Explore">
+              <NavLink to="/Explore">
                 <Icon type="appstore" theme="twoTone" />
                 <span>Explore</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
 
             <Menu.Item key="Streams" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to="/Streams">
+              <NavLink to="/Streams">
                 <Icon type="play-square" theme="twoTone" />
                 <span>Streams</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
 
             <Menu.Item key="Profile" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to="/Profile">
+              <NavLink to="/Profile">
                 <Icon type="contacts" theme="twoTone" />
                 <span>Profile</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
-            <Menu.Item key = "Topics" className = 'Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to='/Topics'>
+            <Menu.Item key="Topics" className='Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to='/Topics'>
                 <Icon type="edit" theme="twoTone" />
                 <span>Topics</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
 
           </Menu>
@@ -176,15 +210,17 @@ class App extends React.Component {
 
           <br></br>
 
-          <Content style={{ margin: '0px 16px' }}>
+          <Content style={{ margin: '0px 16px', width: "82vw" }}>
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/Explore' component={Explore} />
               <Route exact path='/Streams' component={Streams} />
+              <Route exact path='/Streams/' component={Profile} />
+              <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path= '/Topics' component={Topics}/>
-              <Route exact path= '/DiscApp' component={DiscApp}/>
-              <Route exact path = '/Topicpage' component = {Topicpage}/>
+              <Route exact path='/Topics' component={Topics} />
+              <Route exact path='/DiscApp' component={DiscApp} />
+              <Route exact path='/Topicpage' component={Topicpage} />
             </Switch>
           </Content>
 
@@ -223,4 +259,4 @@ class Messages extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
