@@ -5,7 +5,6 @@ import Feed from './Feed';
 import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
-import Topics from './Topics';
 import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
@@ -178,12 +177,6 @@ class App extends React.Component {
                 <span>Profile</span>
               </NavLink>
             </Menu.Item>
-            <Menu.Item key="Topics" className='Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <NavLink to='/Topics'>
-                <Icon type="edit" theme="twoTone" />
-                <span>Topics</span>
-              </NavLink>
-            </Menu.Item>
 
           </Menu>
 
@@ -218,9 +211,8 @@ class App extends React.Component {
               <Route exact path='/Streams/' component={Profile} />
               <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path='/Topics' component={Topics} />
-              <Route exact path='/DiscApp' component={DiscApp} />
-              <Route exact path='/Topicpage' component={Topicpage} />
+              <Route exact path= '/DiscApp' component={DiscApp}/>
+              <Route exact path = '/Topicpage' component = {Topicpage}/>
             </Switch>
           </Content>
 

@@ -39,7 +39,6 @@ class DiscApp extends Component{
       {/*Posting utilities here*/}
       <Post user = {this.state.user} poster = {this.state.poster}/>
       <br/>
-      <Todo user = {this.state.user}/>
       {/*div for 'all*/}
     </div> 
    )
