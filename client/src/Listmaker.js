@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Post from './Posts_utils.js'
-import {Button} from 'antd'
+import {Button,Divider,Icon} from 'antd'
 
 
 class Listmaker extends Component{
@@ -33,11 +33,22 @@ createItem = (items) => {
     }
     render(){
         const toDoEntries = this.props.entries;
+        const toDoAnswers =  this.props.answers
        const listItems = toDoEntries.map(this.createItem);
+       const listAnswers = toDoAnswers.map(this.createItem)
         return (
-            <div id = 'listdesign'>
-             <ul id = 'thelist'>{listItems}</ul>
-             </div>
+        <div id = 'listdesign'>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Answers</span>
+                    <Icon type="star" theme="twoTone" />
+            </Divider>
+            <ul id ='answerlist' >{listAnswers}</ul>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Replies</span>
+                    <Icon type="edit" theme="twoTone" />
+            </Divider>
+             <ul id = 'replylist'>{listItems}</ul>
+        </div>
         )
     }
 }

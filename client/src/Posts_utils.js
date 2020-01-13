@@ -111,10 +111,6 @@ class Post extends Component{
 
           </Divider>
           <div dangerouslySetInnerHTML = {{__html: this.state.post}} className = 'preview'></div>
-          <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Replies</span>
-                    <Icon type="edit" theme="twoTone" />
-          </Divider>
           <Todo user = {this.props.user}/>
         </div>)
       }
