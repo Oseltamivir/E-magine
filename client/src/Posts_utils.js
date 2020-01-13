@@ -22,7 +22,6 @@ class Post extends Component{
 
                   } //For storing text for post
         this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
-        this.editorOpen = true;
     }
     changeText = (ev) =>{let val = ev.target.value;let nam =ev.target.name;this.setState({[nam]: val})}
     postOrEdit = () =>{this.state.postState === 'Post!'? this.setState({postState: "Edit!"}):this.setState({postState: "Post!"})}
@@ -66,7 +65,7 @@ class Post extends Component{
         {
           return(
           <div id = 'postall'>
-            <Tabs defaultActiveKey="1" onChange={callback} tabBarStyle={this.tabcontainer}>
+            <Tabs defaultActiveKey="1"  tabBarStyle={this.tabcontainer}>
               <TabPane  tab  ={
                 <span>
                   <Icon type="edit" theme="twoTone" />
