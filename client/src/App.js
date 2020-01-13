@@ -5,7 +5,6 @@ import Feed from './Feed';
 import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
-import Topics from './Topics';
 import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
