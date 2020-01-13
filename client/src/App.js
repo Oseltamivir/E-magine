@@ -144,12 +144,6 @@ class App extends React.Component {
                 <span>Profile</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key = "Topics" className = 'Sidebars' style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
-              <Link to='/Topics'>
-                <Icon type="edit" theme="twoTone" />
-                <span>Topics</span>
-              </Link>
-            </Menu.Item>
 
           </Menu>
 
@@ -182,7 +176,6 @@ class App extends React.Component {
               <Route exact path='/Explore' component={Explore} />
               <Route exact path='/Streams' component={Streams} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path= '/Topics' component={Topics}/>
               <Route exact path= '/DiscApp' component={DiscApp}/>
               <Route exact path = '/Topicpage' component = {Topicpage}/>
             </Switch>
