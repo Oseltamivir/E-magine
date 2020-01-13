@@ -22,9 +22,9 @@ const { TextArea } = Input
   handleItem = (ev) =>{this.setState({currentText:ev.target.value})}
     render(){
         return(
-            <div class = 'todolist' >
+            <div className = 'todolist' >
                <form onSubmit = {this.addItem}>
-                <Listmaker entries = {this.state.items} deleteItem = {this.deleteItem} user = {this.props.user}/>
+                <Listmaker entries = {this.state.items} deleteItem = {this.deleteItem.bind(this)} user = {this.props.user}/>
                 <div id = 'Postbar'>
                     <TextArea id = 'Messaging' placeholder = 'Type something here'  value = {this.state.currentText} onChange = {this.handleItem}></TextArea>
                     <Button id = 'posttwo' size = 'large' type = 'primary' onClick = {this.addItem}>Post</Button>

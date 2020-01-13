@@ -19,22 +19,22 @@ class Listmaker extends Component{
     }
 createItem = (items) => {
     return (
-        <li>
+        <li key = {items.key}>
             <div className= 'listpart'>
-                <p class = 'timetext'>{this.postTime(items)}</p>
-                <p class = 'replytext'>{items.text}</p>
+                <p className = 'timetext'>{this.postTime(items)}</p>
+                <p className = 'replytext'>{items.text}</p>
             </div>
-            <Button type = 'danger' onClick = {() => alert('hello')}>Delete
-            </Button><br/>
+            <Button type = {'danger'} onClick = {() => {this.props.deleteItem(items.key)}}>Delete
+            </Button>
         </li>
         );
     }
     render(){
         const toDoEntries = this.props.entries;
        const listItems = toDoEntries.map(this.createItem);
-        return(
+        return (
             <div id = 'listdesign'>
-             <ul id =  'thelist'>{listItems}</ul>
+             <ul id = 'thelist'>{listItems}</ul>
              </div>
         )
     }
