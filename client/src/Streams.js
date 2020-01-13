@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, message, Carousel, Row, Col, Avatar, Icon } from 'antd';
-import ReactPlayer from 'react-player'
+import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button } from 'antd';
+import CarouselSlide from "./CauroselSlide"
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
+import StreamsCategories from './StreamsCategories';
 
 const { Meta } = Card;
 
@@ -17,8 +18,6 @@ class Streams extends React.Component {
             data: [],
             hasMore: true,
             loading: false,
-            playing: [true, false, false, false],
-            volumes: [1, 0, 0, 0]
         };
     }
 
@@ -65,13 +64,16 @@ class Streams extends React.Component {
 
     render() {
         return (
-            <div id="feedContainer" style={{
+            <div className="feedContainer" style={{
                 overflow: "auto",
                 height: "85vh",
+                width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
+                overflowX: "hidden",
             }}>
-                <div id="showcase" style={{ marginLeft: "1.3vw" }}>
+
+                <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
                     <Carousel dotPosition="right">
                         <div>
                             <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
@@ -88,35 +90,85 @@ class Streams extends React.Component {
                     </Carousel>
                 </div>
 
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Categories </span>
+                    <Icon type="unordered-list"></Icon>
+                </Divider>
                 
+                <div id="Category">
+                    <StreamsCategories />
+                </div>
+                
+
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Popular Streams </span>
+                    <Icon type="play-square"></Icon>
+                </Divider>
+
+                <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                    hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                    useWindow={false}
+                >
+                    <List
+                        grid={{ gutter: 30, column: 3 }}
+                        dataSource={this.state.data}
+                        locale={{
+                            emptyText: (
+                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                    <Spin size="large" />
+                                </div>
+                            )
+                        }}
+                        renderItem={item => (
+                            <List.Item key={item.id}>
+                                <div onClick={this.cardClick} key={item.id}>
+                                    <Card
+                                        hoverable
+                                        type="inner"
+                                        bordered={false}
+                                        title="Video Title"
+                                        headStyle={{ backgroundColor: "#1890ff", color: "white", }}
+                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                        style={{ boxShadow: "8px 0px 12px" }}
+                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+                                    >
+                                        <Meta
+                                            title={
+                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                        Tkai
+                                                    </Avatar>
+                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
+                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                </div>
+                                            }
+                                            description={
+                                                <div id="Description">
+                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                    <p style={{ color: "white" }}>{item.name.title}</p>
+                                                </div>
+                                            }
+                                        />
+                                    </Card> {/*Pass entire datasource as prop*/}
+                                </div>
+                            </List.Item>
+                        )}
+                    />
+
+                    {this.state.loading && this.state.hasMore && (
+                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                            <Spin size="large" />
+                        </div>
+                    )}
+                </InfiniteScroll>
+
+
             </div>
         );
     }
 }
 
-
-class CarouselSlide extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
-        return (
-            <Row type="flex" justify="center" style={{ height: "50vh"}}>
-                <Col span={12} style={{ backgroundColor: "#001529", boxShadow: "0px 3px 10px #0a0a0a" }}><ReactPlayer url={this.props.url} width="40vw" height="50vh" /></Col>
-                <Col span={6} style={{ backgroundColor: "#001529", height: "50vh", boxShadow: "0px 3px 10px #0a0a0a" }}>
-                    <div style={{ marginLeft: "1vw", marginTop: "2vh", marginRight: "1vw" }}>
-                        <Avatar style={{ backgroundColor: "#1890ff", display: "inline-block" }} size={50}>
-                            {this.props.username}
-                        </Avatar>
-                        <h1 style={{ display: "inline-block", marginLeft: "1vw", color: "white", fontSize: "2vw" }}>{this.props.username}</h1>
-                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewers <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                        <p style={{ color: "white", wordWrap: "break-word", overflow: "hidden", height: "28vh" }}>{this.props.desc}</p>
-                    </div>
-                </Col>
-            </Row>
-        );
-    }
-}
 export default Streams;
