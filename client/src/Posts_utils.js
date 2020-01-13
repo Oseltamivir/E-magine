@@ -7,9 +7,6 @@ import Todo from './to-do-list'
 import {Button} from 'antd';
 import { Tabs, Icon, Divider } from 'antd';
 const { TabPane } = Tabs;
-function callback(key) {
-  console.log(key);
-}
 class Post extends Component{
     constructor(prop){
         super(prop)
