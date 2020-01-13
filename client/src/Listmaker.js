@@ -19,7 +19,7 @@ class Listmaker extends Component{
        
     }
                
-createItem = (items) => {return <li id = {items.key} key = {items.key}><div class = 'listpart'><p class = 'timetext' >{this.postTime(items)}</p><p>{items.text}</p></div><br/></li>}
+createItem = (items) => {return <li id = {items.key} key = {items.key}><div class = 'listpart'><p class = 'timetext' >{this.postTime(items)}</p><p class = 'replytext'>{items.text}</p></div><br/></li>}
     refreshItem = () => {const toDoEntries = this.props.entries;
         this.setState({listItems:toDoEntries.map(this.createItem)});
     }

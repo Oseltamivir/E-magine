@@ -117,7 +117,7 @@
   box-shadow:3px 3px 10px #0a0a0a;
   padding: 10px;
   border-radius: 2em/2em;
-  background-color: #dcf8c6;
+  background-color:#001529;
   list-style: none;
 }
 
@@ -154,4 +154,8 @@ margin-bottom: 10px;
   padding-left:10px;
   padding-top:15px;
   border-radius: 2em/2em;
+}
+
+.replytext{
+  color: #ffffff;
 }
