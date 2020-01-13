@@ -24,8 +24,10 @@ createItem = (items) => {
                 <p className = 'timetext'>{this.postTime(items)}</p>
                 <p className = 'replytext'>{items.text}</p>
             </div>
+
             <Button type = {'danger'} onClick = {() => {this.props.deleteItem(items.key)}}>Delete
             </Button>
+            <br/>
         </li>
         );
     }
