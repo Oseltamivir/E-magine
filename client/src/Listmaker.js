@@ -10,7 +10,6 @@ import {Button} from 'antd'
 class Listmaker extends Component{
     constructor(prop){
         super(prop)
-        this.state = {listItems: []}
     }
     
     postTime = (items) => {
@@ -18,19 +17,24 @@ class Listmaker extends Component{
         return items.user+' posted this at '+d.toDateString()
        
     }
-               
-createItem = (items) => {return <li id = {items.key} key = {items.key}><div class = 'listpart'><p class = 'timetext' >{this.postTime(items)}</p><p class = 'replytext'>{items.text}</p></div><br/></li>}
-    refreshItem = () => {const toDoEntries = this.props.entries;
-        this.setState({listItems:toDoEntries.map(this.createItem)});
-    }
-    componentDidMount(){
-    let interval = setInterval(this.refreshItem,1000) 
+createItem = (items) => {
+    return (
+        <li>
+            <div className= 'listpart'>
+                <p class = 'timetext'>{this.postTime(items)}</p>
+                <p class = 'replytext'>{items.text}</p>
+            </div>
+            <Button type = 'danger' onClick = {() => alert('hello')}>Delete
+            </Button><br/>
+        </li>
+        );
     }
     render(){
-    
+        const toDoEntries = this.props.entries;
+       const listItems = toDoEntries.map(this.createItem);
         return(
             <div id = 'listdesign'>
-             <ul id =  'thelist'>{this.state.listItems}</ul>
+             <ul id =  'thelist'>{listItems}</ul>
              </div>
         )
     }
