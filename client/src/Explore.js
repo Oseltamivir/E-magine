@@ -5,7 +5,7 @@ import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import StreamsCategories from './StreamsCategories';
-
+import { Link} from 'react-router-dom';
 const { Meta } = Card;
 
 
@@ -53,6 +53,7 @@ class Explore extends React.Component {
             this.setState({
                 hasMore: false,
                 loading: false,
+                container:{color: 'red', fontSize:'244%'}
             });
 
         }
@@ -74,101 +75,97 @@ class Explore extends React.Component {
             }}>
 
                 <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
-                    <Carousel dotPosition="right">
-                        <div>
-                            <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="William" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="Warren" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="Sherman" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                    </Carousel>
+                    <Link  to='/DiscApp'>
+                         Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
+                    </Link>
+                    <br/>
+                    <Link to={{
+                        pathname: '/Topicpage',
+                        state: { topicName: 'Computing' }
+                    }}>
+                        Computing
+                    </Link>
                 </div>
 
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Categories </span>
-                    <Icon type="unordered-list"></Icon>
-                </Divider>
-                
-                <div id="Category">
-                    <StreamsCategories />
-                </div>
-                
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Categories </span>
+                        <Icon type="unordered-list"></Icon>
+                    </Divider>
 
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Popular Streams </span>
-                    <Icon type="play-square"></Icon>
-                </Divider>
+                    <div id="Category">
+                        <StreamsCategories />
+                    </div>
 
-                <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                    hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                    useWindow={false}
-                >
-                    <List
-                        grid={{ gutter: 30, column: 3 }}
-                        dataSource={this.state.data}
-                        locale={{
-                            emptyText: (
-                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                    <Spin size="large" />
-                                </div>
-                            )
-                        }}
-                        renderItem={item => (
-                            <List.Item key={item.id}>
-                                <div onClick={this.cardClick} key={item.id}>
-                                    <Card
-                                        hoverable
-                                        type="inner"
-                                        bordered={false}
-                                        title="Video Title"
-                                        headStyle={{ backgroundColor: "#1890ff", color: "white", }}
-                                        bodyStyle={{ backgroundColor: "#001529" }}
-                                        style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
-                                    >
-                                        <Meta
-                                            title={
-                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
-                                                        Tkai
+
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Popular Streams </span>
+                        <Icon type="play-square"></Icon>
+                    </Divider>
+
+                    <InfiniteScroll
+                        initialLoad={false}
+                        pageStart={0}
+                        loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                        hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                        useWindow={false}
+                    >
+                        <List
+                            grid={{ gutter: 30, column: 3 }}
+                            dataSource={this.state.data}
+                            locale={{
+                                emptyText: (
+                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                        <Spin size="large" />
+                                    </div>
+                                )
+                            }}
+                            renderItem={item => (
+                                <List.Item key={item.id}>
+                                    <div onClick={this.cardClick} key={item.id}>
+                                        <Card
+                                            hoverable
+                                            type="inner"
+                                            bordered={false}
+                                            title="Video Title"
+                                            headStyle={{ backgroundColor: "#1890ff", color: "white", }}
+                                            bodyStyle={{ backgroundColor: "#001529" }}
+                                            style={{ boxShadow: "8px 0px 12px" }}
+                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+                                        >
+                                            <Meta
+                                                title={
+                                                    <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                                                        <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                            Tkai
                                                     </Avatar>
-                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
-                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
-                                                </div>
-                                            }
-                                            description={
-                                                <div id="Description">
-                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                                    <p style={{ color: "white" }}>{item.name.title}</p>
-                                                </div>
-                                            }
-                                        />
-                                    </Card> {/*Pass entire datasource as prop*/}
-                                </div>
-                            </List.Item>
+                                                        <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
+                                                        <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                    </div>
+                                                }
+                                                description={
+                                                    <div id="Description">
+                                                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                        <p style={{ color: "white" }}>{item.name.title}</p>
+                                                    </div>
+                                                }
+                                            />
+                                        </Card> {/*Pass entire datasource as prop*/}
+                                    </div>
+                                </List.Item>
+                            )}
+                        />
+
+                        {this.state.loading && this.state.hasMore && (
+                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                <Spin size="large" />
+                            </div>
                         )}
-                    />
-
-                    {this.state.loading && this.state.hasMore && (
-                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                            <Spin size="large" />
-                        </div>
-                    )}
-                </InfiniteScroll>
+                    </InfiniteScroll>
 
 
-            </div>
-        );
-    }
-}
-
-export default Explore;
+                </div>
+                );
+            }
+        }
+        
+        export default Explore;
