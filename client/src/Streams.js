@@ -1,12 +1,15 @@
 import React from 'react';
-import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button } from 'antd';
-import CarouselSlide from "./CauroselSlide"
+import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Input } from 'antd';
+import CarouselSlide from "./CauroselSlide.js";
+import StreamsTopBar from "./streamsTopBar";
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import StreamsCategories from './StreamsCategories';
 
 const { Meta } = Card;
+
+const { Search } = Input;
 
 
 class Streams extends React.Component {
@@ -73,7 +76,14 @@ class Streams extends React.Component {
                 overflowX: "hidden",
             }}>
 
-                <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
+                <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "5vh" }}>
+
+                    <StreamsTopBar />
+
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Spotlight </span>
+                        <Icon type="bulb"></Icon>
+                    </Divider>
                     <Carousel dotPosition="right">
                         <div>
                             <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
@@ -94,11 +104,11 @@ class Streams extends React.Component {
                     <span>Categories </span>
                     <Icon type="unordered-list"></Icon>
                 </Divider>
-                
+
                 <div id="Category">
                     <StreamsCategories />
                 </div>
-                
+
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Popular Streams </span>
