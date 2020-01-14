@@ -20,13 +20,23 @@ class Listmaker extends Component {
     createItem = (items) => {
         return (
             <li key={items.key}>
-                <div className='listpart'>
+                <div>
                     <p className='timetext'>{this.postTime(items)}</p>
                     <p className='replytext'>{items.text}</p>
                 </div>
-
-                <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
-            </Button>
+                <span>
+                    <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
+                    </Button>
+                    <Button onClick={() =>{this.props.upvoteReply(items.key)}} type='primary'>
+                        <Icon type="up-circle" theme="twoTone" />
+                    </Button>
+                    <div>
+                        {items.counter}
+                    </div>
+                    <Button onClick={() =>{this.props.upvoteReply(items.key)}} type='primary'>
+                        <Icon type="down-circle" theme="twoTone" onClick={this.props.upvoteAnswer} />
+                    </Button>
+                </span>
                 <br />
             </li>
         );
@@ -38,9 +48,13 @@ class Listmaker extends Component {
                     <p className='timetext'>{this.postTime(items)}</p>
                     <p className='replytext'>{items.text}</p>
                 </div>
-
-                <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
-            </Button>
+                <span>
+                    <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
+                    </Button>
+                    <Icon type="up-circle" theme="twoTone" onClick={() =>this.props.upvoteAnswer(items.key)} />
+                    {items.counter}
+                    <Icon type="down-circle" theme="twoTone" onClick={() =>this.props.upvoteAnswer(items.key)} />
+                </span>
                 <br />
             </li>
         );

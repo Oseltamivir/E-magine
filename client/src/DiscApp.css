@@ -161,6 +161,8 @@ margin-bottom: 10px;
 }
 #replylist{
   list-style: none;
+  background-color: #001529;
+  border-radius: 2em/2em;
 }
 #postthree{
   margin-left: 10px;
