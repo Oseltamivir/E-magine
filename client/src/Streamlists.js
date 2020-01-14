@@ -22,17 +22,14 @@ class Streamlist extends Component {
         return (
             <div className='todolist' >
                 <form onSubmit={this.addItem}>
-                    <Listmaker
+                    {/*<Streamlistmake
                         entries={this.state.items}
                         deleteItem={this.deleteItem.bind(this)}
                         user={this.props.user}
-                    />
+                    />*/}
                     <div id='Postbar'>
-                        <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
-                        <Button id='posttwo' size='large' type='primary' onClick={this.addItem}>Post</Button>
-                        <Button id='postthree' size='large' type='primary' onClick={this.addAnswer}>
-                            <Icon type="star" theme="twoTone" />Add Answer
-                        </Button>
+                        <TextArea  placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+                        <Button  size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
                 </form>
             </div>
