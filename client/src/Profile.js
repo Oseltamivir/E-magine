@@ -248,7 +248,6 @@ class Profile extends React.Component {
                                         </List.Item>
                                     )}
                                 />
-
                                 {this.state.loading && this.state.hasMore && (
                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                                         <Spin size="large" />
@@ -321,6 +320,18 @@ class Profile extends React.Component {
                         </div>
                     </TabPane>
                 </Tabs>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <span id="yourPosts"></span>
 
             </div >
 
