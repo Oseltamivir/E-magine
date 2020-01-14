@@ -10,9 +10,9 @@ class CarouselSlide extends React.Component {
 
     render() {
         return (
-            <Row type="flex" justify="center" style={{ height: "50vh" }}>
-                <Col span={12} style={{ backgroundColor: "#001529", boxShadow: "0px 3px 10px #0a0a0a" }}><ReactPlayer url={this.props.url} width="40vw" height="50vh" /></Col>
-                <Col span={6} style={{ backgroundColor: "#001529", height: "50vh", boxShadow: "0px 3px 10px #0a0a0a" }}>
+            <Row type="flex" justify="center" style={{ height: "55vh", width: "80vw" }}>
+                <Col span={12} style={{ backgroundColor: "#001529", boxShadow: "0px 3px 10px #0a0a0a" }}><ReactPlayer url={this.props.url} width="40vw" height="55vh" /></Col>
+                <Col span={6} style={{ backgroundColor: "#001529", height: "55vh", boxShadow: "0px 3px 10px #0a0a0a" }}>
                     <div style={{ marginLeft: "1vw", marginTop: "2vh", marginRight: "1vw" }}>
                         <Avatar style={{ backgroundColor: "#1890ff", display: "inline-block" }} size={50}>
                             {this.props.username}
