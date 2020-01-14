@@ -27,15 +27,17 @@ class Listmaker extends Component {
                 <span>
                     <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
                     </Button>
-                    <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
-                        <Icon type="up-circle" theme="twoTone" />
-                    </Button>
-                    <div>
-                        {items.counter}
-                    </div>
-                    <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
-                        <Icon type="down-circle" theme="twoTone" />
-                    </Button>
+                    <span className='votearea'>
+                        <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
+                            <Icon type="up-circle" theme="twoTone" />
+                        </Button>
+                        <p className='whittencounter'>
+                            {items.counter}
+                        </p>
+                        <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
+                            <Icon type="down-circle" theme="twoTone" />
+                        </Button>
+                    </span>
                 </span>
                 <br />
             </li>
@@ -51,15 +53,17 @@ class Listmaker extends Component {
                 <span>
                     <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
                     </Button>
-                    <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
-                        <Icon type="up-circle" theme="twoTone" />
-                    </Button>
-                    <div>
-                        {items.counter}
-                    </div>
-                    <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
-                        <Icon type="down-circle" theme="twoTone" />
-                    </Button>
+                    <span class='votearea'>
+                        <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
+                            <Icon type="up-circle" theme="twoTone" />
+                        </Button>
+                        <p class='whitencounter'>
+                            {items.counter}
+                        </p>
+                        <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
+                            <Icon type="down-circle" theme="twoTone" />
+                        </Button>
+                    </span>
                 </span>
                 <br />
             </li>
