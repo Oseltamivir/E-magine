@@ -27,14 +27,14 @@ class Listmaker extends Component {
                 <span>
                     <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
                     </Button>
-                    <Button onClick={() =>{this.props.upvoteReply(items.key)}} type='primary'>
+                    <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
                         <Icon type="up-circle" theme="twoTone" />
                     </Button>
                     <div>
                         {items.counter}
                     </div>
-                    <Button onClick={() =>{this.props.downvoteReply(items.key)}} type='primary'>
-                        <Icon type="down-circle" theme="twoTone"/>
+                    <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
+                        <Icon type="down-circle" theme="twoTone" />
                     </Button>
                 </span>
                 <br />
@@ -51,13 +51,13 @@ class Listmaker extends Component {
                 <span>
                     <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
                     </Button>
-                    <Button onClick={() =>{this.props.upvoteAnswer(items.key)}} type='primary'>
+                    <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
                         <Icon type="up-circle" theme="twoTone" />
                     </Button>
                     <div>
                         {items.counter}
                     </div>
-                    <Button onClick={() =>{this.props.downvoteAnswer(items.key)}} type='primary'>
+                    <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
                         <Icon type="down-circle" theme="twoTone" />
                     </Button>
                 </span>
