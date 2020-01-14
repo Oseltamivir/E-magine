@@ -102,8 +102,8 @@ class Explore extends React.Component {
 
 
                     <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                        <span>Popular Streams </span>
-                        <Icon type="play-square"></Icon>
+                        <span>Hot</span>
+                        <Icon type="fire" theme="twoTone" twoToneColor = 'red' />
                     </Divider>
 
                     <InfiniteScroll
@@ -148,7 +148,7 @@ class Explore extends React.Component {
                                                 }
                                                 description={
                                                     <div id="Description">
-                                                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Title: <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
                                                         <p style={{ color: "white" }}>{item.name.title}</p>
                                                     </div>
                                                 }
