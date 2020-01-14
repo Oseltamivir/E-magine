@@ -79,6 +79,10 @@ class Explore extends React.Component {
                          Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
                     </Link>
                     <br/>
+                    <Link to = '/StreamsDiscussion'>
+                        I discuss about Jugemu here(LINK TO STREAM DISCUSSIONS PAGE FOR DEBUGGING PURPOSES)
+                    </Link>
+                    <br/>
                     <Link to={{
                         pathname: '/Topicpage',
                         state: { topicName: 'Computing' }
