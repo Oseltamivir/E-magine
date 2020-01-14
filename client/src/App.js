@@ -85,9 +85,9 @@ class App extends React.Component {
         })
       }
       else {
-      this.setState({
-        current: page
-      })
+        this.setState({
+          current: page
+        })
       }
     }
   }
@@ -103,9 +103,9 @@ class App extends React.Component {
       })
     }
     else {
-    this.setState({
-      current: page
-    })
+      this.setState({
+        current: page
+      })
     }
   }
 
@@ -211,8 +211,8 @@ class App extends React.Component {
               <Route exact path='/Streams/' component={Profile} />
               <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path= '/DiscApp' component={DiscApp}/>
-              <Route exact path = '/Topicpage' component = {Topicpage}/>
+              <Route exact path='/DiscApp' component={DiscApp} />
+              <Route exact path='/Topicpage' component={Topicpage} />
             </Switch>
           </Content>
 
