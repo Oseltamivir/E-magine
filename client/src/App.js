@@ -256,7 +256,6 @@ class Messages extends React.Component {
         { sender: 'Chairman Mao', text: "hello" },
 
       ],
-      currentText: '',
       user: 'Hi'
     };
   }
