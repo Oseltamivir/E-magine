@@ -19,6 +19,7 @@ MongoClient.connect(mongo_url, { useUnifiedTopology: true }).then(c => {
   console.log('[LOG] Connected to database');
 });
 
+/* API token authentication verification function */
 const apiAuth = (req, res) => {
   if(!req.header('Authorization')) {
     res.status(401).json({success: false, error: 'Missing api token!'});
@@ -42,6 +43,7 @@ router.get('/version', (req, res) => {
   res.json({version: 1});
 });
 
+/* Login to API using user/pass to obtain token for api */
 router.post('/auth/login', async (req, res) => {
   if (!req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')) {
     res.status(400).json({success: false, error: 'Username and password is required!'});
@@ -66,6 +68,7 @@ router.post('/auth/login', async (req, res) => {
   res.json({success: true, token});
 });
 
+/* Gets user profile of current logged in user */
 router.get('/users/me', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
@@ -81,6 +84,7 @@ router.get('/users/me', async (req, res) => {
   res.json({success: true, profile});
 });
 
+/* Gets user profile from user ID */
 router.get('/users/:id', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
