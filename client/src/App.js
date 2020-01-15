@@ -11,9 +11,9 @@ import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
 import { ReactComponent as Logo } from './logo.svg';
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
+import { Divider, Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
-
+const { Meta } = Card
 const { Header, Content, Sider } = Layout;
 
 
@@ -191,8 +191,8 @@ class App extends React.Component {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
 
               <div style={{ align: "center" }}>
-                <Icon component={Logo}/>
-                <span style={{fontWeight: "500"}}> Exegesis</span>
+                <Icon component={Logo} />
+                <span style={{ fontWeight: "500" }}> Exegesis</span>
               </div>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <Badge count={5} offset={[-1, 1]}>
@@ -217,9 +217,9 @@ class App extends React.Component {
               <Route exact path='/Streams/' component={Profile} />
               <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path= '/DiscApp' component={DiscApp}/>
-              <Route exact path = '/Topicpage' component = {Topicpage}/>
-              <Route exact path  = '/StreamsDiscussion' component = {StreamDisc}/>
+              <Route exact path='/DiscApp' component={DiscApp} />
+              <Route exact path='/Topicpage' component={Topicpage} />
+              <Route exact path='/StreamsDiscussion' component={StreamDisc} />
             </Switch>
           </Content>
 
@@ -243,17 +243,139 @@ class Messages extends React.Component {
     super(props);
 
     this.state = {
-      current: "",
+      recents: [
+        { sender: 'Hi', text: "hello" },
+        { sender: 'Jimmy', text: "hello i am great" },
+        { sender: 'Twig', text: "Twig" },
+        { sender: 'Pew', text: "I am an object within an object across an object between an objec" },
+        { sender: 'DInk', text: "hello" },
+        { sender: 'ahahahahah', text: "hello" },
+        { sender: 'Jabba', text: "hello" },
+        { sender: 'Palpatine', text: "hello" },
+        { sender: 'Vader', text: "hello" },
+        { sender: 'Chairman Mao', text: "hello" },
+
+      ],
+      currentText: '',
+      user: 'Hi'
     };
   }
-
   render() {
     return (
       <Layout>
         <Header style={{ fontSize: "2.5vw", color: "#cccccc" }}>
-          Messages
-          </Header>
-      </Layout>
+          <Divider style={{ fontSize: "2.5vw", color: "#cccccc" }}>Messages</Divider>
+        </Header>
+        <Menu onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          //defaultOpenKeys={['']}
+          mode="inline"
+          theme="dark">
+          <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <hr style={{ color: '#cccccc' }} />
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[0].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[0].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_2" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[1].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[1].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+
+          <Menu.Item key="Sender_3" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[2].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[2].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+
+          <Menu.Item key="Sender_4" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[3].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[3].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_5" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[4].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[4].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_6" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[5].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[5].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_7" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[6].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[6].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_8" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[7].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[7].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_9" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[8].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[8].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_10" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[9].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[9].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+        </Menu>
+      </Layout >
     );
   }
 }
