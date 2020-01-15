@@ -29,7 +29,7 @@ const apiAuth = (req, res) => {
   
   try {
     const user = signer.unsign(token);
-    req.user = user;
+    req.user = Buffer.from(user, 'base64').toString();
     return true;
   }
   catch (e) {
@@ -61,8 +61,8 @@ router.post('/auth/login', async (req, res) => {
     return;
   }
 
-  // Generate API token for user
-  const token = signer.sign(Buffer.from(username).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
+  // Generate API token for user from user ID
+  const token = signer.sign(Buffer.from(user.id).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
   res.json({success: true, token});
 });
 
