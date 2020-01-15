@@ -12,7 +12,7 @@ import StreamDisc from './StreamsDiscussion'
 import { ReactComponent as Logo } from './logo.svg';
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
-import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
+import { NavLink, Switch, Route, withRouter, useHistory } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
@@ -62,6 +62,29 @@ const notification = (
 );
 
 
+var profileOpen = false;
+function OpenProfile() {
+  const history = useHistory();
+
+  function handleClick() {
+
+    if (profileOpen === false) {
+      profileOpen = true;
+      history.push("/Profile");
+    }
+    else if (profileOpen === true) {
+      profileOpen = false
+      history.push("/")
+    }
+  }
+
+  return (
+    <Button type="primary" onClick={handleClick} shape="circle" style={{ marginLeft: "1.3vw", width: "4vw", height: "4vw", borderStyle: "solid", borderWidth: "3px", borderColor: "#002766" }}>Tkai</Button>
+  );
+}
+
+
+
 var previousLocation = "";
 
 class App extends React.Component {
@@ -73,6 +96,7 @@ class App extends React.Component {
       current: "Feed",
       collapsed: false,
       msgcollapsed: true,
+      profileOpen: false,
     };
   }
 
@@ -87,11 +111,19 @@ class App extends React.Component {
         this.setState({
           current: "Feed"
         })
+        profileOpen = false;
+      }
+      else if (page === "Profile") {
+        this.setState({
+          current: "Feed"
+        })
+        profileOpen = true;
       }
       else {
         this.setState({
           current: page
         })
+        profileOpen = false;
       }
     }
   }
@@ -102,11 +134,19 @@ class App extends React.Component {
 
     previousLocation = page;
     if (page === "") {
+      profileOpen = false;
       this.setState({
         current: "Feed"
       })
     }
+    else if (page === "Profile") {
+      this.setState({
+        current: "Feed"
+      })
+      profileOpen = true;
+    }
     else {
+      profileOpen = false;
       this.setState({
         current: page
       })
@@ -116,6 +156,11 @@ class App extends React.Component {
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
   };
+
+  openProfile = () => {
+    const history = useHistory();
+    history.push("/Profile");
+  }
 
   toggle = () => {
     // Collapse navbar when opening message bar
@@ -175,10 +220,10 @@ class App extends React.Component {
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item key="Profile" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-              <NavLink to="/Profile">
-                <Icon type="contacts" theme="twoTone" twoToneColor="#0050b3" />
-                <span>Profile</span>
+            <Menu.Item key="DiscApp" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/DiscApp">
+                <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Create Post</span>
               </NavLink>
             </Menu.Item>
 
@@ -191,8 +236,8 @@ class App extends React.Component {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
 
               <div style={{ align: "center" }}>
-                <Icon component={Logo}/>
-                <span style={{fontWeight: "500"}}> Exegesis</span>
+                <Icon component={Logo} />
+                <span style={{ fontWeight: "500" }}> Exegesis</span>
               </div>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <Badge count={5} offset={[-1, 1]}>
@@ -201,8 +246,9 @@ class App extends React.Component {
                   </Dropdown>
                 </Badge>
                 <Badge count={5} offset={[-1, 1]}>
-                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "1.5vw" }} />
+                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "0.8vw" }} />
                 </Badge>
+                <OpenProfile />
               </div>
             </div>
           </Header>
@@ -217,9 +263,9 @@ class App extends React.Component {
               <Route exact path='/Streams/' component={Profile} />
               <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path= '/DiscApp' component={DiscApp}/>
-              <Route exact path = '/Topicpage' component = {Topicpage}/>
-              <Route exact path  = '/StreamsDiscussion' component = {StreamDisc}/>
+              <Route exact path='/DiscApp' component={DiscApp} />
+              <Route exact path='/Topicpage' component={Topicpage} />
+              <Route exact path='/StreamsDiscussion' component={StreamDisc} />
             </Switch>
           </Content>
 
