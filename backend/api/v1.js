@@ -70,14 +70,14 @@ router.get('/users/me', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
   const profile = await db.collection('users').findOne({id: req.user}, {_id: 0, password: 0});
-  delete profile._id;
-  
+
   // Some error trapping
   if (!profile) {
     res.status(500).json({success: false, error: 'Internal server error, please contact administrator.'});
     return;
   }
 
+  delete profile._id;
   res.json({success: true, profile});
 });
 
