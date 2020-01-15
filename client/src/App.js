@@ -249,17 +249,34 @@ class Messages extends React.Component {
         { sender: 'Twig', text: "Twig" },
         { sender: 'Pew', text: "I am an object within an object across an object between an objec" },
         { sender: 'DInk', text: "hello" },
-        { sender: 'ahahahahah', text: "hello" },
+        { sender: 'ahahahahahahahhahahahahahahahahahahaha', text: "hello" },
         { sender: 'Jabba', text: "hello" },
         { sender: 'Palpatine', text: "hello" },
         { sender: 'Vader', text: "hello" },
         { sender: 'Chairman Mao', text: "hello" },
 
       ],
-      user: 'Hi'
+      user: 'Hi',
+      notified: 0
     };
   }
+  limitWords = (recents) => {
+    let changedItem = this.state.recents
+    for (let i = 0; i < 10; i++) {
+      if (this.state.recents[i].sender.length > 25) {
+        changedItem[i].sender = this.state.recents[i].sender.slice(0, 25) + '...'
+      }
+      if (this.state.recents[i].text.length > 35) {
+        changedItem[i].text = this.state.recents[i].text.slice(0, 35) + '...'
+      }
+
+    }
+    if (changedItem !== this.state.recents) {
+      this.setState({ recents: changedItem })
+    }
+  }
   render() {
+    this.limitWords(this.state.recents)
     return (
       <Layout>
         <Header style={{ fontSize: "2.5vw", color: "#cccccc" }}>
