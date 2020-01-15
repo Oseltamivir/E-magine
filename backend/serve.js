@@ -14,4 +14,7 @@ app.use((req, res, next) => {
 console.log('[LOG] Loading v1 API');
 app.use('/api/v1', apiv1);
 
+console.log('[LOG] Registering default api version to 1');
+app.use('/api', apiv1);
+
 app.listen(8080, () => console.log('[LOG] Backend server is ready'));
