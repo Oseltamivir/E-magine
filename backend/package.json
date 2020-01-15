@@ -20,6 +20,7 @@
     "aws-sdk": "^2.601.0",
     "express": "^4.17.1",
     "mongodb": "^3.4.1",
-    "reallydangerous": "^2.1.0"
+    "reallydangerous": "^2.1.0",
+    "simpleflakes": "^2.1.0"
   }
 }
