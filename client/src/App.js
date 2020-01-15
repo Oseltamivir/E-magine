@@ -9,6 +9,8 @@ import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
+import { ReactComponent as Logo } from './logo.svg';
+
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 
@@ -59,6 +61,7 @@ const notification = (
 
 );
 
+
 var previousLocation = "";
 
 class App extends React.Component {
@@ -86,9 +89,9 @@ class App extends React.Component {
         })
       }
       else {
-      this.setState({
-        current: page
-      })
+        this.setState({
+          current: page
+        })
       }
     }
   }
@@ -104,9 +107,9 @@ class App extends React.Component {
       })
     }
     else {
-    this.setState({
-      current: page
-    })
+      this.setState({
+        current: page
+      })
     }
   }
 
@@ -151,30 +154,30 @@ class App extends React.Component {
         inline - Sidebar Menu
         */}
 
-            <Menu.Item key="Feed" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+            <Menu.Item key="Feed" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
               <NavLink to="/">
-                <Icon type="home" theme="twoTone" />
+                <Icon type="home" theme="twoTone" twoToneColor="#0050b3" />
                 <span>Home</span>
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item key="Explore" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+            <Menu.Item key="Explore" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
               <NavLink to="/Explore">
-                <Icon type="appstore" theme="twoTone" />
+                <Icon type="appstore" theme="twoTone" twoToneColor="#0050b3" />
                 <span>Explore</span>
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item key="Streams" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+            <Menu.Item key="Streams" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
               <NavLink to="/Streams">
-                <Icon type="play-square" theme="twoTone" />
+                <Icon type="play-square" theme="twoTone" twoToneColor="#0050b3" />
                 <span>Streams</span>
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item key="Profile" style={{ fontSize: "130%", height: "10vh", display: "flex", alignItems: "center" }}>
+            <Menu.Item key="Profile" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
               <NavLink to="/Profile">
-                <Icon type="contacts" theme="twoTone" />
+                <Icon type="contacts" theme="twoTone" twoToneColor="#0050b3" />
                 <span>Profile</span>
               </NavLink>
             </Menu.Item>
@@ -188,8 +191,8 @@ class App extends React.Component {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
 
               <div style={{ align: "center" }}>
-                <Icon type="book" theme="twoTone" />
-                HomeworkOverflow
+                <Icon component={Logo}/>
+                <span style={{fontWeight: "500"}}> Exegesis</span>
               </div>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <Badge count={5} offset={[-1, 1]}>
@@ -197,7 +200,9 @@ class App extends React.Component {
                     <Button type="primary" shape="circle" icon="bell" size="large" />
                   </Dropdown>
                 </Badge>
-                <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "1.5vw" }} />
+                <Badge count={5} offset={[-1, 1]}>
+                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "1.5vw" }} />
+                </Badge>
               </div>
             </div>
           </Header>

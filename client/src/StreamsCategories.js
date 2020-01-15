@@ -67,7 +67,7 @@ class StreamsCategories extends React.Component {
                                     bordered={false}
                                     bodyStyle={{ backgroundColor: "#001529" }}
                                     style={{ boxShadow: "8px 0px 12px", overflow: "hidden" }}
-                                    cover={<img style={{ height: "50vh", width: "50vw", overflow: "hidden" }} alt="example" src={item.cover} />}
+                                    cover={<img style={{ height: "50vh", width: "80vw", overflow: "hidden" }} alt="example" src={item.cover} />}
                                 >
                                     <Meta
                                         title={

@@ -91,9 +91,9 @@ class Profile extends React.Component {
                 msOverflowStyle: "none",
                 overflowX: "hidden",
             }}>
-                <div id="TopBox" style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: "90vh" }}>
+                <div id="TopBox" style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <div id="AvatarHolder" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "20vw", height: "90vh" }}>
-                        <Avatar style={{ fontSize: "7vw", backgroundColor: "#1890ff" }} size={250}>
+                        <Avatar style={{ fontSize: "5vw", backgroundColor: "#1890ff" }} size={200}>
                         </Avatar>
 
                         <div id="InfoHolder" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
@@ -134,36 +134,62 @@ class Profile extends React.Component {
                             <p class="followersstyle" style={{ color: "#cccccc" }}><span style={{ color: "white" }}>399</span> Questions</p>
                             <p class="followersstyle" style={{ color: "#cccccc" }}><span style={{ color: "white" }}>123</span> Accepted Solutions</p>
                         </div>
+
                         <div id="Description" style={{ color: "#cccccc", fontSize: "1.3vw" }}>
                             <text>{this.state.description}</text>
                         </div>
-                        <Divider orientation="left" style={{ color: "white", fontSize: "1.4vw" }}>
-                            <span>Credentials & Info </span>
-                            <Icon type="idcard" theme="twoTone"></Icon>
-                        </Divider>
 
-                        <div id="Credentials" style={{ fontSize: "1.3vw" }}>
-                            <p style={{ color: "#cccccc" }}><IconFont type="iconlocation" /> {this.state.location}</p>
-                            <p style={{ color: "#cccccc" }}><IconFont type="iconwork" /> {this.state.workplace}</p>
-                            <p style={{ color: "#cccccc" }}><IconFont type="iconstudy" /> {this.state.study}</p>
-                        </div>
+                        <div id="InfoHolder" style={{ display: "flex", justifyContent: "space-around", width: "53vw", marginTop: "5vh"}}>
 
-                        <Divider orientation="left" style={{ color: "white", fontSize: "1.4vw" }}>
-                            <span>Knowledge Areas </span>
-                            <Icon type="crown" theme="twoTone" twoToneColor="#ffd000"></Icon>
-                        </Divider>
+                            <div>
+                                <Card
+                                    type="inner"
+                                    bordered={false}
+                                    title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center" }}><Icon type="idcard" theme="twoTone" twoToneColor="#0050b3" /> Credentials & Info</p>}
+                                    headStyle={{ backgroundColor: "#1890ff", width: "20vw" }}
+                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh"}}
+                                    style={{ boxShadow: "8px 0px 12px", width: "20vw"}}
+                                >
+                                    <Meta
+                                        description={<div id="Credentials" style={{ fontSize: "1.3vw" }}>
+                                            <p style={{ color: "#cccccc" }}><IconFont type="iconlocation" /> {this.state.location}</p>
+                                            <p style={{ color: "#cccccc" }}><IconFont type="iconwork" /> {this.state.workplace}</p>
+                                            <p style={{ color: "#cccccc" }}><IconFont type="iconstudy" /> {this.state.study}</p>
+                                        </div>}
+                                    />
+                                </Card>
+                            </div>
 
-                        <div id="KnowledgeAreas" style={{ fontSize: "1.3vw" }}>
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={this.state.knowledgeAreas}
-                                split={false}
-                                renderItem={item => (
-                                    <List.Item>
-                                        <p style={{ marginBottom: "-1.5vh", fontSize: "1.3vw", color: "#cccccc" }}>● <Icon type={item.icon} /> {item.subject}</p>
-                                    </List.Item>
-                                )}
-                            />
+                            <div>
+
+                                <Card
+                                    type="inner"
+                                    bordered={false}
+                                    title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center"  }}><Icon type="crown" theme="twoTone" twoToneColor="#d4b106" /> Knowledge Areas</p>}
+                                    headStyle={{ backgroundColor: "#1890ff", width: "20vw" }}
+                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh"}}
+                                    style={{ boxShadow: "8px 0px 12px", width: "20vw" }}
+                                >
+                                    <Meta
+                                        description={
+                                            <div id="KnowledgeAreas" style={{ fontSize: "1.3vw" }}>
+                                                <List
+                                                    itemLayout="horizontal"
+                                                    dataSource={this.state.knowledgeAreas}
+                                                    split={false}
+                                                    renderItem={item => (
+                                                        <List.Item>
+                                                            <p style={{ marginBottom: "-1.5vh", fontSize: "1.3vw", color: "#cccccc" }}><Icon type={item.icon} /> {item.subject}</p>
+                                                        </List.Item>
+                                                    )}
+                                                />
+                                            </div>
+                                        }
+                                    />
+                                </Card>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,7 +248,6 @@ class Profile extends React.Component {
                                         </List.Item>
                                     )}
                                 />
-
                                 {this.state.loading && this.state.hasMore && (
                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                                         <Spin size="large" />
@@ -295,8 +320,20 @@ class Profile extends React.Component {
                         </div>
                     </TabPane>
                 </Tabs>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <span id="yourPosts"></span>
 
-            </div>
+            </div >
 
         );
     }
