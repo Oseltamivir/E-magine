@@ -7,6 +7,7 @@ import Post from './Posts_utils.js'
 import { Button, Divider, Icon } from 'antd'
 
 
+
 export default class DirectMessagesMessages extends Component {
     constructor(prop) {
         super(prop)
@@ -14,7 +15,7 @@ export default class DirectMessagesMessages extends Component {
 
     postTime = (items) => {
         let d = new Date()
-        return items.user + ' posted this at ' + d.toDateString()
+        return this.props.sender + ' posted this at ' + d.toDateString()
 
     }
     createItem = (items) => {
