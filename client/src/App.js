@@ -12,7 +12,7 @@ import StreamDisc from './StreamsDiscussion'
 import { ReactComponent as Logo } from './logo.svg';
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
-import { NavLink, Switch, Route, withRouter, useHistory } from 'react-router-dom';
+import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
@@ -63,7 +63,7 @@ const notification = (
 
 
 var profileOpen = false;
-function OpenProfile() {
+function OpenProfile() { //Special hook function in order to use React Router's history.push 
   const history = useHistory();
 
   function handleClick() {
@@ -83,9 +83,27 @@ function OpenProfile() {
   );
 }
 
+function BackButton() { //Special hook function in order to use React Router's history.push
+  const history = useHistory();
+  const location = useLocation().pathname;
+
+  function ClickHandler() {
+    const fullPath = location.split("/");
+    const backPath = fullPath.slice(0, fullPath.length - 1);
+    const backPathJoined = backPath.join("/")
+
+    history.push(backPathJoined);
+  }
+
+  return (
+    <Button type="primary" onClick={ClickHandler} icon="left" size="large" style={{ marginRight: "2vw", marginLeft: "-1vw" }} />
+  );
+}
+
 
 
 var previousLocation = "";
+var previousFullLocation = "";
 
 class App extends React.Component {
   constructor(props) {
@@ -96,71 +114,100 @@ class App extends React.Component {
       current: "Feed",
       collapsed: false,
       msgcollapsed: true,
-      profileOpen: false,
+      back: false,
     };
   }
 
   componentDidUpdate() {
+    //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
+    const fullPath = path.split("/");
     const page = path.split("/")[1];
 
-    if (page !== previousLocation) {
+    if (page !== previousLocation) { //Only checks 1st path
       previousLocation = page;
 
       if (page === "") {
         this.setState({
-          current: "Feed"
+          current: "Feed",
         })
         profileOpen = false;
       }
       else if (page === "Profile") {
         this.setState({
-          current: "Feed"
+          current: "Feed",
         })
         profileOpen = true;
       }
       else {
         this.setState({
-          current: page
+          current: page,
         })
         profileOpen = false;
+      }
+    }
+
+    //Check if back button should be displayed
+
+    if (previousFullLocation !== path) { //Check if path actually changed to avoid calling repeatedly
+      previousFullLocation = path;
+      if (fullPath.length > 2) {
+        this.setState({
+          back: true,
+        })
+      }
+      else {
+        this.setState({
+          back: false,
+        })
       }
     }
   }
 
   componentDidMount() {
+    //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
+    previousFullLocation = path;
+
+    const fullPath = path.split("/");
     const page = path.split("/")[1];
 
     previousLocation = page;
     if (page === "") {
       profileOpen = false;
       this.setState({
-        current: "Feed"
+        current: "Feed",
       })
     }
-    else if (page === "Profile") {
+    else if (page === "Profile") { //Special handler for profile, since it should be "be at the feed page"
       this.setState({
-        current: "Feed"
+        current: "Feed",
       })
-      profileOpen = true;
+      profileOpen = true
     }
     else {
       profileOpen = false;
       this.setState({
-        current: page
+        current: page,
+      })
+    }
+
+    //Check if back button should be displayed
+    if (fullPath.length > 2) {
+      this.setState({
+        back: true,
+      })
+    }
+    else {
+      this.setState({
+        back: false,
       })
     }
   }
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
-  };
-
-  openProfile = () => {
-    const history = useHistory();
-    history.push("/Profile");
-  }
+  }; //Collapse function for menu sider
 
   toggle = () => {
     // Collapse navbar when opening message bar
@@ -233,8 +280,11 @@ class App extends React.Component {
 
         <Layout style={{ background: "#002140" }}>
           <Header style={{ background: '#001529', fontSize: "3vw", color: "#e6f7ff", boxShadow: "0px 3px 10px #0a0a0a" }}>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
 
+              {this.state.back && (
+                <BackButton></BackButton>
+              )}
               <div style={{ align: "center" }}>
                 <Icon component={Logo} />
                 <span style={{ fontWeight: "500" }}> Exegesis</span>
