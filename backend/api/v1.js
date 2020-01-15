@@ -81,4 +81,20 @@ router.get('/users/me', async (req, res) => {
   res.json({success: true, profile});
 });
 
+router.get('/users/:id', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const id = req.params.id;
+  const profile = await db.collection('users').findOne({id}, {_id: 0, password: 0});
+  
+  // Some error trapping
+  if (!profile) {
+    res.status(404).json({success: false, error: 'Requested user profile not found!'});
+    return;
+  }
+
+  delete profile._id;
+  res.json({success: true, profile});
+});
+
 module.exports = router;
