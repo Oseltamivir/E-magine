@@ -1,37 +1,92 @@
 // Makes a list for js
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Post from './Posts_utils.js'
-import {Button} from 'antd'
+import { Button, Divider, Icon } from 'antd'
 
 
-class Listmaker extends Component{
-    constructor(prop){
+class Listmaker extends Component {
+    constructor(prop) {
         super(prop)
-        this.state = {listItems: []}
     }
-    
+
     postTime = (items) => {
-        let d =  new Date()
-        return items.user+' posted this at '+d.toDateString()
-       
+        let d = new Date()
+        return items.user + ' posted this at ' + d.toDateString()
+
     }
-               
-createItem = (items) => {return <li id = {items.key} key = {items.key}><div class = 'listpart'><p class = 'timetext' >{this.postTime(items)}</p><p class = 'replytext'>{items.text}</p></div><br/></li>}
-    refreshItem = () => {const toDoEntries = this.props.entries;
-        this.setState({listItems:toDoEntries.map(this.createItem)});
+    createItem = (items) => {
+        return (
+            <li key={items.key}>
+                <div>
+                    <p className='timetext'>{this.postTime(items)}</p>
+                    <p className='replytext'>{items.text}</p>
+                </div>
+                <span>
+                    <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
+                    </Button>
+                    <span className='votearea'>
+                        <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
+                            <Icon type="up-circle" theme="twoTone" />
+                        </Button>
+                        <p className='whittencounter'>
+                            {items.counter}
+                        </p>
+                        <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
+                            <Icon type="down-circle" theme="twoTone" />
+                        </Button>
+                    </span>
+                </span>
+                <br />
+            </li>
+        );
     }
-    componentDidMount(){
-    let interval = setInterval(this.refreshItem,1000) 
+    createAnswers = (items) => {
+        return (
+            <li key={items.key}>
+                <div className='listpart'>
+                    <p className='timetext'>{this.postTime(items)}</p>
+                    <p className='replytext'>{items.text}</p>
+                </div>
+                <span>
+                    <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
+                    </Button>
+                    <span class='votearea'>
+                        <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
+                            <Icon type="up-circle" theme="twoTone" />
+                        </Button>
+                        <p class='whitencounter'>
+                            {items.counter}
+                        </p>
+                        <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
+                            <Icon type="down-circle" theme="twoTone" />
+                        </Button>
+                    </span>
+                </span>
+                <br />
+            </li>
+        );
     }
-    render(){
-    
-        return(
-            <div id = 'listdesign'>
-             <ul id =  'thelist'>{this.state.listItems}</ul>
-             </div>
+    render() {
+        const toDoEntries = this.props.entries;
+        const toDoAnswers = this.props.answers
+        const listItems = toDoEntries.map(this.createItem);
+        const listAnswers = toDoAnswers.map(this.createAnswers)
+        return (
+            <div id='listdesign'>
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Answers</span>
+                    <Icon type="star" theme="twoTone" />
+                </Divider>
+                <ul id='answerlist' >{listAnswers}</ul>
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Replies</span>
+                    <Icon type="edit" theme="twoTone" />
+                </Divider>
+                <ul id='replylist'>{listItems}</ul>
+            </div>
         )
     }
 }

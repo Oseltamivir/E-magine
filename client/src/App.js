@@ -8,7 +8,9 @@ import Profile from './Profile';
 import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
+import StreamDisc from './StreamsDiscussion'
 import { ReactComponent as Logo } from './logo.svg';
+
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
 import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
 
@@ -215,8 +217,9 @@ class App extends React.Component {
               <Route exact path='/Streams/' component={Profile} />
               <Route exact path='/Streams/:topic' component={streamsTopicPage} />
               <Route exact path='/Profile' component={Profile} />
-              <Route exact path='/DiscApp' component={DiscApp} />
-              <Route exact path='/Topicpage' component={Topicpage} />
+              <Route exact path= '/DiscApp' component={DiscApp}/>
+              <Route exact path = '/Topicpage' component = {Topicpage}/>
+              <Route exact path  = '/StreamsDiscussion' component = {StreamDisc}/>
             </Switch>
           </Content>
 

@@ -5,7 +5,6 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Post from './Posts_utils.js'
 import Todo from './to-do-list.js'
 import {Button, Badge} from 'antd'
-import Notes from './notifications.js'
 //This will be the discussion page mainframe
 class DiscApp extends Component{
   constructor(){
