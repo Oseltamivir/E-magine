@@ -55,7 +55,7 @@ router.post('/auth/login', async (req, res) => {
   const hashed = crypto.createHash('sha256').update(password).digest('hex');
 
   // Check login
-  const user = await db.collection('users').findOne({username, password: hashed});
+  const user = await db.collection('users').findOne({username, password: hashed}, {_id: 0, id: 1});
   if (!user) {
     res.status(403).json({success: false, error: 'Invalid username or password!'});
     return;
