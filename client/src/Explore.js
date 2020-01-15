@@ -102,7 +102,7 @@ class Explore extends React.Component {
 
 
                     <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                        <span>Hot</span>
+                        <span>Hot Posts </span>
                         <Icon type="fire" theme="twoTone" twoToneColor = 'red' />
                     </Divider>
 
