@@ -11,7 +11,7 @@ const env = require('../env.json');
 const mongo_url = env.mongo_url;
 
 let db, conn;
-MongoClient.connect(mongo_url).then(c => {
+MongoClient.connect(mongo_url, { useUnifiedTopology: true }).then(c => {
   conn = c;
   db = c.db(env.mongo_db);
 
