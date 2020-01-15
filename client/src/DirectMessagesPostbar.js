@@ -5,15 +5,16 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button, Input, Icon } from 'antd'
 import Listmaker from './Listmaker.js'
 import { getElementError } from '@testing-library/react';
+import DirectMessagesMessages from './DirectMessagesMessages'
 const { TextArea } = Input
+
 export default class DirectMessagesPostbar extends Component {
     constructor(prop) {
         super(prop)
         this.state = {
-            receiver:'Bob',
-            sender:'Charlie',
+
             items: [],
-            currentState: { key: '', text: ''},
+            currentState: { key: '', text: '' },
             currentText: '',
         }
 
@@ -25,14 +26,15 @@ export default class DirectMessagesPostbar extends Component {
         return (
             <div className='todolist' >
                 <form onSubmit={this.addItem}>
-                    <DirectMessagesMessages/>
+                    <DirectMessagesMessages
                         entries={this.state.items}
                         deleteItem={this.deleteItem.bind(this)}
-                        user={this.props.user}
-                    />
+                        receiver={this.props.receiver}
+                        sender={this.props.sender} />
+
                     <div id='Postbar'>
                         <TextArea id='DirectMessaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
-                        <Button id='Directposttwo' size='large' type='primary' onClick={()=>{this.addItem}}>Post</Button>
+                        <Button id='Directposttwo' size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
                 </form>
             </div>
