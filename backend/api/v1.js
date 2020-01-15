@@ -4,6 +4,20 @@ const router = express.Router();
 const RD = require('reallydangerous');
 const signer = new RD.TimestampSigner('my-secret');
 
+const MongoClient = require('mongodb').MongoClient;
+
+const env = require('../env.json');
+
+const mongo_url = env.mongo_url;
+
+let db, conn;
+MongoClient.connect(mongo_url).then(c => {
+  conn = c;
+  db = c.db(env.mongo_db);
+
+  console.log('[LOG] Connected to database');
+});
+
 router.get('/version', (req, res) => {
   res.json({version: 1});
 });
