@@ -19,6 +19,25 @@ MongoClient.connect(mongo_url, { useUnifiedTopology: true }).then(c => {
   console.log('[LOG] Connected to database');
 });
 
+const apiAuth = (req, res) => {
+  if(!req.header('Authorization')) {
+    res.status(401).json({success: false, error: 'Missing api token!'});
+    return;
+  }
+
+  const token = req.header('Authorization').split(' ').pop();
+  
+  try {
+    const user = signer.unsign(token);
+    req.user = user;
+    return true;
+  }
+  catch (e) {
+    res.status(401).json({success: false, error: 'Invalid api token provided!'});
+    return false;
+  }
+}
+
 router.get('/version', (req, res) => {
   res.json({version: 1});
 });
