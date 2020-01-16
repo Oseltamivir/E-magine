@@ -9,6 +9,7 @@ import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
+import WrappedNormalLoginForm from './Login';
 import { ReactComponent as Logo } from './logo.svg';
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
@@ -115,7 +116,12 @@ class App extends React.Component {
       collapsed: false,
       msgcollapsed: true,
       back: false,
+      loggedIn: false,
     };
+  }
+
+  handleLogin(loginStatus) {
+    this.setState({loggedIn: loginStatus})
   }
 
   componentDidUpdate() {
@@ -165,6 +171,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    /*[TODO:] Work on sessions so that the login status will be kept when page is reloaded */
     //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
     previousFullLocation = path;
@@ -230,7 +237,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+    <div>
+      {this.state.loggedIn && (
+      <Layout style={{ minHeight: '100vh'}}>
 
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
           <Menu
@@ -326,7 +335,11 @@ class App extends React.Component {
         </Sider>
 
       </Layout>
-
+      )}
+      {this.state.loggedIn === false && (
+      <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
+      )}
+    </div>
     );
 
   }
