@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './DiscApp.css';
+import './DirectMessages.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Post from './Posts_utils.js'
 import Todo from './to-do-list.js'
@@ -20,11 +20,11 @@ class DirectMsg extends Component {
   }
   render() {
     return (
-      <div id='All'>
-        <div id='header'>
-          <h1 id='Category'>{this.state.receiver}
-            <span id='Status'>
-              <Button type='primary' size='small' id='pfp' onClick={this.changeUser = () => {
+      <div id='dmall'>
+        <div id='dmheader'>
+          <h1 id='dmcategory'>{this.state.receiver}
+            <span id='dmstatus'>
+              <Button type='primary' size='small' id='dmpfp' onClick={this.changeUser = () => {
                 this.state.sender === 'Charlie' ? this.setState({ sender: 'YEET6' }) : this.setState({ sender: 'Charlie' })
                   ; alert('User Changed')
               }}></Button>

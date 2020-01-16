@@ -38,13 +38,13 @@ export default class DirectMessagesMessages extends Component {
         const toDoEntries = this.props.entries;
         const listItems = toDoEntries.map(this.createItem);
         return (
-            <div id='listdesign'>
+            <div id='dmlistdesign'>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Your chat with {this.props.receiver}
                         <Icon type="edit" theme="twoTone" />
                     </span>
                 </Divider>
-                <ul id='replylist'>{listItems}</ul>
+                <ul id='dmreplylist'>{listItems}</ul>
             </div>
         )
     }

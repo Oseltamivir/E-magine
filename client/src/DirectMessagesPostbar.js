@@ -32,7 +32,7 @@ export default class DirectMessagesPostbar extends Component {
                         receiver={this.props.receiver}
                         sender={this.props.sender} />
 
-                    <div id='Postbar'>
+                    <div id='dmpostbar'>
                         <TextArea id='DirectMessaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
                         <Button id='Directposttwo' size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
