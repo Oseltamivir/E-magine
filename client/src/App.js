@@ -375,7 +375,8 @@ class Messages extends React.Component {
       this.setState({ recents: changedItem })
     }
   }
-  checkItem = (newItem)=>{
+
+  checkItemInList = (newItem)=>{
     for(let i = 0;i< this.state.recents.length;i++){
       if (this.state.recents[i].sender === newItem.sender){
         return true
@@ -383,14 +384,35 @@ class Messages extends React.Component {
     }
     return false
   }
+  findItemInList = (item) =>{
+    for (let i = 0; i<this.state.recents.length;i++){
+      if (this.state.recents[i].sender=== item.sender){
+        return i
+      }
+    }
+  }
   addItem = (newItem) =>{
     if (this.state.recents.length===10){
-      if (this.checkItem(newItem)){
+      if (this.checkItemInList(newItem)){
+        let changedItem = this.state.recents
+        let changedIndex = -200
+        changedIndex = this.findItemInList(newItem) // Index of new item
+        changedItem.splice(changedIndex,1)
+        changedItem.shift(newItem)
+        this.setState({recents:changedItem})
+
+      }
+      else{
       let changedItem = this.state.recents
       changedItem.pop()
       changedItem.unshift(newItem)
+      this.setState({recents:changedItem})
     }
-
+    }
+    else{
+      let changedItem = this.state.recents
+      changedItem.push(newItem)
+      this.setState({recents:changedItem})
     }
   }
   render() {
