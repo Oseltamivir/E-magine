@@ -16,6 +16,7 @@ import { ReactComponent as Logo } from './logo.svg';
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
+
 const { Header, Content, Sider } = Layout;
 
 
@@ -117,7 +118,14 @@ class App extends React.Component {
       collapsed: false,
       msgcollapsed: true,
       back: false,
+      msgsrc: '',
+      msgtxt: ''
     };
+  }
+
+  passInfo = (info) => {
+    this.setState({notified:this.state.notified+1})
+    this.setState({newItem:info})
   }
 
   componentDidUpdate() {
@@ -318,7 +326,10 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-              <Route exact path='/DirectMessages' component={DirectMsgs} />
+              <Route exact path='/DirectMessages' component={DirectMsgs} render={()=>
+                <DirectMsgs func = {this.passInfo.bind(this)} />
+              }
+                />
 
             </Switch>
           </Content>
@@ -326,7 +337,7 @@ class App extends React.Component {
         </Layout>
 
         <Sider collapsible trigger={null} collapsedWidth={0} collapsed={this.state.msgcollapsed} onCollapse={this.onCollapse} width={400} style={{ boxShadow: "-3px 0px 10px" }}>
-          <Messages></Messages>
+          <Messages sender = {this.state.msgsrc} messagetext = {this.state.msgtxt}/>
         </Sider>
 
       </Layout>
@@ -360,10 +371,6 @@ class Messages extends React.Component {
       notified: 0,
       newItem: ''
     };
-  }
-  passInfo = (info) => {
-    this.setState({notified:notified+1})
-    this.setState({newItem:info})
   }
   limitWords = (recents) => {
     let changedItem = this.state.recents
@@ -434,7 +441,7 @@ class Messages extends React.Component {
           theme="dark"
         >
           <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "20vh", alignItems: "center" }}>
-            <NavLink to={{path:"/DirectMessages", state:{infoPasser}}}>
+            <NavLink to="/DirectMessages">
               <div>
                 <hr style={{ color: '#cccccc' }} />
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[0].sender}</strong></h1>
@@ -445,7 +452,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_2" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+          <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[1].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[1].text}</p>
@@ -456,7 +463,7 @@ class Messages extends React.Component {
 
 
           <Menu.Item key="Sender_3" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+          <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[2].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[2].text}</p>
@@ -467,7 +474,7 @@ class Messages extends React.Component {
 
 
           <Menu.Item key="Sender_4" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+          <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[3].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[3].text}</p>
@@ -477,7 +484,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_5" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[4].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[4].text}</p>
@@ -487,7 +494,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_6" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[5].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[5].text}</p>
@@ -497,7 +504,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_7" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[6].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[6].text}</p>
@@ -507,7 +514,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_8" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[7].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[7].text}</p>
@@ -517,7 +524,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_9" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[8].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[8].text}</p>
@@ -527,7 +534,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_10" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+           <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[9].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[9].text}</p>
