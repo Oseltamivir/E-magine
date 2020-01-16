@@ -13,7 +13,7 @@ import DirectMsgs from './DirectMessages'
 import { ReactComponent as Logo } from './logo.svg';
 
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
