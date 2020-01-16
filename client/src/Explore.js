@@ -5,7 +5,7 @@ import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import StreamsCategories from './StreamsCategories';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
 
 
@@ -53,7 +53,7 @@ class Explore extends React.Component {
             this.setState({
                 hasMore: false,
                 loading: false,
-                container:{color: 'red', fontSize:'244%'}
+                container: { color: 'red', fontSize: '244%' }
             });
 
         }
@@ -75,14 +75,14 @@ class Explore extends React.Component {
             }}>
 
                 <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
-                    <Link  to='/DiscApp'>
-                         Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
+                    <Link to='/DiscApp'>
+                        Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
                     </Link>
-                    <br/>
-                    <Link to = '/StreamsDiscussion'>
+                    <br />
+                    <Link to='/StreamsDiscussion'>
                         I discuss about Jugemu here(LINK TO STREAM DISCUSSIONS PAGE FOR DEBUGGING PURPOSES)
                     </Link>
-                    <br/>
+                    <br />
                     <Link to={{
                         pathname: '/Topicpage',
                         state: { topicName: 'Computing' }
@@ -90,6 +90,7 @@ class Explore extends React.Component {
                         Computing
                     </Link>
                 </div>
+
 
                     <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                         <span>Categories </span>
@@ -142,34 +143,34 @@ class Explore extends React.Component {
                                                         <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
                                                             Tkai
                                                     </Avatar>
-                                                        <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
-                                                        <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
-                                                    </div>
-                                                }
-                                                description={
-                                                    <div id="Description">
-                                                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Title: <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                                        <p style={{ color: "white" }}>{item.name.title}</p>
-                                                    </div>
-                                                }
-                                            />
-                                        </Card> {/*Pass entire datasource as prop*/}
-                                    </div>
-                                </List.Item>
-                            )}
-                        />
-
-                        {this.state.loading && this.state.hasMore && (
-                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                <Spin size="large" />
-                            </div>
+                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
+                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                </div>
+                                            }
+                                            description={
+                                                <div id="Description">
+                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Title: <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                    <p style={{ color: "white" }}>{item.name.title}</p>
+                                                </div>
+                                            }
+                                        />
+                                    </Card> {/*Pass entire datasource as prop*/}
+                                </div>
+                            </List.Item>
                         )}
-                    </InfiniteScroll>
+                    />
+
+                    {this.state.loading && this.state.hasMore && (
+                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                            <Spin size="large" />
+                        </div>
+                    )}
+                </InfiniteScroll>
 
 
-                </div>
-                );
-            }
-        }
-        
-        export default Explore;
+            </div>
+        );
+    }
+}
+
+export default Explore;
