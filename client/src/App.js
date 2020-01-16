@@ -10,9 +10,12 @@ import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
 import WrappedNormalLoginForm from './Login';
+import DirectMsgs from './DirectMessages'
+
 import { ReactComponent as Logo } from './logo.svg';
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar } from 'antd';
+
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
@@ -325,6 +328,8 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
+               <Route exact path='/DirectMessages' component={DirectMsgs} />
+
             </Switch>
           </Content>
 
@@ -352,17 +357,156 @@ class Messages extends React.Component {
     super(props);
 
     this.state = {
-      current: "",
+      recents: [
+        { sender: 'Hi', text: "hello" },
+        { sender: 'Jimmy', text: "hello i am great" },
+        { sender: 'Twig', text: "Twig" },
+        { sender: 'Pew', text: "I am an object within an object across an object between an objec" },
+        { sender: 'DInk', text: "hello" },
+        { sender: 'ahahahahahahahhahahahahahahahahahahaha', text: "hello" },
+        { sender: 'Jabba', text: "hello" },
+        { sender: 'Palpatine', text: "hello" },
+        { sender: 'Vader', text: "hello" },
+        { sender: 'Chairman Mao', text: "hello" },
+
+      ],
+      user: 'Hi',
+      notified: 0
     };
   }
+  limitWords = (recents) => {
+    let changedItem = this.state.recents
+    for (let i = 0; i < 10; i++) {
+      if (this.state.recents[i].sender.length > 25) {
+        changedItem[i].sender = this.state.recents[i].sender.slice(0, 25) + '...'
+      }
+      if (this.state.recents[i].text.length > 35) {
+        changedItem[i].text = this.state.recents[i].text.slice(0, 35) + '...'
+      }
 
+    }
+    if (changedItem !== this.state.recents) {
+      this.setState({ recents: changedItem })
+    }
+  }
   render() {
+    this.limitWords(this.state.recents)
     return (
       <Layout>
         <Header style={{ fontSize: "2.5vw", color: "#cccccc" }}>
-          Messages
-          </Header>
-      </Layout>
+          <Divider style={{ fontSize: "2.5vw", color: "#cccccc" }}>Messages</Divider>
+        </Header>
+        <Menu onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          //defaultOpenKeys={['']}
+          mode="inline"
+          theme="dark"
+        >
+          <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "20vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <hr style={{ color: '#cccccc' }} />
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[0].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[0].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_2" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[1].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[1].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+
+          <Menu.Item key="Sender_3" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[2].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[2].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+
+          <Menu.Item key="Sender_4" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[3].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[3].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_5" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[4].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[4].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_6" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[5].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[5].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_7" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[6].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[6].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_8" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[7].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[7].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_9" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[8].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[8].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="Sender_10" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+            <NavLink to="/DirectMessages">
+              <div>
+                <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[9].sender}</strong></h1>
+                <p><Icon type="double-right" />{this.state.recents[9].text}</p>
+                <hr style={{ color: '#cccccc' }} />
+              </div>
+            </NavLink>
+          </Menu.Item>
+
+        </Menu>
+      </Layout >
     );
   }
 }

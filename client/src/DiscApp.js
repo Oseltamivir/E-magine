@@ -7,10 +7,12 @@ import Todo from './to-do-list.js'
 import { Button, Badge } from 'antd'
 
 
+
 //This will be the discussion page mainframe
 class DiscApp extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       user: 'YEET6',
       category: 'Math', // For storing category
