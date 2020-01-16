@@ -341,7 +341,7 @@ class App extends React.Component {
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-
+    //this.props.newpost for newer post
     this.state = {
       recents: [
         { sender: 'Hi', text: "hello" },
@@ -373,6 +373,24 @@ class Messages extends React.Component {
     }
     if (changedItem !== this.state.recents) {
       this.setState({ recents: changedItem })
+    }
+  }
+  checkItem = (newItem)=>{
+    for(let i = 0;i< this.state.recents.length;i++){
+      if (this.state.recents[i].sender === newItem.sender){
+        return true
+      }
+    }
+    return false
+  }
+  addItem = (newItem) =>{
+    if (this.state.recents.length===10){
+      if (this.checkItem(newItem)){
+      let changedItem = this.state.recents
+      changedItem.pop()
+      changedItem.unshift(newItem)
+    }
+
     }
   }
   render() {
