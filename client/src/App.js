@@ -290,7 +290,7 @@ class Messages extends React.Component {
           mode="inline"
           theme="dark"
         >
-          <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
+          <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "20vh", alignItems: "center" }}>
             <NavLink to="/DirectMessages">
               <div>
                 <hr style={{ color: '#cccccc' }} />
