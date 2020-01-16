@@ -5,7 +5,7 @@ import './index.css';
 import InfiniteScroll from 'react-infinite-scroller';
 
 const { Meta } = Card;
-const { TabPane } = Tabs;
+const { TabPane } = Tabs; 
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: "//at.alicdn.com/t/font_1597763_p5whc4dho8h.js"

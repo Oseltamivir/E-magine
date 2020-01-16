@@ -12,9 +12,10 @@ import StreamDisc from './StreamsDiscussion'
 import DirectMsgs from './DirectMessages'
 import { ReactComponent as Logo } from './logo.svg';
 
-import { Divider, Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
-import { NavLink, Switch, Route, withRouter } from 'react-router-dom';
-const { Meta } = Card
+
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
+import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
+
 const { Header, Content, Sider } = Layout;
 
 
@@ -63,7 +64,48 @@ const notification = (
 );
 
 
+var profileOpen = false;
+function OpenProfile() { //Special hook function in order to use React Router's history.push 
+  const history = useHistory();
+
+  function handleClick() {
+
+    if (profileOpen === false) {
+      profileOpen = true;
+      history.push("/Profile");
+    }
+    else if (profileOpen === true) {
+      profileOpen = false
+      history.push("/")
+    }
+  }
+
+  return (
+    <Button type="primary" onClick={handleClick} shape="circle" style={{ marginLeft: "1.3vw", width: "4vw", height: "4vw", borderStyle: "solid", borderWidth: "3px", borderColor: "#002766" }}>Tkai</Button>
+  );
+}
+
+function BackButton() { //Special hook function in order to use React Router's history.push
+  const history = useHistory();
+  const location = useLocation().pathname;
+
+  function ClickHandler() {
+    const fullPath = location.split("/");
+    const backPath = fullPath.slice(0, fullPath.length - 1);
+    const backPathJoined = backPath.join("/")
+
+    history.push(backPathJoined);
+  }
+
+  return (
+    <Button type="primary" onClick={ClickHandler} icon="left" size="large" style={{ marginRight: "2vw", marginLeft: "-1vw" }} />
+  );
+}
+
+
+
 var previousLocation = "";
+var previousFullLocation = "";
 
 class App extends React.Component {
   constructor(props) {
@@ -74,49 +116,100 @@ class App extends React.Component {
       current: "Feed",
       collapsed: false,
       msgcollapsed: true,
+      back: false,
     };
   }
 
   componentDidUpdate() {
+    //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
+    const fullPath = path.split("/");
     const page = path.split("/")[1];
 
-    if (page !== previousLocation) {
+    if (page !== previousLocation) { //Only checks 1st path
       previousLocation = page;
 
       if (page === "") {
         this.setState({
-          current: "Feed"
+          current: "Feed",
+        })
+        profileOpen = false;
+      }
+      else if (page === "Profile") {
+        this.setState({
+          current: "Feed",
+        })
+        profileOpen = true;
+      }
+      else {
+        this.setState({
+          current: page,
+        })
+        profileOpen = false;
+      }
+    }
+
+    //Check if back button should be displayed
+
+    if (previousFullLocation !== path) { //Check if path actually changed to avoid calling repeatedly
+      previousFullLocation = path;
+      if (fullPath.length > 2) {
+        this.setState({
+          back: true,
         })
       }
       else {
         this.setState({
-          current: page
+          back: false,
         })
       }
     }
   }
 
   componentDidMount() {
+    //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
+    previousFullLocation = path;
+
+    const fullPath = path.split("/");
     const page = path.split("/")[1];
 
     previousLocation = page;
     if (page === "") {
+      profileOpen = false;
       this.setState({
-        current: "Feed"
+        current: "Feed",
+      })
+    }
+    else if (page === "Profile") { //Special handler for profile, since it should be "be at the feed page"
+      this.setState({
+        current: "Feed",
+      })
+      profileOpen = true
+    }
+    else {
+      profileOpen = false;
+      this.setState({
+        current: page,
+      })
+    }
+
+    //Check if back button should be displayed
+    if (fullPath.length > 2) {
+      this.setState({
+        back: true,
       })
     }
     else {
       this.setState({
-        current: page
+        back: false,
       })
     }
   }
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
-  };
+  }; //Collapse function for menu sider
 
   toggle = () => {
     // Collapse navbar when opening message bar
@@ -176,10 +269,10 @@ class App extends React.Component {
               </NavLink>
             </Menu.Item>
 
-            <Menu.Item key="Profile" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-              <NavLink to="/Profile">
-                <Icon type="contacts" theme="twoTone" twoToneColor="#0050b3" />
-                <span>Profile</span>
+            <Menu.Item key="DiscApp" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/DiscApp">
+                <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Create Post</span>
               </NavLink>
             </Menu.Item>
 
@@ -189,8 +282,11 @@ class App extends React.Component {
 
         <Layout style={{ background: "#002140" }}>
           <Header style={{ background: '#001529', fontSize: "3vw", color: "#e6f7ff", boxShadow: "0px 3px 10px #0a0a0a" }}>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
 
+              {this.state.back && (
+                <BackButton></BackButton>
+              )}
               <div style={{ align: "center" }}>
                 <Icon component={Logo} />
                 <span style={{ fontWeight: "500" }}> Exegesis</span>
@@ -202,8 +298,9 @@ class App extends React.Component {
                   </Dropdown>
                 </Badge>
                 <Badge count={5} offset={[-1, 1]}>
-                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "1.5vw" }} />
+                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "0.8vw" }} />
                 </Badge>
+                <OpenProfile />
               </div>
             </div>
           </Header>
@@ -221,7 +318,8 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-              <Route exact path='/DirectMessages' component={DirectMsgs} />
+               <Route exact path='/DirectMessages' component={DirectMsgs} />
+
             </Switch>
           </Content>
 

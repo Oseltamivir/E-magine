@@ -91,56 +91,57 @@ class Explore extends React.Component {
                     </Link>
                 </div>
 
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Categories </span>
-                    <Icon type="unordered-list"></Icon>
-                </Divider>
 
-                <div id="Category">
-                    <StreamsCategories />
-                </div>
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Categories </span>
+                        <Icon type="unordered-list"></Icon>
+                    </Divider>
+
+                    <div id="Category">
+                        <StreamsCategories />
+                    </div>
 
 
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Hot</span>
-                    <Icon type="fire" theme="twoTone" twoToneColor='red' />
-                </Divider>
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Hot Posts </span>
+                        <Icon type="fire" theme="twoTone" twoToneColor = 'red' />
+                    </Divider>
 
-                <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                    hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                    useWindow={false}
-                >
-                    <List
-                        grid={{ gutter: 30, column: 3 }}
-                        dataSource={this.state.data}
-                        locale={{
-                            emptyText: (
-                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                    <Spin size="large" />
-                                </div>
-                            )
-                        }}
-                        renderItem={item => (
-                            <List.Item key={item.id}>
-                                <div onClick={this.cardClick} key={item.id}>
-                                    <Card
-                                        hoverable
-                                        type="inner"
-                                        bordered={false}
-                                        title="Video Title"
-                                        headStyle={{ backgroundColor: "#1890ff", color: "white", }}
-                                        bodyStyle={{ backgroundColor: "#001529" }}
-                                        style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
-                                    >
-                                        <Meta
-                                            title={
-                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
-                                                        Tkai
+                    <InfiniteScroll
+                        initialLoad={false}
+                        pageStart={0}
+                        loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                        hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                        useWindow={false}
+                    >
+                        <List
+                            grid={{ gutter: 30, column: 3 }}
+                            dataSource={this.state.data}
+                            locale={{
+                                emptyText: (
+                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                        <Spin size="large" />
+                                    </div>
+                                )
+                            }}
+                            renderItem={item => (
+                                <List.Item key={item.id}>
+                                    <div onClick={this.cardClick} key={item.id}>
+                                        <Card
+                                            hoverable
+                                            type="inner"
+                                            bordered={false}
+                                            title="Video Title"
+                                            headStyle={{ backgroundColor: "#1890ff", color: "white", }}
+                                            bodyStyle={{ backgroundColor: "#001529" }}
+                                            style={{ boxShadow: "8px 0px 12px" }}
+                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+                                        >
+                                            <Meta
+                                                title={
+                                                    <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                                                        <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                            Tkai
                                                     </Avatar>
                                                     <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
                                                     <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>

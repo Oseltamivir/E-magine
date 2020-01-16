@@ -111,8 +111,8 @@ class Streams extends React.Component {
 
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Popular Streams </span>
-                    <Icon type="play-square"></Icon>
+                        <span>Hot Streams </span>
+                        <Icon type="fire" theme="twoTone" twoToneColor = 'red' />
                 </Divider>
 
                 <InfiniteScroll
