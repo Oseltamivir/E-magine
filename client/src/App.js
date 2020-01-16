@@ -318,7 +318,7 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-               <Route exact path='/DirectMessages' component={DirectMsgs} />
+              <Route exact path='/DirectMessages' component={DirectMsgs} />
 
             </Switch>
           </Content>
@@ -357,8 +357,13 @@ class Messages extends React.Component {
 
       ],
       user: 'Hi',
-      notified: 0
+      notified: 0,
+      newItem: ''
     };
+  }
+  passInfo = (info) => {
+    this.setState({notified:notified+1})
+    this.setState({newItem:info})
   }
   limitWords = (recents) => {
     let changedItem = this.state.recents
@@ -376,43 +381,43 @@ class Messages extends React.Component {
     }
   }
 
-  checkItemInList = (newItem)=>{
-    for(let i = 0;i< this.state.recents.length;i++){
-      if (this.state.recents[i].sender === newItem.sender){
+  checkItemInList = (newItem) => {
+    for (let i = 0; i < this.state.recents.length; i++) {
+      if (this.state.recents[i].sender === newItem.sender) {
         return true
       }
     }
     return false
   }
-  findItemInList = (item) =>{
-    for (let i = 0; i<this.state.recents.length;i++){
-      if (this.state.recents[i].sender=== item.sender){
+  findItemInList = (item) => {
+    for (let i = 0; i < this.state.recents.length; i++) {
+      if (this.state.recents[i].sender === item.sender) {
         return i
       }
     }
   }
-  addItem = (newItem) =>{
-    if (this.state.recents.length===10){
-      if (this.checkItemInList(newItem)){
+  addItem = (newItem) => {
+    if (this.state.recents.length === 10) {
+      if (this.checkItemInList(newItem)) {
         let changedItem = this.state.recents
         let changedIndex = -200
         changedIndex = this.findItemInList(newItem) // Index of new item
-        changedItem.splice(changedIndex,1)
+        changedItem.splice(changedIndex, 1)
         changedItem.shift(newItem)
-        this.setState({recents:changedItem})
+        this.setState({ recents: changedItem })
 
       }
-      else{
-      let changedItem = this.state.recents
-      changedItem.pop()
-      changedItem.unshift(newItem)
-      this.setState({recents:changedItem})
+      else {
+        let changedItem = this.state.recents
+        changedItem.pop()
+        changedItem.unshift(newItem)
+        this.setState({ recents: changedItem })
+      }
     }
-    }
-    else{
+    else {
       let changedItem = this.state.recents
       changedItem.push(newItem)
-      this.setState({recents:changedItem})
+      this.setState({ recents: changedItem })
     }
   }
   render() {
@@ -429,7 +434,7 @@ class Messages extends React.Component {
           theme="dark"
         >
           <Menu.Item key="Sender_1" style={{ fontSize: "130%", height: "20vh", alignItems: "center" }}>
-            <NavLink to="/DirectMessages">
+            <NavLink to={{path:"/DirectMessages", state:{infoPasser}}}>
               <div>
                 <hr style={{ color: '#cccccc' }} />
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[0].sender}</strong></h1>
