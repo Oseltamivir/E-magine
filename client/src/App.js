@@ -11,7 +11,7 @@ import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
 import WrappedNormalLoginForm from './Login';
 import DirectMsgs from './DirectMessages'
-
+import CreatePost from './createpost'
 import { ReactComponent as Logo } from './logo.svg';
 
 
@@ -286,7 +286,7 @@ class App extends React.Component {
                 </Menu.Item>
 
                 <Menu.Item key="DiscApp" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                  <NavLink to="/DiscApp">
+                  <NavLink to="/createpost">
                     <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
                     <span>Create Post</span>
                   </NavLink>
@@ -334,6 +334,7 @@ class App extends React.Component {
                   <Route exact path='/DiscApp' component={DiscApp} />
                   <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
+                  <Route exact path ='/createpost' component ={CreatePost}/>
                   <Route exact path='/DirectMessages' render={() =>
                     <DirectMsgs func={this.passInfo.bind(this)} />
                   }
