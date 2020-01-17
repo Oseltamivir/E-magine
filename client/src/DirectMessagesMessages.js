@@ -15,7 +15,7 @@ export default class DirectMessagesMessages extends Component {
 
     postTime = (items) => {
         let d = new Date()
-        return this.props.sender + ' posted this at ' + d.toDateString()
+        return this.props.receiver + ' posted this at ' + d.toDateString()
 
     }
     createItem = (items) => {
@@ -40,7 +40,7 @@ export default class DirectMessagesMessages extends Component {
         return (
             <div id='dmlistdesign'>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Your chat with {this.props.receiver}
+                    <span>Your chat with {this.props.sender}
                         <Icon type="edit" theme="twoTone" />
                     </span>
                 </Divider>
