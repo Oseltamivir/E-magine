@@ -103,6 +103,14 @@ class Gateway {
     }
     ws.send(JSON.stringify(ready));
   }
+
+  sendMessage (ws, message) {
+    const msg = {
+      "op": 2,
+      "message": message
+    }
+    ws.send(JSON.stringify(msg));
+  }
 }
 
 module.exports = Gateway;
