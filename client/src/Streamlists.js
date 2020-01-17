@@ -6,6 +6,7 @@ import { Button, Input, Icon } from 'antd'
 import Listmaker from './Listmaker.js'
 import { getElementError } from '@testing-library/react';
 import Streamlistmake from './Streamlistmake'
+import './streamchat.css'
 const { TextArea } = Input
 class Streamlist extends Component {
     constructor(prop) {
@@ -29,7 +30,7 @@ class Streamlist extends Component {
                         user={this.props.user}
                     />
                     <div id='Postbar'>
-                        <TextArea placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+                        <TextArea id = 'streamMessaging'placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
                         <Button size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
                 </form>

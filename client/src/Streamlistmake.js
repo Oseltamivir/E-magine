@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Post from './Posts_utils.js'
+import './streamchat.css'
 import { Button, Divider, Icon } from 'antd'
 
 
@@ -47,12 +48,12 @@ export default class Streamlistmake extends Component {
         const toDoStreamItems = this.props.entries;
         const streamListItems = toDoStreamItems.map(this.createItem);
         return (
-            <div id='listdesign'>
+            <div id='streamlistdesign'>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Chat Messages</span>
                     <Icon type="edit" theme="twoTone" />
                 </Divider>
-                <ul id='replylist'>{streamListItems}</ul>
+                <ul id='streamreplylist'>{streamListItems}</ul>
             </div>
         )
     }

@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Icon, Layout, Divider, Button } from 'antd'
 import Streamlist from './Streamlists'
 import ReactPlayer from 'react-player'
+import './streamchat.css'
 //This will be the discussion page mainframe
 const { Header, Content, Sider } = Layout;
 
