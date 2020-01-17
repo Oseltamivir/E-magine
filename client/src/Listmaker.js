@@ -28,17 +28,6 @@ class Listmaker extends Component {
                     <span>
                         <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
                     </Button>
-                        <span className='votearea'>
-                            <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
-                                <Icon type="up-circle" theme="twoTone" />
-                            </Button>
-                            <p className='whittencounter'>
-                                {items.counter}
-                            </p>
-                            <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
-                                <Icon type="down-circle" theme="twoTone" />
-                            </Button>
-                        </span>
                     </span>
                     <br />
                 </li>
@@ -51,17 +40,6 @@ class Listmaker extends Component {
                         <p className='timetext'>{this.postTime(items)}</p>
                         <p className='replytext'>{items.text}</p>
                     </div>
-                    <span className='votearea'>
-                        <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
-                            <Icon type="up-circle" theme="twoTone" />
-                        </Button>
-                        <p className='whittencounter'>
-                            {items.counter}
-                        </p>
-                        <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
-                            <Icon type="down-circle" theme="twoTone" />
-                        </Button>
-                    </span>
                     <br />
                 </li>
             );
