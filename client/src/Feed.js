@@ -98,6 +98,7 @@ class Feed extends React.Component {
                             <List.Item key={item.id}>
                                 <div onClick={this.cardClick} key={item.id}>
                                     <Card
+
                                         hoverable
                                         type="inner"
                                         bordered={false}
@@ -108,7 +109,7 @@ class Feed extends React.Component {
                                         cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
-                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                            title={<div><p style={{ color: "white" }}>First Name: {item.name.first}</p> <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button></div>}
                                             description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
                                         />
                                     </Card>
@@ -157,7 +158,7 @@ class Feed extends React.Component {
                                         cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
-                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                            title={<div><p style={{ color: "white" }}>First Name: {item.name.first}</p><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button></div>}
                                             description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
                                         />
                                     </Card>
