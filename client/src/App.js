@@ -12,6 +12,7 @@ import StreamDisc from './StreamsDiscussion'
 import WrappedNormalLoginForm from './Login';
 import DirectMsgs from './DirectMessages'
 import CreatePost from './createpost'
+import ExploreTopicPage from './ExploreTopicPage'
 import { ReactComponent as Logo } from './logo.svg';
 
 
@@ -330,6 +331,7 @@ class App extends React.Component {
                   <Route exact path='/Streams' component={Streams} />
                   <Route exact path='/Streams/' component={Profile} />
                   <Route exact path='/Streams/:topic' component={streamsTopicPage} />
+                  <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
                   <Route exact path='/Profile' component={Profile} />
                   <Route exact path='/DiscApp' component={DiscApp} />
                   <Route exact path='/Topicpage' component={Topicpage} />
