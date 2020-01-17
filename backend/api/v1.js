@@ -122,6 +122,16 @@ router.get('/posts/me', async(req, res) => {
     limit = Math.abs(limit);
     if (limit > 50) limit = 50;
   }
+
+  const results = await db.collection('posts').find({author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+  results.forEach(res => {
+    res.id = res.id.toString();
+    res.author = res.id.toString();
+    res.channel_id = res.channel_id.toString();
+    delete res._id;
+  });
+
+  res.json({success: true, posts: results});
 });
 
 module.exports = router;
