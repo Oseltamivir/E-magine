@@ -67,9 +67,10 @@ class Gateway {
       ws.close(1003, "Identify failed, invalid token provided.");
     }
 
-    this.clients.set(user, ws);
+    const client = new Client(ws, user);
+    this.clients.set(user, client);
     ws.user = user;
-    sendReady(ws);
+    client.sendReady();
   }
 
   sendHello (ws) {
@@ -95,21 +96,28 @@ class Gateway {
     }
     ws.send(JSON.stringify(hb_ack));
   }
+}
 
-  sendReady (ws) {
-    const ready = {
-      "op": 1,
-      "user": ws.user
-    }
-    ws.send(JSON.stringify(ready));
+class Client {
+  constructor (ws, user) {
+    this.ws = ws;
+    this.user = user;
   }
 
-  sendMessage (ws, message) {
+  sendReady () {
+    const ready = {
+      "op": 1,
+      "user": this.user
+    }
+    this.ws.send(JSON.stringify(ready));
+  }
+
+  sendMessage (message) {
     const msg = {
       "op": 2,
       "message": message
     }
-    ws.send(JSON.stringify(msg));
+    this.ws.send(JSON.stringify(msg));
   }
 }
 
