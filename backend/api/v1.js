@@ -5,6 +5,8 @@ const RD = require('reallydangerous');
 const signer = new RD.TimestampSigner('my-secret');
 
 const MongoClient = require('mongodb').MongoClient;
+const Long = require('mongodb').Long;
+
 const crypto = require('crypto');
 
 const env = require('../env.json');
@@ -64,7 +66,7 @@ router.post('/auth/login', async (req, res) => {
   }
 
   // Generate API token for user from user ID
-  const token = signer.sign(Buffer.from(user.id).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
+  const token = signer.sign(Buffer.from(user.id.toString()).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
   res.json({success: true, token});
 });
 
@@ -72,7 +74,7 @@ router.post('/auth/login', async (req, res) => {
 router.get('/users/me', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
-  const profile = await db.collection('users').findOne({id: req.user}, {_id: 0, password: 0});
+  const profile = await db.collection('users').findOne({id: Long.fromString(req.user)}, {_id: 0, password: 0});
 
   // Some error trapping
   if (!profile) {
