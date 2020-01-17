@@ -15,7 +15,7 @@ import DirectMsgs from './DirectMessages'
 import { ReactComponent as Logo } from './logo.svg';
 
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card } from 'antd';
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider} from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
@@ -119,7 +119,7 @@ class App extends React.Component {
       collapsed: false,
       msgcollapsed: true,
       back: false,
-      loggedIn: false,
+      loggedIn: true,
     };
   }
 
@@ -242,7 +242,7 @@ class App extends React.Component {
     return (
     <div>
       {this.state.loggedIn && (
-      <Layout style={{ minHeight: '100vh'}}>
+      <Layout style={{ height: '100vh'}}>
 
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
           <Menu
@@ -317,7 +317,7 @@ class App extends React.Component {
 
           <br></br>
 
-          <Content style={{ margin: '0px 16px', width: "82vw" }}>
+          <Content style={{ margin: '0px 16px'}}>
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/Explore' component={Explore} />
@@ -328,7 +328,7 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-               <Route exact path='/DirectMessages' component={DirectMsgs} />
+              <Route exact path='/DirectMessages' component={DirectMsgs} />
 
             </Switch>
           </Content>
