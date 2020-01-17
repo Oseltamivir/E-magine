@@ -124,6 +124,7 @@ router.get('/posts/me', async(req, res) => {
   }
 
   const results = await db.collection('posts').find({author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+  // clean results by removing Long data formats
   results.forEach(res => {
     res.id = res.id.toString();
     res.author = res.id.toString();
@@ -157,6 +158,7 @@ router.get('/posts/:channelID', async (req, res) => {
   }
 
   const results = await db.collection('posts').find({channel_id: Long.fromString(channelID)}, {_id: 0}).limit(limit).toArray();
+  // clean results by removing Long data formats
   results.forEach(res => {
     res.id = res.id.toString();
     res.author = res.id.toString();
