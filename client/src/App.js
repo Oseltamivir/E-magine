@@ -378,8 +378,8 @@ class Messages extends React.Component {
       if (this.state.recents[i].sender.length > 25) {
         changedItem[i].sender = this.state.recents[i].sender.slice(0, 25) + '...'
       }
-      if (this.state.recents[i].text.length > 35) {
-        changedItem[i].text = this.state.recents[i].text.slice(0, 35) + '...'
+      if (this.state.recents[i].text.length > 30) {
+        changedItem[i].text = this.state.recents[i].text.slice(0, 25) + '...'
       }
 
     }
@@ -432,14 +432,20 @@ class Messages extends React.Component {
       }
     }
   }
+  componentDidMount(){
+    this.limitWords(this.state.recents)
+  }
   render() {
     let item = {sender:this.props.sender,text:this.props.text}
-    alert(Object.entries(item))
-    alert(Object.entries(this.state.newItem))
+    if (item.sender.length >25){
+      item.sender = item.sender.slice(0,25)+'...'
+    }
+    if (item.text.length>25){
+      item.text = item.text.slice(0,35)+'...'
+    }
     if (this.state.newItem.sender != item.sender || this.state.newItem.text != item.text){
       this.addItem(item)
     }
-    this.limitWords(this.state.recents)
     return (
       <Layout>
         <Header style={{ fontSize: "2.5vw", color: "#cccccc" }}>
