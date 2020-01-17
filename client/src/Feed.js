@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, message, Spin, List, Divider, Button, Icon } from 'antd';
-import { NavHashLink as NavLink } from 'react-router-hash-link';
+import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -70,7 +70,7 @@ class Feed extends React.Component {
         return (
             <div className="feedContainer" style={{
                 overflow: "auto",
-                height: "85vh",
+                height: "87vh",
                 width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
@@ -116,11 +116,11 @@ class Feed extends React.Component {
                             </List.Item>
                         )}
                     />
-                    <NavLink smooth to="/Profile/#yourPosts">
+                    <NavLinkHash smooth to="/Profile/#yourPosts">
                         <Button type="primary" shape="round" icon="right" size="large" style={{ marginLeft: "-5vw" }}>
                             Show All
                         </Button>
-                    </NavLink>
+                    </NavLinkHash>
                 </div>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Recommended Questions </span>
