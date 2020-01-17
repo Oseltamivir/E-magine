@@ -94,9 +94,7 @@ class Todo extends Component {
                             user={this.props.user}
                             deleteAnswer={this.deleteAnswer.bind(this)}
                             upvoteAnswer={this.upvoteAnswer.bind(this)}
-                            upvoteReply={this.upvoteReply.bind(this)}
                             downvoteAnswer={this.downvoteAnswer.bind(this)}
-                            downvoteReply={this.downvoteReply.bind(this)}
                         />
                         <div id='Postbar'>
                             <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
