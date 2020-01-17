@@ -101,4 +101,26 @@ router.get('/users/:id', async (req, res) => {
   res.json({success: true, profile});
 });
 
+/* Fetch posts by user using user ID */
+router.get('/posts/:userid', async(req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const userid = req.params.userid;
+  
+  let limit = 10;
+  let before = "";
+  let after = "";
+
+  if (req.query.hasOwnProperty('limit')) {
+    limit = parseInt(req.query.limit);
+
+    // Integer checks
+    if (isNaN(limit)) {
+      res.status(400).json({success: false, error: 'Limit of posts must be an integer!'});
+      return;
+    }
+    limit = Math.abs(limit);
+  }
+});
+
 module.exports = router;
