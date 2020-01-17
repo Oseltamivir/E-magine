@@ -134,4 +134,37 @@ router.get('/posts/me', async(req, res) => {
   res.json({success: true, posts: results});
 });
 
+/* Fetch posts from channel using channel ID */
+router.get('/posts/:channelID', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const channelID = req.params.channelID;
+
+  let limit = 10;
+  let before = "";
+  let after = "";
+
+  if (req.query.hasOwnProperty('limit')) {
+    limit = parseInt(req.query.limit);
+
+    // Integer checks
+    if (isNaN(limit)) {
+      res.status(400).json({success: false, error: 'Limit of posts must be an integer!'});
+      return;
+    }
+    limit = Math.abs(limit);
+    if (limit > 50) limit = 50;
+  }
+
+  const results = await db.collection('posts').find({channel_id: Long.fromString(channelID)}, {_id: 0}).limit(limit).toArray();
+  results.forEach(res => {
+    res.id = res.id.toString();
+    res.author = res.id.toString();
+    res.channel_id = res.channel_id.toString();
+    delete res._id;
+  });
+
+  res.json({success: true, posts: results});
+});
+
 module.exports = router;
