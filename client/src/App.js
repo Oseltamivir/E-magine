@@ -123,9 +123,8 @@ class App extends React.Component {
     };
   }
 
-  passInfo = (info) => {
-    this.setState({notified:this.state.notified+1})
-    this.setState({newItem:info})
+  passInfo = (sender, text) => {
+    this.setState({ msgsrc: sender, msgtxt: text })
   }
 
   componentDidUpdate() {
@@ -326,10 +325,10 @@ class App extends React.Component {
               <Route exact path='/DiscApp' component={DiscApp} />
               <Route exact path='/Topicpage' component={Topicpage} />
               <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-              <Route exact path='/DirectMessages' component={DirectMsgs} render={()=>
-                <DirectMsgs func = {this.passInfo.bind(this)} />
+              <Route exact path='/DirectMessages' render={() =>
+                <DirectMsgs func={this.passInfo.bind(this)} />
               }
-                />
+              />
 
             </Switch>
           </Content>
@@ -337,7 +336,7 @@ class App extends React.Component {
         </Layout>
 
         <Sider collapsible trigger={null} collapsedWidth={0} collapsed={this.state.msgcollapsed} onCollapse={this.onCollapse} width={400} style={{ boxShadow: "-3px 0px 10px" }}>
-          <Messages sender = {this.state.msgsrc} messagetext = {this.state.msgtxt}/>
+          <Messages sender={this.state.msgsrc} text={this.state.msgtxt} />
         </Sider>
 
       </Layout>
@@ -369,7 +368,8 @@ class Messages extends React.Component {
       ],
       user: 'Hi',
       notified: 0,
-      newItem: ''
+      newItem: { sender: 'a', text: 'a' }
+
     };
   }
   limitWords = (recents) => {
@@ -401,33 +401,44 @@ class Messages extends React.Component {
       if (this.state.recents[i].sender === item.sender) {
         return i
       }
+      else {
+        alert("Item not found")
+      }
     }
   }
   addItem = (newItem) => {
-    if (this.state.recents.length === 10) {
-      if (this.checkItemInList(newItem)) {
-        let changedItem = this.state.recents
-        let changedIndex = -200
-        changedIndex = this.findItemInList(newItem) // Index of new item
-        changedItem.splice(changedIndex, 1)
-        changedItem.shift(newItem)
-        this.setState({ recents: changedItem })
+    if (newItem.sender!=='' && newItem.text !== '' ) {
+      if (this.state.recents.length === 10) {
+        if (this.checkItemInList(newItem)) {
+          let changedItem = this.state.recents
+          let changedIndex = -200
+          changedIndex = this.findItemInList(newItem) // Index of new item
+          changedItem.splice(changedIndex,1)
+          changedItem.unshift(newItem)
+          this.setState({ recents: changedItem,newItem:newItem  })
 
+        }
+        else {
+          let changedItem = this.state.recents
+          changedItem.pop()
+          changedItem.unshift(newItem)
+          this.setState({ recents: changedItem,newItem:newItem })
+        }
       }
       else {
         let changedItem = this.state.recents
-        changedItem.pop()
         changedItem.unshift(newItem)
-        this.setState({ recents: changedItem })
+        this.setState({ recents: changedItem,newItem:newItem })
       }
-    }
-    else {
-      let changedItem = this.state.recents
-      changedItem.push(newItem)
-      this.setState({ recents: changedItem })
     }
   }
   render() {
+    let item = {sender:this.props.sender,text:this.props.text}
+    alert(Object.entries(item))
+    alert(Object.entries(this.state.newItem))
+    if (this.state.newItem.sender != item.sender || this.state.newItem.text != item.text){
+      this.addItem(item)
+    }
     this.limitWords(this.state.recents)
     return (
       <Layout>
@@ -452,7 +463,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_2" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-          <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[1].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[1].text}</p>
@@ -463,7 +474,7 @@ class Messages extends React.Component {
 
 
           <Menu.Item key="Sender_3" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-          <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[2].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[2].text}</p>
@@ -474,7 +485,7 @@ class Messages extends React.Component {
 
 
           <Menu.Item key="Sender_4" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-          <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[3].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[3].text}</p>
@@ -484,7 +495,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_5" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[4].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[4].text}</p>
@@ -494,7 +505,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_6" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[5].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[5].text}</p>
@@ -504,7 +515,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_7" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[6].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[6].text}</p>
@@ -514,7 +525,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_8" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[7].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[7].text}</p>
@@ -524,7 +535,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_9" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[8].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[8].text}</p>
@@ -534,7 +545,7 @@ class Messages extends React.Component {
           </Menu.Item>
 
           <Menu.Item key="Sender_10" style={{ fontSize: "130%", height: "18vh", alignItems: "center" }}>
-           <NavLink to="/DirectMessages">
+            <NavLink to="/DirectMessages">
               <div>
                 <h1 style={{ color: 'white', fontSize: "130%" }}><strong>{this.state.recents[9].sender}</strong></h1>
                 <p><Icon type="double-right" />{this.state.recents[9].text}</p>

@@ -18,7 +18,6 @@ class DirectMsg extends Component {
     }
 
   }
-  pew =()=>{alert(this.props.location.func)}
   render() {
     return (
       <div id='dmall'>

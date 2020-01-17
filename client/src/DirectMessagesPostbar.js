@@ -20,7 +20,16 @@ export default class DirectMessagesPostbar extends Component {
 
     }
     deleteItem = (key) => { const filteredItems = this.state.items.filter(item => { return item.key !== key }); this.setState({ items: filteredItems }) }
-    addItem = (ev) => { ev.preventDefault(); let newState = { key: Date.now() + this.props.user, text: this.state.currentText}; if (newState.text !== '') {this.props.func({sender:this.state.sender,text:newState.text});let item = [...this.state.items, newState]; this.setState({ currentState: newState, items: item, currentText: '' })} else { alert('Wrong Input') } }
+    addItem = (ev) => {
+        ev.preventDefault();
+        let newState = { key: Date.now() + this.props.sender, text: this.state.currentText };
+        if (newState.text !== '') {
+            this.props.func(this.props.sender,newState.text);
+            let item = [...this.state.items, newState];
+            this.setState({ currentState: newState, items: item, currentText: '' })
+        }
+        else { alert('Wrong Input') }
+    }
     handleItem = (ev) => { this.setState({ currentText: ev.target.value }) }
     render() {
         return (
