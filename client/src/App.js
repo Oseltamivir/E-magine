@@ -128,7 +128,7 @@ class App extends React.Component {
 
   passInfo = (sender, text) => {
     this.setState({ msgsrc: sender, msgtxt: text })
-
+  }
   handleLogin(loginStatus) {
     this.setState({ loggedIn: loginStatus })
   }
