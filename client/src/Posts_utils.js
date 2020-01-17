@@ -82,10 +82,10 @@ class Post extends Component {
                 <Icon type="edit" theme='twoTone'></Icon>
               </Divider>
 
-              <form id='post' onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
+              <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
                 <div id='exampl'></div>
                 <br />
-                <Button id='spaceout' type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
+                <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
                 {ifPosted}
               </form>
 
