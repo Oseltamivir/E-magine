@@ -102,10 +102,8 @@ router.get('/users/:id', async (req, res) => {
 });
 
 /* Fetch posts by user using author ID */
-router.get('/posts/:authorid', async(req, res) => {
+router.get('/posts/me', async(req, res) => {
   if (!apiAuth(req, res)) return;
-
-  const authorID = req.params.authorid;
   
   let limit = 10;
   let before = "";
