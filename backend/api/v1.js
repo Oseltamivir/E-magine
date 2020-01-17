@@ -135,6 +135,21 @@ router.get('/posts/me', async(req, res) => {
   res.json({success: true, posts: results});
 });
 
+/* Fetch channel data from channel ID */
+router.get('/channels/:channelID', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const channelID = req.params.channelID;
+
+  const info = await db.collection('channels').findOne({id: Long.fromString(channelID)});
+  
+  if (!info) {
+    res.status(404).json({success: false, error: 'Channel not found!'});
+    return;
+  }
+  res.json({success: true, channel: info});
+});
+
 /* Fetch posts from channel using channel ID */
 router.get('/channels/:channelID/posts', async (req, res) => {
   if (!apiAuth(req, res)) return;
