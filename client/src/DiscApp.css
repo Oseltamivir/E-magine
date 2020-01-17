@@ -158,6 +158,7 @@ margin-bottom: 10px;
 
 .replytext{
   color: #ffffff;
+  white-space: pre-line;
 }
 #replylist{
   list-style: none;
