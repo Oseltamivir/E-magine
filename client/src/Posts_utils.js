@@ -16,7 +16,7 @@ class Post extends Component {
       PostTitle: '',
       fileName: '',
       postState: 'Post!',
-      post: ''
+      post: '',
 
 
     } //For storing text for post
@@ -31,6 +31,9 @@ class Post extends Component {
         contentChanged: function () {
           self.setState({ post: this.html.get() });
         },
+        initialized: function () {
+          this.html.set(self.state.post)
+        }
       },
       attribution: false
     })
@@ -46,6 +49,9 @@ class Post extends Component {
             contentChanged: function () {
               self.setState({ post: this.html.get() });
             },
+            initialized: function () {
+              this.html.set(self.state.post)
+            }
           },
           attribution: false
         })
@@ -60,7 +66,7 @@ class Post extends Component {
     else {
       ifPosted = '';
     }
-    if (this.props.user === this.props.poster) {
+    if (this.props.user === this.props.poster && this.state.postState !== 'Edit!') {
       return (
         <div id='postall'>
           <Tabs defaultActiveKey="1" tabBarStyle={this.tabcontainer}>
@@ -103,16 +109,31 @@ class Post extends Component {
       )
     }
     else {
-      return (
-        <div>
-          <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-            <span>Question </span>
-            <Icon type="question-circle" theme="twoTone" />
+      if (this.props.user === this.props.poster) {
+        return (
+          <div>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+              <span>Question </span>
+              <Icon type="question-circle" theme="twoTone" />
 
-          </Divider>
-          <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
-          <Todo user={this.props.user} />
-        </div>)
+            </Divider>
+            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+            <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
+            <Todo user={this.props.user} />
+          </div>)
+      }
+      else {
+        return (
+          <div>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+              <span>Question </span>
+              <Icon type="question-circle" theme="twoTone" />
+
+            </Divider>
+            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+            <Todo user={this.props.user} />
+          </div>)
+      }
     }
   }
 }
