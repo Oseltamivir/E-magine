@@ -22,17 +22,17 @@ class DirectMsg extends Component {
     return (
       <div id='dmall'>
         <div id='dmheader'>
-          <h1 id='dmcategory'>{this.state.receiver}
+          <h1 id='dmcategory'>{this.state.sender}
             <span id='dmstatus'>
               <Button type='primary' size='small' id='dmpfp' onClick={this.changeUser = () => {
                 this.state.sender === 'Charlie' ? this.setState({ sender: 'YEET6' }) : this.setState({ sender: 'Charlie' })
-                  ; alert('User Changed')
+                  ;
               }}></Button>
             </span>
           </h1>
           <br />
         </div>{/*Div for id 'Header */}
-        <DirectMessagesPostbar sender={this.state.sender} receiver={this.state.receiver} />
+        <DirectMessagesPostbar sender={this.state.sender} receiver={this.state.receiver} func = {this.props.func} />
         {/*div for 'all*/}
       </div>
     )

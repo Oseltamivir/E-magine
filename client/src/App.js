@@ -18,6 +18,7 @@ import { ReactComponent as Logo } from './logo.svg';
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
+
 const { Header, Content, Sider } = Layout;
 
 
@@ -119,9 +120,14 @@ class App extends React.Component {
       collapsed: false,
       msgcollapsed: true,
       back: false,
+      msgsrc: '',
+      msgtxt: '',
       loggedIn: true,
     };
   }
+
+  passInfo = (sender, text) => {
+    this.setState({ msgsrc: sender, msgtxt: text })
 
   handleLogin(loginStatus) {
     this.setState({ loggedIn: loginStatus })
@@ -258,93 +264,97 @@ class App extends React.Component {
         inline - Sidebar Menu
         */}
 
-                <Menu.Item key="Feed" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                  <NavLink to="/">
-                    <Icon type="home" theme="twoTone" twoToneColor="#0050b3" />
-                    <span>Home</span>
-                  </NavLink>
-                </Menu.Item>
+            <Menu.Item key="Feed" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/">
+                <Icon type="home" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Home</span>
+              </NavLink>
+            </Menu.Item>
 
-                <Menu.Item key="Explore" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                  <NavLink to="/Explore">
-                    <Icon type="appstore" theme="twoTone" twoToneColor="#0050b3" />
-                    <span>Explore</span>
-                  </NavLink>
-                </Menu.Item>
+            <Menu.Item key="Explore" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/Explore">
+                <Icon type="appstore" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Explore</span>
+              </NavLink>
+            </Menu.Item>
 
-                <Menu.Item key="Streams" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                  <NavLink to="/Streams">
-                    <Icon type="play-square" theme="twoTone" twoToneColor="#0050b3" />
-                    <span>Streams</span>  
-                  </NavLink>
-                </Menu.Item>
+            <Menu.Item key="Streams" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/Streams">
+                <Icon type="play-square" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Streams</span>
+              </NavLink>
+            </Menu.Item>
 
-                <Menu.Item key="DiscApp" style={{ boxShadow: "0 0 20px #0a0a0a", fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                    <NavLink to="/DiscApp">
-                      <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
-                      <span>Create Post</span>
-                    </NavLink>
-                </Menu.Item>
+            <Menu.Item key="DiscApp" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+              <NavLink to="/DiscApp">
+                <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
+                <span>Create Post</span>
+              </NavLink>
+            </Menu.Item>
 
-              </Menu>
+          </Menu>
 
-            </Sider>
+        </Sider>
 
-            <Layout style={{ background: "#002140" }}>
-              <Header style={{ background: '#001529', fontSize: "3vw", color: "#e6f7ff", boxShadow: "0px 3px 10px #0a0a0a" }}>
-                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <Layout style={{ background: "#002140" }}>
+          <Header style={{ background: '#001529', fontSize: "3vw", color: "#e6f7ff", boxShadow: "0px 3px 10px #0a0a0a" }}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
 
-                  {this.state.back && (
-                    <BackButton></BackButton>
-                  )}
-                  <div style={{ align: "center" }}>
-                    <Icon component={Logo} />
-                    <span style={{ fontWeight: "500" }}> Exegesis</span>
-                  </div>
-                  <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-                    <Badge count={5} offset={[-1, 1]}>
-                      <Dropdown overlay={notification} trigger={['click']} placement="bottomLeft">
-                        <Button type="primary" shape="circle" icon="bell" size="large" />
-                      </Dropdown>
-                    </Badge>
-                    <Badge count={5} offset={[-1, 1]}>
-                      <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "0.8vw" }} />
-                    </Badge>
-                    <OpenProfile />
-                  </div>
-                </div>
-              </Header>
+              {this.state.back && (
+                <BackButton></BackButton>
+              )}
+              <div style={{ align: "center" }}>
+                <Icon component={Logo} />
+                <span style={{ fontWeight: "500" }}> Exegesis</span>
+              </div>
+              <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+                <Badge count={5} offset={[-1, 1]}>
+                  <Dropdown overlay={notification} trigger={['click']} placement="bottomLeft">
+                    <Button type="primary" shape="circle" icon="bell" size="large" />
+                  </Dropdown>
+                </Badge>
+                <Badge count={5} offset={[-1, 1]}>
+                  <Button type="primary" onClick={this.toggle} shape="circle" icon="message" size="large" style={{ marginLeft: "0.8vw" }} />
+                </Badge>
+                <OpenProfile />
+              </div>
+            </div>
+          </Header>
 
-              <br></br>
+          <br></br>
 
-              <Content style={{ margin: '0px 16px' }}>
-                <Switch>
-                  <Route exact path='/' component={Feed} />
-                  <Route exact path='/Explore' component={Explore} />
-                  <Route exact path='/Streams' component={Streams} />
-                  <Route exact path='/Streams/' component={Profile} />
-                  <Route exact path='/Streams/:topic' component={streamsTopicPage} />
-                  <Route exact path='/Profile' component={Profile} />
-                  <Route exact path='/DiscApp' component={DiscApp} />
-                  <Route exact path='/Topicpage' component={Topicpage} />
-                  <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-                  <Route exact path='/DirectMessages' component={DirectMsgs} />
+          <Content style={{ margin: '0px 16px'}}>
+            <Switch>
+              <Route exact path='/' component={Feed} />
+              <Route exact path='/Explore' component={Explore} />
+              <Route exact path='/Streams' component={Streams} />
+              <Route exact path='/Streams/' component={Profile} />
+              <Route exact path='/Streams/:topic' component={streamsTopicPage} />
+              <Route exact path='/Profile' component={Profile} />
+              <Route exact path='/DiscApp' component={DiscApp} />
+              <Route exact path='/Topicpage' component={Topicpage} />
+              <Route exact path='/StreamsDiscussion' component={StreamDisc} />
+              <Route exact path='/DirectMessages' render={() =>
+                <DirectMsgs func={this.passInfo.bind(this)} />
+              }
+              />
 
-                </Switch>
-              </Content>
+            </Switch>
+          </Content>
 
-            </Layout>
+        </Layout>
 
-            <Sider collapsible trigger={null} collapsedWidth={0} collapsed={this.state.msgcollapsed} onCollapse={this.onCollapse} width={400} style={{ boxShadow: "-3px 0px 10px" }}>
-              <Messages></Messages>
-            </Sider>
+        <Sider collapsible trigger={null} collapsedWidth={0} collapsed={this.state.msgcollapsed} onCollapse={this.onCollapse} width={400} style={{ boxShadow: "-3px 0px 10px" }}>
+          <Messages sender={this.state.msgsrc} text={this.state.msgtxt} />
+        </Sider>
 
-          </Layout>
+      </Layout> 
         )}
         {this.state.loggedIn === false && (
           <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
         )}
       </div>
+
     );
 
   }
@@ -355,7 +365,7 @@ class App extends React.Component {
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-
+    //this.props.newpost for newer post
     this.state = {
       recents: [
         { sender: 'Hi', text: "hello" },
@@ -371,7 +381,9 @@ class Messages extends React.Component {
 
       ],
       user: 'Hi',
-      notified: 0
+      notified: 0,
+      newItem: { sender: 'a', text: 'a' }
+
     };
   }
   limitWords = (recents) => {
@@ -380,8 +392,8 @@ class Messages extends React.Component {
       if (this.state.recents[i].sender.length > 25) {
         changedItem[i].sender = this.state.recents[i].sender.slice(0, 25) + '...'
       }
-      if (this.state.recents[i].text.length > 35) {
-        changedItem[i].text = this.state.recents[i].text.slice(0, 35) + '...'
+      if (this.state.recents[i].text.length > 30) {
+        changedItem[i].text = this.state.recents[i].text.slice(0, 25) + '...'
       }
 
     }
@@ -389,8 +401,65 @@ class Messages extends React.Component {
       this.setState({ recents: changedItem })
     }
   }
-  render() {
+
+  checkItemInList = (newItem) => {
+    for (let i = 0; i < this.state.recents.length; i++) {
+      if (this.state.recents[i].sender === newItem.sender) {
+        return true
+      }
+    }
+    return false
+  }
+  findItemInList = (item) => {
+    for (let i = 0; i < this.state.recents.length; i++) {
+      if (this.state.recents[i].sender === item.sender) {
+        return i
+      }
+      else {
+        alert("Item not found")
+      }
+    }
+  }
+  addItem = (newItem) => {
+    if (newItem.sender!=='' && newItem.text !== '' ) {
+      if (this.state.recents.length === 10) {
+        if (this.checkItemInList(newItem)) {
+          let changedItem = this.state.recents
+          let changedIndex = -200
+          changedIndex = this.findItemInList(newItem) // Index of new item
+          changedItem.splice(changedIndex,1)
+          changedItem.unshift(newItem)
+          this.setState({ recents: changedItem,newItem:newItem  })
+
+        }
+        else {
+          let changedItem = this.state.recents
+          changedItem.pop()
+          changedItem.unshift(newItem)
+          this.setState({ recents: changedItem,newItem:newItem })
+        }
+      }
+      else {
+        let changedItem = this.state.recents
+        changedItem.unshift(newItem)
+        this.setState({ recents: changedItem,newItem:newItem })
+      }
+    }
+  }
+  componentDidMount(){
     this.limitWords(this.state.recents)
+  }
+  render() {
+    let item = {sender:this.props.sender,text:this.props.text}
+    if (item.sender.length >25){
+      item.sender = item.sender.slice(0,25)+'...'
+    }
+    if (item.text.length>25){
+      item.text = item.text.slice(0,35)+'...'
+    }
+    if (this.state.newItem.sender != item.sender || this.state.newItem.text != item.text){
+      this.addItem(item)
+    }
     return (
       <Layout>
         <Header style={{ fontSize: "2.5vw", color: "#cccccc" }}>
