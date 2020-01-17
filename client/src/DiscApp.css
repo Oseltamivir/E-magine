@@ -88,10 +88,6 @@
 #postall {
   background-color: #002140;
 }
-
-.exampl {
-  color:002140;
-}
 .todolist{
   background-color: #002140 ;
 }
@@ -180,4 +176,7 @@ margin-bottom: 10px;
 }
 .votearea{
  float: right;
+}
+#createpostall {
+  background-color: #002140;
 }
