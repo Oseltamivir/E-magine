@@ -1,0 +1,157 @@
+.DiscApp {
+    text-align: center;
+    background-color: #00ff00;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .DiscApp-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .DiscApp-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  #streamstatus {
+    display:inline-block;
+      position:absolute;
+      right:0;
+      margin-right:8px;
+  }
+  
+  #streamcategory {
+    text-shadow: aqua;
+    color: red;
+    font-size: 280%;
+  }
+  
+  
+  
+  
+  
+  #streampfp {
+    height: 50px;
+    width: 50px;
+    margin-right: 15px;
+    border-color: black;
+    border-radius: 50%;
+    background-image: url('http://pm1.narvii.com/7037/d9c8e27a4a7989491ff83d5d0ce75ee7c219c582r1-811-682v2_uhq.jpg');
+    background-size: cover;
+  }
+  
+  
+  
+  #streamheader{
+    background-color:#002140
+  }
+  
+  .exampl {
+    color:002140;
+  }
+  .todolist{
+    background-color: #002140 ;
+  }
+  #streamlistdesign{
+    background-color: #002140;
+    position: relative;
+    margin-bottom: 100px;
+   
+  }
+  .c-search-results__item:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+  #streamMessaging{
+    width:12.5%;
+    height:50px;
+    border-radius:4em;
+    resize: none;
+    margin-top: 1em;
+    margin-right: 10px;
+  }
+  .listpart{
+    width: 105%;
+    box-shadow:3px 3px 10px #0a0a0a;
+    padding: 10px;
+    border-radius: 2em/2em;
+    background-color:#001529;
+    margin-left: -35px;
+  }
+  
+  #streampostbar{
+    bottom:0;
+    position:fixed;
+    width: 100%
+  }
+  #streamposttwo{
+  display: inline-block;
+  margin-bottom: 10px;
+  }
+  .timetext{
+    color: #5f5f5f;
+    font-size: 75%;
+  }
+  
+  .white{
+    color: #ffffff;
+  }
+  .whiteright {
+    color: #ffffff;
+    text-align: right;
+    margin-top: -20px;
+  }
+  #streampostdetails {
+    display:  inline;
+  }
+  .preview {
+    color: white;
+    box-shadow:3px 3px 10px #0a0a0a;
+    background-color: #001529;
+    padding-bottom: 15px;
+    padding-left:10px;
+    padding-top:15px;
+    border-radius: 2em/2em;
+  }
+  
+  .replytext{
+    color: #ffffff;
+    white-space: pre-line;
+  }
+  #streamreplylist{
+    list-style: none;
+    background-color: #001529;
+    border-radius: 2em/2em;
+  }
+  
+  .whittencounter{
+    color:  #ffffff;
+    border-radius : 6px/6px;
+    box-shadow: 2px 2px 10px #0a0a0a;
+    width:40%;
+    padding-left: 5px;
+  }
