@@ -101,11 +101,11 @@ router.get('/users/:id', async (req, res) => {
   res.json({success: true, profile});
 });
 
-/* Fetch posts by user using user ID */
-router.get('/posts/:userid', async(req, res) => {
+/* Fetch posts by user using author ID */
+router.get('/posts/:authorid', async(req, res) => {
   if (!apiAuth(req, res)) return;
 
-  const userid = req.params.userid;
+  const authorID = req.params.authorid;
   
   let limit = 10;
   let before = "";
@@ -120,6 +120,7 @@ router.get('/posts/:userid', async(req, res) => {
       return;
     }
     limit = Math.abs(limit);
+    if (limit > 50) limit = 50;
   }
 });
 
