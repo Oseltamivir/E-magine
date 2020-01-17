@@ -62,7 +62,7 @@ class StreamDisc extends Component {
                         <h1 style={{ color: "white", fontSize: "2vw", textAlign: "center" }}>Stream Chat</h1>
                         <Divider></Divider>
                     </div>
-                    <Streamlist></Streamlist>
+                    <Streamlist user= {this.state.user} />
                     {/*Hello warren please put your very nice chat component here :D */}
                 </Sider>
             </Layout>

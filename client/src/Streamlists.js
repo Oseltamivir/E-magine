@@ -16,7 +16,7 @@ class Streamlist extends Component {
             currentText: '',
         }
     }
-    deleteItem = (key) => { const filteredItems = this.state.items.filter(item => { return item.key !== key }); this.setState({ items: filteredItems }) }
+    deleteItem = (key) => { const filteredItems = this.state.items.filter(item => { return item.key !== key }); this.setState({ items: filteredItems })}
     addItem = (ev) => { ev.preventDefault(); let newState = { key: Date.now() + this.props.user, text: this.state.currentText, user: this.props.user, counter: 0 }; if (newState.text !== '') { let item = [...this.state.items, newState]; this.setState({ currentState: newState, items: item, currentText: '' }) } else { alert('Wrong Input') } }
     handleItem = (ev) => { this.setState({ currentText: ev.target.value }) }
     render() {
