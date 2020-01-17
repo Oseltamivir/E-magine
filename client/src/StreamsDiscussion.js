@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Button, Badge, Carousel, Layout, Menu } from 'antd'
-import CarouselSlide from "./CauroselSlide"
+import { Icon, Layout, Divider, Button } from 'antd'
 import Streamlist from './Streamlists'
+import ReactPlayer from 'react-player'
 //This will be the discussion page mainframe
-const { Sider } = Layout;
+const { Header, Content, Sider } = Layout;
+
 class StreamDisc extends Component {
     constructor() {
         super()
@@ -15,46 +15,56 @@ class StreamDisc extends Component {
             notifications: 9999, //Stores number of notifications  
             poster: 'YEET6',
             items: {},
-            collapsed: false,
-            msgcollapsed: true,
         }
     }
-    onCollapse = (collapsed) => {
-        this.setState({ collapsed });
-    };
     render() {
         return (
-            <div id='All'>
-                <Layout>
-                    <Sider>
-                        Î<Menu
-                            onClick={this.handleClick}
-                            selectedKeys={[this.state.current]}
-                            //defaultOpenKeys={['']}
-                            mode="inline"
-                            theme="dark"
-                        >
-                            <Streamlist collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }} />
-                        </Menu>
+            <Layout style={{
+                height: "90vh",
+                width: "85vw",
+                marginTop: "-18px",
+                marginLeft: "-16px",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                overflow: "auto",
+                overflowX: "none",
+            }}>
+                <Content>
 
-                    </Sider>
-                </Layout>
-                <div id='header'>
-                    <h1 id='Category'>{this.state.category}
-                    </h1>
-                    <br />
-                </div>{/*Div for id 'Header */}
-                <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "10vh" }}>
-                    <Carousel dotPosition="">
-                        <div>
-                            <CarouselSlide username="ThatCapitalistGopnik" url="https://www.youtube.com/watch?v=2SLvtP6KMUM&gl=SG" viewers={156} desc="State Anthem of the Soviet UnionAlexandrow-Ensemble Союз нерушимый республик свободных Сплотила навеки Великая Русь. Да здравствует созданный волей народов Единый, могучий Советский Союз! Славься, Отечество наше свободное, Дружбы, народов надежный оплот! Знамя советское, знамя народное Пусть от победы, к победе ведет! Сквозь грозы сияло нам солнце свободы, И Ленин великий нам путь озарил. Нас вырастил Сталин - на верность народу На труд и на подвиги нас вдохновил. Славься, Отечество чаше свободное, Счастья народов надежный оплот! Знамя советское, знамя народное Пусть от победы к победе ведет! Skvoz grozy siialo nam solntse svobody, I Lenin velikij nam put ozaril. Nas vyrastil Stalin - na vernost narodu Na trud i na podvigi nas vdokhnovil. Slavsia, Otechestvo chashe svobodnoe, Schastia narodov nadezhnyj oplot! Znamia sovetskoe, znamia narodnoe Pust ot pobedy k pobede vedet! Мы армию нашу растили в сраженьях, Захватчиков подлых с дороги сметем! Мы в битвах решаем судьбу поколений, Мы к славе Отчизну свою поведем! Славься, Отечество наше свободное, Славы народов надежный оплот! Знамя советское, знамя народное Пусть от победы к победе ведет!"
-                            />
+                    <div id="videoDesc" style={{
+                        overflow: "auto",
+                        backgroundColor: "#001529"
+                    }}>
+
+                        <div id="video" style={{ backgroundColor: "black" }}>
+                            <ReactPlayer url={"https://www.twitch.tv/chess"} height="90vh" width="auto" />
                         </div>
-                    </Carousel>
-                </div>
-                {/*div for 'all*/}
+                        <div id="desc" style={{ margin: "5px 13px" }}>
+                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                <span>Video Title </span>
+                            </Divider>
+                            <div style={{display: "flex", alignItems: "center", marginBottom: "2vh"}}>
+                                <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                <Button style={{ marginLeft: "2vw", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                            </div>
+                            <p style={{ color: "#cccccc" }}>Hello this is the description</p>
+                        </div>
+                    </div>
 
-            </div>
+                </Content>
+
+
+                <Sider collapsible width="20vw" trigger={null} collapsedWidth={0} style={{
+                    backgroundColor: "#002140",
+                    overflow: "auto",
+                }}>
+                    <div id="ChatHeader" style={{ backgroundColor: "#001529" }}>
+                        <h1 style={{ color: "white", fontSize: "2vw", textAlign: "center" }}>Stream Chat</h1>
+                        <Divider></Divider>
+                    </div>
+                    {/*Hello warren please put your very nice chat component here :D */}
+                </Sider>
+            </Layout>
         )
     }
 }

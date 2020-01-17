@@ -9,7 +9,9 @@ import DiscApp from './DiscApp.js';
 import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
+import WrappedNormalLoginForm from './Login';
 import DirectMsgs from './DirectMessages'
+
 import { ReactComponent as Logo } from './logo.svg';
 
 
@@ -119,12 +121,16 @@ class App extends React.Component {
       msgcollapsed: true,
       back: false,
       msgsrc: '',
-      msgtxt: ''
+      msgtxt: '',
+      loggedIn: true,
     };
   }
 
   passInfo = (sender, text) => {
     this.setState({ msgsrc: sender, msgtxt: text })
+
+  handleLogin(loginStatus) {
+    this.setState({ loggedIn: loginStatus })
   }
 
   componentDidUpdate() {
@@ -174,6 +180,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    /*[TODO:] Work on sessions so that the login status will be kept when page is reloaded */
     //Ensures correct menu.item is selected when page changes without clicking on menu.items
     const path = this.props.location.pathname;
     previousFullLocation = path;
@@ -239,17 +246,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <div>
+        {this.state.loggedIn && (
+          <Layout style={{ height: '100vh' }}>
 
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
-          <Menu
-            onClick={this.handleClick}
-            selectedKeys={[this.state.current]}
-            //defaultOpenKeys={['']}
-            mode="inline"
-            theme="dark"
+            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
+              <Menu
+                onClick={this.handleClick}
+                selectedKeys={[this.state.current]}
+                //defaultOpenKeys={['']}
+                mode="inline"
+                theme="dark"
 
-          > {/*
+              > {/*
         defaultSelectedKeys - default selected menu items
         defaultOpenKeys - default opened sub menus
         inline - Sidebar Menu
@@ -314,7 +323,7 @@ class App extends React.Component {
 
           <br></br>
 
-          <Content style={{ margin: '0px 16px', width: "82vw" }}>
+          <Content style={{ margin: '0px 16px'}}>
             <Switch>
               <Route exact path='/' component={Feed} />
               <Route exact path='/Explore' component={Explore} />
@@ -339,7 +348,12 @@ class App extends React.Component {
           <Messages sender={this.state.msgsrc} text={this.state.msgtxt} />
         </Sider>
 
-      </Layout>
+      </Layout> 
+        )}
+        {this.state.loggedIn === false && (
+          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
+        )}
+      </div>
 
     );
 

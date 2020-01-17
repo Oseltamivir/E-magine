@@ -1,11 +1,12 @@
 import React from 'react';
 import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
+import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
 const { Meta } = Card;
-const { TabPane } = Tabs; 
+const { TabPane } = Tabs;
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: "//at.alicdn.com/t/font_1597763_p5whc4dho8h.js"
@@ -101,7 +102,7 @@ class Profile extends React.Component {
                             <h1 style={{ color: "#cccccc", marginTop: "-5vh" }}>#{this.state.id}</h1>
                         </div>
                     </div>
-
+            
                     <div id="ButtonsInfo" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column", marginLeft: "4vw", width: "53vw", height: "90vh" }}>
 
                         {/*Visitor view*/}
@@ -139,7 +140,7 @@ class Profile extends React.Component {
                             <text>{this.state.description}</text>
                         </div>
 
-                        <div id="InfoHolder" style={{ display: "flex", justifyContent: "space-around", width: "53vw", marginTop: "5vh"}}>
+                        <div id="InfoHolder" style={{ display: "flex", justifyContent: "space-around", width: "53vw", marginTop: "5vh" }}>
 
                             <div>
                                 <Card
@@ -147,8 +148,8 @@ class Profile extends React.Component {
                                     bordered={false}
                                     title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center" }}><Icon type="idcard" theme="twoTone" twoToneColor="#0050b3" /> Credentials & Info</p>}
                                     headStyle={{ backgroundColor: "#1890ff", width: "20vw" }}
-                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh"}}
-                                    style={{ boxShadow: "8px 0px 12px", width: "20vw"}}
+                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh" }}
+                                    style={{ boxShadow: "8px 0px 12px", width: "20vw" }}
                                 >
                                     <Meta
                                         description={<div id="Credentials" style={{ fontSize: "1.3vw" }}>
@@ -165,9 +166,9 @@ class Profile extends React.Component {
                                 <Card
                                     type="inner"
                                     bordered={false}
-                                    title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center"  }}><Icon type="crown" theme="twoTone" twoToneColor="#d4b106" /> Knowledge Areas</p>}
+                                    title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center" }}><Icon type="crown" theme="twoTone" twoToneColor="#d4b106" /> Knowledge Areas</p>}
                                     headStyle={{ backgroundColor: "#1890ff", width: "20vw" }}
-                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh"}}
+                                    bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh" }}
                                     style={{ boxShadow: "8px 0px 12px", width: "20vw" }}
                                 >
                                     <Meta
@@ -193,145 +194,132 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <Tabs defaultActiveKey="1" size="large" tabBarStyle={{ color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }}>
-                    <TabPane tab={
-                        <span>
-                            <Icon type="question-circle" theme="twoTone" />
-                            Questions
+                    <Tabs defaultActiveKey="1" size="large" tabBarStyle={{ color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }}>
+                        <TabPane tab={
+                            <span>
+                                <Icon type="question-circle" theme="twoTone" />
+                                Questions
                         </span>
-                    }
-                        key="1">
-                        <div>
+                        }
+                            key="1">
+                            <div>
 
-                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                <span>Questions Posted </span>
-                                <Icon type="question-circle"></Icon>
-                            </Divider>
-                            <InfiniteScroll
-                                initialLoad={false}
-                                pageStart={0}
-                                loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                                hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                                useWindow={false}
-                                getScrollParent={() => document.getElementById('feedContainer')}
-                            >
-                                <List
-                                    grid={{ gutter: 20, column: 2 }}
-                                    dataSource={this.state.data}
-                                    locale={{
-                                        emptyText: (
-                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                <Spin size="large" />
-                                            </div>
-                                        )
-                                    }}
-                                    renderItem={item => (
-                                        <List.Item key={item.id}>
-                                            <div onClick={this.cardClick} key={item.id}>
-                                                <Card
-                                                    hoverable
-                                                    type="inner"
-                                                    bordered={false}
-                                                    title="Mathematics - Differential Equations"
-                                                    headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                                    bodyStyle={{ backgroundColor: "#001529" }}
-                                                    style={{ boxShadow: "8px 0px 12px" }}
-                                                    cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
-                                                >
-                                                    <Meta
-                                                        title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                        description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                                    />
-                                                </Card>
-                                            </div>
-                                        </List.Item>
+                                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                    <span>Questions Posted </span>
+                                    <Icon type="question-circle"></Icon>
+                                </Divider>
+                                <InfiniteScroll
+                                    initialLoad={false}
+                                    pageStart={0}
+                                    loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                                    hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                                    useWindow={false}
+                                    getScrollParent={() => document.getElementById('feedContainer')}
+                                >
+                                    <List
+                                        grid={{ gutter: 20, column: 2 }}
+                                        dataSource={this.state.data}
+                                        locale={{
+                                            emptyText: (
+                                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                                    <Spin size="large" />
+                                                </div>
+                                            )
+                                        }}
+                                        renderItem={item => (
+                                            <List.Item key={item.id}>
+                                                <div onClick={this.cardClick} key={item.id}>
+                                                    <Card
+                                                        hoverable
+                                                        type="inner"
+                                                        bordered={false}
+                                                        title="Mathematics - Differential Equations"
+                                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                                        style={{ boxShadow: "8px 0px 12px" }}
+                                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+                                                    >
+                                                        <Meta
+                                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                        />
+                                                    </Card>
+                                                </div>
+                                            </List.Item>
+                                        )}
+                                    />
+                                    {this.state.loading && this.state.hasMore && (
+                                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                            <Spin size="large" />
+                                        </div>
                                     )}
-                                />
-                                {this.state.loading && this.state.hasMore && (
-                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                        <Spin size="large" />
-                                    </div>
-                                )}
-                            </InfiniteScroll>
-                        </div>
-                    </TabPane>
-                    <TabPane tab={
-                        <span>
-                            <Icon type="check-circle" theme="twoTone" />
-                            Solutions
+                                </InfiniteScroll>
+                            </div>
+                        </TabPane>
+                        <TabPane tab={
+                            <span>
+                                <Icon type="check-circle" theme="twoTone" />
+                                Solutions
                         </span>
-                    }
-                        key="2"
-                    >
-                        <div>
+                        }
+                            key="2"
+                        >
+                            <div>
 
-                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                <span>Solutions </span>
-                                <Icon type="check-circle"></Icon>
-                            </Divider>
-                            <InfiniteScroll
-                                initialLoad={false}
-                                pageStart={0}
-                                loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
-                                hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
-                                useWindow={false}
-                                getScrollParent={() => document.getElementById('feedContainer')}
-                            >
-                                <List
-                                    grid={{ gutter: 20, column: 2 }}
-                                    dataSource={this.state.data}
-                                    locale={{
-                                        emptyText: (
-                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                <Spin size="large" />
-                                            </div>
-                                        )
-                                    }}
-                                    renderItem={item => (
-                                        <List.Item key={item.id}>
-                                            <div onClick={this.cardClick} key={item.id}>
-                                                <Card
-                                                    hoverable
-                                                    type="inner"
-                                                    bordered={false}
-                                                    title="Mathematics - Differential Equations"
-                                                    headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                                    bodyStyle={{ backgroundColor: "#001529" }}
-                                                    style={{ boxShadow: "8px 0px 12px" }}
-                                                    cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
-                                                >
-                                                    <Meta
-                                                        title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                        description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
-                                                    />
-                                                </Card>
-                                            </div>
-                                        </List.Item>
+                                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                    <span>Solutions </span>
+                                    <Icon type="check-circle"></Icon>
+                                </Divider>
+                                <InfiniteScroll
+                                    initialLoad={false}
+                                    pageStart={0}
+                                    loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                                    hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
+                                    useWindow={false}
+                                    getScrollParent={() => document.getElementById('feedContainer')}
+                                >
+                                    <List
+                                        grid={{ gutter: 20, column: 2 }}
+                                        dataSource={this.state.data}
+                                        locale={{
+                                            emptyText: (
+                                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                                    <Spin size="large" />
+                                                </div>
+                                            )
+                                        }}
+                                        renderItem={item => (
+                                            <List.Item key={item.id}>
+                                                <div onClick={this.cardClick} key={item.id}>
+                                                    <Card
+                                                        hoverable
+                                                        type="inner"
+                                                        bordered={false}
+                                                        title="Mathematics - Differential Equations"
+                                                        headStyle={{ backgroundColor: "#1890ff", color: "white" }}
+                                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                                        style={{ boxShadow: "8px 0px 12px" }}
+                                                        cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
+                                                    >
+                                                        <Meta
+                                                            title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
+                                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                        />
+                                                    </Card>
+                                                </div>
+                                            </List.Item>
+                                        )}
+                                    />
+
+                                    {this.state.loading && this.state.hasMore && (
+                                        <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                            <Spin size="large" />
+                                        </div>
                                     )}
-                                />
-
-                                {this.state.loading && this.state.hasMore && (
-                                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                        <Spin size="large" />
-                                    </div>
-                                )}
-                            </InfiniteScroll>
-                        </div>
-                    </TabPane>
-                </Tabs>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <span id="yourPosts"></span>
+                                </InfiniteScroll>
+                            </div>
+                        </TabPane>
+                    </Tabs>
 
             </div >
 
