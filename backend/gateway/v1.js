@@ -14,12 +14,14 @@ class Gateway {
     this.wss.on('connection', this.connectionHandler.bind(this));
   }
 
+  /* Handles incoming connections from gateway clients */
   connectionHandler (ws) {
     this.registerListener(ws);
 
     this.sendHello(ws);
   }
 
+  /* Listeners for messages and events from client */
   registerListener (ws) {
     ws.on('message', (msg) => this.messageHandler(ws, msg));
 
@@ -28,6 +30,7 @@ class Gateway {
     }, 45000);
   }
 
+  /* Handles packets/messages received from client */
   messageHandler (ws, msg) {
     const data = JSON.parse(msg);
 
@@ -49,6 +52,24 @@ class Gateway {
     else {
       ws.close(1006, "Invalid payload received.");
     }
+  }
+
+  /* Process identity opcode sent from client */
+  identifyHandler (ws, data) {
+    const token = data.token;
+    let user = "";
+
+    try {
+      user = signer.unsign(token);
+    }
+    catch (e) {
+      // bad token
+      ws.close(1003, "Identify failed, invalid token provided.");
+    }
+
+    this.clients.set(user, ws);
+    ws.user = user;
+    sendReady(ws);
   }
 
   sendHello (ws) {
@@ -73,23 +94,6 @@ class Gateway {
       "time": data.time
     }
     ws.send(JSON.stringify(hb_ack));
-  }
-
-  identifyHandler (ws, data) {
-    const token = data.token;
-    let user = "";
-
-    try {
-      user = signer.unsign(token);
-    }
-    catch (e) {
-      // bad token
-      ws.close(1003, "Identify failed, invalid token provided.");
-    }
-
-    this.clients.set(user, ws);
-    ws.user = user;
-    sendReady(ws);
   }
 
   sendReady (ws) {
