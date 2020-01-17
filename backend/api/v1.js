@@ -136,7 +136,7 @@ router.get('/posts/me', async(req, res) => {
 });
 
 /* Fetch posts from channel using channel ID */
-router.get('/posts/:channelID', async (req, res) => {
+router.get('/channels/:channelID/posts', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
   const channelID = req.params.channelID;
