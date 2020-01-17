@@ -17,13 +17,33 @@ class Post extends Component {
       fileName: '',
       postState: 'Post!',
       post: '',
+      counter: 0,
 
 
     } //For storing text for post
     this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
   }
-  changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
-  postOrEdit = () => { this.state.postState === 'Post!' ? this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" }) }
+
+  changeText = (ev) => {
+    let val = ev.target.value;
+    let nam = ev.target.name;
+    this.setState({ [nam]: val })
+  }
+
+  postOrEdit = () => {
+    this.state.postState === 'Post!' ? //Note ternary operator here
+      this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" })
+  }
+
+  upvoteQuestion = () => {
+    this.setState({ counter: this.state.counter + 1 })
+  }
+
+  downvoteQuestion = () => {
+    this.setState({ counter: this.state.counter - 1 })
+  }
+
+
   componentDidMount() {
     var self = this;
     this.editor = new window.FroalaEditor('#exampl', {
@@ -119,6 +139,18 @@ class Post extends Component {
             </Divider>
             <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
             <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
+            
+            <span class='votearea'>
+              <Button type=  'primary' onClick={() => this.upvoteQuestion}>
+                <Icon type="up-circle" theme="twoTone" />
+              </Button>
+              <p> {this.state.counter}</p>
+              <br/>
+              <Button type=  'primary' onClick={() => this.downvoteQuestion}>
+                <Icon type="down-circle" theme="twoTone" />
+              </Button>
+            </span>
+
             <Todo user={this.props.user} />
           </div>)
       }
@@ -131,6 +163,17 @@ class Post extends Component {
 
             </Divider>
             <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+           
+            <span class='votearea'>
+              <Button type=  'primary' onClick={() => {this.upvoteQuestion()}}>
+                <Icon type="up-circle" theme="twoTone" />
+              </Button>
+              <p> {this.state.counter}</p>
+              <Button type=  'primary' onClick={() => {this.downvoteQuestion()}}>
+                <Icon type="down-circle" theme="twoTone" />
+              </Button>
+            </span>
+
             <Todo user={this.props.user} />
           </div>)
       }
