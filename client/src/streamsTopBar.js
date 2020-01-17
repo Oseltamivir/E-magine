@@ -32,18 +32,18 @@ class StreamsTopBar extends React.Component {
     }
 
     linkOnChange(e) {
-        this.setState({Link: e.target.value})
+        this.setState({ Link: e.target.value })
     }
     titleOnChange(e) {
-        this.setState({Title: e.target.value})
+        this.setState({ Title: e.target.value })
     }
     descOnChange(e) {
-        this.setState({Desc: e.target.value})
+        this.setState({ Desc: e.target.value })
     }
     topicOnChange(e) {
-        this.setState({Topic: e})
+        this.setState({ Topic: e })
     }
-    
+
     showModal() {
         this.setState({ visible: true })
     }
@@ -93,14 +93,14 @@ class StreamsTopBar extends React.Component {
                         <Input onChange={this.linkOnChange.bind(this)} value={this.state.Link} addonBefore={selectBefore} placeholder="Enter end part" />
                     </Tooltip>
 
-                    <h3 style={{marginTop: "3vh"}}>Stream Title</h3>
+                    <h3 style={{ marginTop: "3vh" }}>Stream Title</h3>
                     <Input onChange={this.titleOnChange.bind(this)} value={this.state.Title} placeholder="E.g Vectors Revision!" />
 
-                    <h3 style={{marginTop: "3vh"}}>Stream Description</h3>
+                    <h3 style={{ marginTop: "3vh" }}>Stream Description</h3>
                     <TextArea onChange={this.descOnChange.bind(this)} value={this.state.Desc} allowClear placeholder="E.g Revision before CA1!" rows={5} />
 
-                    <h3 style={{marginTop: "3vh"}}>Topic</h3>
-                    <Select value={this.state.Topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw"}}>
+                    <h3 style={{ marginTop: "3vh" }}>Topic</h3>
+                    <Select value={this.state.Topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
                         <Option value="Mathematics">Mathematics</Option>
                         <Option value="Physics">Physics</Option>
                         <Option value="Economics">Economics</Option>
