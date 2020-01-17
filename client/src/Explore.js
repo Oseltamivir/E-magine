@@ -4,7 +4,7 @@ import CarouselSlide from "./CauroselSlide"
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
-import StreamsCategories from './StreamsCategories';
+import ExploreCategories from './ExploreCategories';
 import { Link } from 'react-router-dom';
 const { Meta } = Card;
 
@@ -98,7 +98,7 @@ class Explore extends React.Component {
                     </Divider>
 
                     <div id="Category">
-                        <StreamsCategories />
+                        <ExploreCategories />
                     </div>
 
 
@@ -131,7 +131,7 @@ class Explore extends React.Component {
                                             hoverable
                                             type="inner"
                                             bordered={false}
-                                            title="Video Title"
+                                            title="Post Title"
                                             headStyle={{ backgroundColor: "#1890ff", color: "white", }}
                                             bodyStyle={{ backgroundColor: "#001529" }}
                                             style={{ boxShadow: "8px 0px 12px" }}
