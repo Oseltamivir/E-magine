@@ -82,7 +82,7 @@ class Listmaker extends Component {
                             <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
                                 <Icon type="up-circle" theme="twoTone" />
                             </Button>
-                            <p class='whitencounter'>
+                            <p class='whittencounter'>
                                 {items.counter}
                             </p>
                             <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
@@ -105,7 +105,7 @@ class Listmaker extends Component {
                         <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
                             <Icon type="up-circle" theme="twoTone" />
                         </Button>
-                        <p class='whitencounter'>
+                        <p class='whittencounter'>
                             {items.counter}
                         </p>
                         <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
