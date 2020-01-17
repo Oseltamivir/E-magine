@@ -56,24 +56,27 @@ class Todo extends Component {
         return (
             <div className='todolist' >
                 <form onSubmit={this.addItem}>
-                    <Listmaker
-                        answers={this.state.answerItems}
-                        entries={this.state.items}
-                        deleteItem={this.deleteItem.bind(this)}
-                        user={this.props.user}
-                        deleteAnswer={this.deleteAnswer.bind(this)}
-                        upvoteAnswer={this.upvoteAnswer.bind(this)}
-                        upvoteReply={this.upvoteReply.bind(this)}
-                        downvoteAnswer={this.downvoteAnswer.bind(this)}
-                        downvoteReply={this.downvoteReply.bind(this)}
-                    />
-                    <div id='Postbar'>
-                        <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
-                        <Button id='posttwo' size='large' type='primary' onClick={this.addItem}>Post</Button>
-                        <Button id='postthree' size='large' type='primary' onClick={this.addAnswer}>
-                            <Icon type="star" theme="twoTone" />Add Answer
+                    <form onSubmit={this.addAnswer}>
+                        <Listmaker
+                            answers={this.state.answerItems}
+                            entries={this.state.items}
+                            deleteItem={this.deleteItem.bind(this)}
+                            user={this.props.user}
+                            deleteAnswer={this.deleteAnswer.bind(this)}
+                            upvoteAnswer={this.upvoteAnswer.bind(this)}
+                            upvoteReply={this.upvoteReply.bind(this)}
+                            downvoteAnswer={this.downvoteAnswer.bind(this)}
+                            downvoteReply={this.downvoteReply.bind(this)}
+                        />
+                        <div id='Postbar'>
+                            <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+
+                            <Button id='posttwo' size='large' type='primary' onClick={this.addItem}>Post</Button>
+                            <Button id='postthree' size='large' type='primary' onClick={this.addAnswer}>
+                                <Icon type="star" theme="twoTone" />Add Answer
                         </Button>
-                    </div>
+                        </div>
+                    </form>
                 </form>
             </div>
         )
