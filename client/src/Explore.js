@@ -3,7 +3,7 @@ import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Inp
 import CarouselSlide from "./CauroselSlide.js";
 import ExploreTopBar from "./ExploreTopBar";
 import './index.css';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroller';
 import ExploreCategories from './ExploreCategories';
 
@@ -91,25 +91,7 @@ export default class Explore extends React.Component {
                         Computing
                     </Link>
                     <ExploreTopBar />
-
-                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                        <span>Spotlight </span>
-                        <Icon type="bulb"></Icon>
-                    </Divider>
-                    <Carousel dotPosition="right">
-                        <div>
-                            <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="William" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="Warren" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                        <div>
-                            <CarouselSlide username="Sherman" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
-                        </div>
-                    </Carousel>
+                    
                 </div>
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
