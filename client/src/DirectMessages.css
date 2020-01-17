@@ -140,6 +140,7 @@
   
   .replytext{
     color: #ffffff;
+    white-space: pre-line;
   }
   #dmreplylist{
     list-style: none;
