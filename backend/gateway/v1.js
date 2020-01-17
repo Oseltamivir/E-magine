@@ -1,3 +1,6 @@
+const RD = require('reallydangerous');
+const signer = new RD.TimestampSigner('my-secret');
+
 class Gateway {
   constructor (wss) {
     this.wss = wss;
@@ -73,7 +76,28 @@ class Gateway {
   }
 
   identifyHandler (ws, data) {
-    // TODO
+    const token = data.token;
+    let user = "";
+
+    try {
+      user = signer.unsign(token);
+    }
+    catch (e) {
+      // bad token
+      ws.close(1003, "Identify failed, invalid token provided.");
+    }
+
+    this.clients.set(user, ws);
+    ws.user = user;
+    sendReady(ws);
+  }
+
+  sendReady (ws) {
+    const ready = {
+      "op": 1,
+      "user": ws.user
+    }
+    ws.send(JSON.stringify(ready));
   }
 }
 
