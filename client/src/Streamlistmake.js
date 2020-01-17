@@ -18,19 +18,30 @@ export default class Streamlistmake extends Component {
 
     }
     createItem = (items) => {
+        if (this.props.user === items.user){
         return (
             <li key={items.key}>
                 <div>
                     <p className='timetext'>{this.postTime(items)}</p>
                     <p className='replytext'>{items.text}</p>
                 </div>
-                <span>
                     <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
                     </Button>
-                </span>
                 <br />
             </li>
         );
+        }
+        else{
+            return(
+            <li key={items.key}>
+                <div>
+                    <p className='timetext'>{this.postTime(items)}</p>
+                    <p className='replytext'>{items.text}</p>
+                </div>
+                <br />
+            </li>
+            )
+        }
     }
     render() {
         const toDoStreamItems = this.props.entries;
