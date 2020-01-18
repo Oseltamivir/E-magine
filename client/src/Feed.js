@@ -64,7 +64,7 @@ class Feed extends React.Component {
     };
 
     fetchPostsData() { //Fetch user's posts
-        fetch(window.baseURL + '/api/v1/posts/me?limit=5&type=0', {
+        fetch(window.baseURL + '/api/v1/posts/me?limit=4&type=0', {
             method: 'get',
             headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
         }).then((results) => {
