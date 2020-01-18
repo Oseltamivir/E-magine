@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, message, Spin, List, Divider, Button, Icon } from 'antd';
-import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
+import { NavLink } from 'react-router-dom';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -117,11 +117,11 @@ class Feed extends React.Component {
                             </List.Item>
                         )}
                     />
-                    <NavLinkHash smooth to="/Profile/#yourPosts">
+                    <NavLink to="/Profile">
                         <Button type="primary" shape="round" icon="right" size="large" style={{ marginLeft: "-5vw" }}>
                             Show All
                         </Button>
-                    </NavLinkHash>
+                    </NavLink>
                 </div>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Recommended Questions </span>
