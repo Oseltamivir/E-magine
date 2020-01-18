@@ -287,7 +287,7 @@ class App extends React.Component {
                   </NavLink>
                 </Menu.Item>
 
-                <Menu.Item key="DiscApp" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+                <Menu.Item key="Create Post" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
                   <NavLink to="/createpost">
                     <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
                     <span>Create Post</span>
