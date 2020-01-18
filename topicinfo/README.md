@@ -14,30 +14,15 @@ Thiamethoxam contains a guanidine-like of three atoms joined to a central carbon
 created buckets 556fdf05-3d83-475f-a5c8-899f0250b618 and 9d5a2e8c-fc99-43fb-98a4-6fc53b8c090f
 starting job 8acd774e-cffb-405c-a0e0-5a217e251c2b
 wrote output to /tmp/SCSE/output.tar.gz
+~/E-magine/topicinfo# tar Ozxf /tmp/SCSE/output.tar.gz
+{ "File": "chemtext.txt", "Line": "0", "Classes": [ { "Name": "Chemistry", "Score": 0.4429 }, { "Name": "Mathematics", "Score": 0.2321 }, { "Name": "Biology", "Score": 0.228 } ] }
 ~/E-magine/topicinfo# ./extractinfo.sh
-{
-  "File": "chemtext.txt",
-  "Line": "0",
-  "Classes": [
-    {
-      "Name": "Chemistry",
-      "Score": 0.4429
-    },
-    {
-      "Name": "Mathematics",
-      "Score": 0.2321
-    },
-    {
-      "Name": "Biology",
-      "Score": 0.228
-    }
-  ]
-}
+"chemtext.txt: Chemistry"
 ```
 ## Bugs
 The python script will crash with absolute certainty iff
 1. Windows is involved
 2. The dependencies above were ignored
 3. ~/.aws/credentials is not valid/present
-4. Any credentials other than mine (152334H) are used, because the variables CLASSIFIER and role_ARN are hardcoded
+4. Any credentials other than mine (152334H) are used, because the variables `CLASSIFIER` and `role_ARN` are hardcoded (Ideally, this will be fixed later)
 

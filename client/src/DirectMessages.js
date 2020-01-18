@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DirectMessages.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import Post from './Posts_utils.js'
-import Todo from './to-do-list.js'
-import { Button, Badge } from 'antd'
+import { Button } from 'antd'
 import DirectMessagesPostbar from './DirectMessagesPostbar'
 //This will be the direct messages mainframe
 class DirectMsg extends Component {
@@ -32,7 +29,7 @@ class DirectMsg extends Component {
           </h1>
           <br />
         </div>{/*Div for id 'Header */}
-        <DirectMessagesPostbar sender={this.state.sender} receiver={this.state.receiver} func = {this.props.func} />
+        <DirectMessagesPostbar sender={this.state.sender} receiver={this.state.receiver} func={this.props.func} />
         {/*div for 'all*/}
       </div>
     )

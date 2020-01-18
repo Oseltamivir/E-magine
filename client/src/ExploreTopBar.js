@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Input, Icon, Button, Modal, Select, Tooltip } from 'antd';
 import { NavLink } from 'react-router-dom';
 
@@ -44,18 +45,15 @@ class ExploreTopBar extends React.Component {
 
     handleOk() {
         this.setState({ visible: false })
-    }
-
-    handleCancel() {
-        this.setState({ visible: false })
-    }
-
-    submitForm(e) {
         inputValues.Link = this.state.Link
         inputValues.Title = this.state.Title
         inputValues.Desc = this.state.Desc
         inputValues.Topic = this.state.Topic
         console.log(inputValues)
+    }
+
+    handleCancel() {
+        this.setState({ visible: false })
     }
 
     render() {

@@ -23,10 +23,6 @@ def download_and_delete(k: str, b, f: str=None) -> None:
     print('wrote output to %s' % f)
     obj.delete()
 
-def clean(b) -> None:
-    for obj in b.objects.all():
-        obj.delete()
-
 def display(b) -> None:
     for obj in b.objects.all():
         print(obj.key)
@@ -39,19 +35,15 @@ def delete_all_objects(bucket) -> None:
     print(res)
     bucket.delete_objects(Delete={'Objects': res})
 
+def purge(bucket) -> None:
+    delete_all_objects(bucket)
+    bucket.delete()
+
 if __name__ == '__main__':
     #this function is here to document the usage of this lib
-    #the first line of this function explicitly assumes that ~/.aws/credentials exists
+    #boto3.resource() explicitly assumes that ~/.aws/credentials exists
     import boto3
     s3r = boto3.resource('s3', region_name=LOCATE)
-    '''TRASH='scsething'
+    TRASH='scsething'
     bucket = s3r.Bucket(name=TRASH)
-    display(bucket)'''
-    bucket = s3r.Bucket(name='7cc72314-9da7-47d1-8553-36be510211af')
     display(bucket)
-    
-    from os.path import basename
-    for obj in bucket.objects.all():
-        if obj.key[0] != '.': #if file is not hidden file
-            download_and_delete(obj.key, bucket, '/tmp/SCSE/%s' % basename(obj.key))
-

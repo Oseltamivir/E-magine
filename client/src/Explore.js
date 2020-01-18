@@ -1,15 +1,13 @@
 import React from 'react';
-import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Input } from 'antd';
-import CarouselSlide from "./CauroselSlide.js";
+import { Card, message, Avatar, Icon, Spin, List, Divider, Button } from 'antd';
 import ExploreTopBar from "./ExploreTopBar";
 import './index.css';
-import { Link } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroller';
 import ExploreCategories from './ExploreCategories';
 
 const { Meta } = Card;
 
-const { Search } = Input;
+
 
 
 export default class Explore extends React.Component {

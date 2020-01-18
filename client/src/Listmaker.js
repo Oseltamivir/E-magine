@@ -1,17 +1,11 @@
 // Makes a list for js
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import Post from './Posts_utils.js'
 import { Button, Divider, Icon } from 'antd'
 
 
 class Listmaker extends Component {
-    constructor(prop) {
-        super(prop)
-    }
-
     postTime = (items) => {
         let d = new Date()
         return items.user + ' posted this at ' + d.toDateString()

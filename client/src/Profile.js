@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
-import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -22,11 +21,10 @@ class Profile extends React.Component {
 
         this.state = {
             profileData: null,
-            data: [],
+            yourPostsData: [],
             token: this.props.token,
             hasMore: true,
             loading: false,
-            yourPostsData: [],
             visitor: false, //Switch between visitor and own profile view
         };
     }
@@ -46,18 +44,14 @@ class Profile extends React.Component {
                 return results.json(); //return data in JSON (since its JSON data)
             }).then((data) => {
                 const retrievedData = data.results
-                const currentData = this.state.data
-                this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
+                const currentData = this.state.yourPostsData
+                this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
-
-                if (this.state.yourPostsData.length === 0) {
-                    this.setState({ yourPostsData: retrievedData })
-                }
             })
     }
 
     fetchProfileData() { //Fetch profile info
-        fetch('http://test.exegesisapp.tech:8080/api/v1/users/me', {
+        fetch(window.baseURL + '/api/v1/users/me', {
             method: 'get',
             headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
         }).then((results) => {
@@ -65,7 +59,7 @@ class Profile extends React.Component {
         }).then((data) => {
             this.setState({ errorFetch: false })
 
-            if (data.success == true) {
+            if (data.success === true) {
                 this.setState({ profileData: data.profile })
 
             }
@@ -86,7 +80,7 @@ class Profile extends React.Component {
             loading: true,
         });
 
-        if (this.state.data.length > 50) { //Limit number of posts displayed
+        if (this.state.yourPostsData.length > 50) { //Limit number of posts displayed
             message.warning({ content: "Oops, we ran out of posts for now..." });
             this.setState({
                 hasMore: false,
@@ -123,12 +117,11 @@ class Profile extends React.Component {
                     }}>
                         <div id="TopBox" style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                             <div id="AvatarHolder" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "20vw", height: "90vh" }}>
-                                <Avatar style={{ fontSize: "5vw", backgroundColor: "#1890ff" }} size={200}>
-                                </Avatar>
+                                <Avatar style={{ fontSize: "5vw", backgroundColor: "#1890ff" }} size={200} src={this.state.profileData.avatar}></Avatar>
 
                                 <div id="InfoHolder" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                                    <h1 style={{ fontSize: "5vw", color: "#cccccc" }}>{this.state.profileData.displayName}</h1>
-                                    <h1 style={{ color: "#cccccc", marginTop: "-5vh" }}>#{this.state.profileData.id}</h1>
+                                    <h1 style={{ fontSize: "3.5vw", color: "#cccccc" }}>{this.state.profileData.displayName}</h1>
+                                    <h1 style={{ color: "#cccccc", marginTop: "-2vh" }}>#{this.state.profileData.id}</h1>
                                 </div>
                             </div>
 
@@ -359,7 +352,7 @@ class Profile extends React.Component {
                 )}
 
                 {!this.state.profileData && (
-                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                         <Spin size="large" />
                     </div>
                 )}

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button, Input, Icon, Divider } from 'antd'
 import Listmaker from './Listmaker.js'
-import { getElementError } from '@testing-library/react';
 import { NavLink } from 'react-router-dom';
 const { TextArea } = Input
 class Todo extends Component {
     constructor(prop) {
         super(prop)
+
         this.state = {
+            data: this.props.data,
+            token: this.props.token,
             items: [],
             currentState: { key: '', text: '', user: '', counter: '' },
             currentText: '',
@@ -18,6 +19,10 @@ class Todo extends Component {
             answerItems: []
         }
 
+    }
+
+    fetchPostsData() {
+        
     }
     upvoteAnswer = (key) => {
         let ind = this.state.answerItems.findIndex(x => x.key === key);
@@ -84,7 +89,7 @@ class Todo extends Component {
         else { alert('Wrong Input') }
     }
     render() {
-        let d = new Date
+        let d = new Date()
         if (this.state.user === this.state.poster) { 
         return (
             <div className='todolist' >
@@ -95,8 +100,8 @@ class Todo extends Component {
                         <Icon type="question-circle" theme="twoTone" />
                     </Divider>
                     <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
-                    <div dangerouslySetInnerHTML={{__html: this.props.title}}className = 'preview'></div>
-                    <div dangerouslySetInnerHTML={{ __html: this.props.post }} className='preview'></div>
+                    <div dangerouslySetInnerHTML={{__html: this.state.data.channel.title}}className = 'preview'></div>
+                    <div dangerouslySetInnerHTML={{ __html: this.state.data.channel.description }} className='preview'></div>
                     <Button type='primary' onClick={this.postOrEdit}><NavLink to = {{pathname:'/Posts_utils', state:{title:this.props.title, post:this.props.post}}}>Edit Post</NavLink></Button>
 
                     <span className ='votearea'>

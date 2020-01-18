@@ -46,11 +46,11 @@ class Gateway {
     else if (op == 11) {
       // check if ping timed out
       if ((data.time + 45000) < Date.now()) {
-        ws.close(1006, "Connection timed out.");
+        ws.close(4002, "Connection timed out.");
       }
     }
     else {
-      ws.close(1006, "Invalid payload received.");
+      ws.close(4001, "Invalid payload received.");
     }
   }
 
@@ -65,7 +65,7 @@ class Gateway {
     }
     catch (e) {
       // bad token
-      ws.close(1003, "Identify failed, invalid token provided.");
+      ws.close(4003, "Identify failed, invalid token provided.");
     }
 
     const client = new Client(ws, user);

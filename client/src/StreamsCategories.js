@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Icon, Spin, List } from 'antd';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import './index.css';
 
 const { Meta } = Card;
@@ -35,10 +35,6 @@ const Categories = [
 
 class StreamsCategories extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
 
