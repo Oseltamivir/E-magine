@@ -5,8 +5,10 @@ import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
 import { Tabs, Icon, Divider, Input } from 'antd';
+import {NavLink} from 'react-router-dom'
 const { TabPane } = Tabs;
 const { TextArea } = Input
+
 export default class CreatePost extends Component {
     constructor(prop) {
         super(prop)
@@ -87,7 +89,7 @@ export default class CreatePost extends Component {
                             <TextArea value={this.state.title} onChange={this.handleInput} placeholder='Type title here'></TextArea>
                             <div id='createexampl'></div>
                             <br />
-                            <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
+                            <Button type='primary' onClick={this.postOrEdit}><NavLink to = {{pathname:'/DiscApp', state:{title:this.state.title, post:this.state.post}}}>{this.state.postState}</NavLink></Button>
                             {ifPosted}
                         </form>
 
