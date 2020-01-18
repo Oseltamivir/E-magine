@@ -55,9 +55,9 @@ class Login extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
 
-                <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
+                <Layout style={{ backgroundColor: "#002140", maxWidth: "100vw", maxHeight: "100vh", overflow: "hidden" }}>
                     <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", width: "100%", backgroundImage: "url("+ Background + ")", backgroundSize: `cover`, overflow:`hidden` }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", width: "80vw", backgroundImage: "url("+ Background + ")", backgroundSize: `cover`, overflow:`hidden` }}>
                             <div style={{ fontSize: "8vw", color: "white" }}>
                                 <Icon component={Logo} />
                                 <span style={{ fontWeight: "500",textShadow: '1px -1px 1px -1px #000000' }}> Exegesis</span>
@@ -67,7 +67,7 @@ class Login extends React.Component {
                             </div>
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "50vw", boxShadow: "-5px 0px 20px black" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "40vw", boxShadow: "-5px 0px 20px black" }}>
                             <h1 style={{ color: "white", fontSize: "3vw" }}>Sign In <Icon type="unlock" theme="twoTone" /> </h1>
                             <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
                                 <Form.Item>
@@ -105,7 +105,7 @@ class Login extends React.Component {
                                     <div>
                                         <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
                                             Log in
-                                    </Button>
+                                      </Button>
                                     <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
                                 </div>
                             </Form.Item>

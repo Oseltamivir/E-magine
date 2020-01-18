@@ -4,18 +4,68 @@ import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
 import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
+import { useHistory} from 'react-router-dom';
 const { TabPane } = Tabs;
 const { Option } = Select;
+
+var FormInput = [
+    "",
+    "",
+    "",
+]
+var clicked = false
+var token = "";
+
+function Redirect() { //Special hook function in order to use React Router's history.push 
+    const history = useHistory();
+
+    function HandleClick() {
+        clicked = true
+        fetch(window.baseURL + '/api/v1/channels', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Authorization': token },
+            body: JSON.stringify({
+                "type": 0,
+                "timestamp": Date.now(),
+                "description": FormInput[0],
+                "title": FormInput[1],
+                "topic": FormInput[2]
+            })
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+            
+
+            if (data.success === true) {
+                alert("Post Created")
+                history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
+            }
+            else {
+                message.error({ content: "Oops... Form fields cannot be left blank" });
+            }
+
+            clicked = false;
+
+        }).catch((error) => {
+            clicked = false;
+            message.error({ content: "Oops, connection error" });
+        })
+        
+    }
+
+    return (
+        <Button type='primary' onClick={HandleClick}>Post!</Button>
+    );
+}
+
 
 export default class CreatePost extends Component {
     constructor(props) {
         super(props)
 
-
         this.state = {
             token: this.props.token,
             fileName: '',
-            postState: 'Post!',
             post: '',
             user: 'Bob',
             title: '',
@@ -23,38 +73,11 @@ export default class CreatePost extends Component {
 
 
         } //For storing text for post
+        token = this.state.token
         this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
     }
     changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
 
-    createPost() { //Fetch profile info
-        fetch(window.baseURL + '/api/v1/channels', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
-            body: JSON.stringify({
-                "type": 0,
-                "timestamp": Date.now(),
-                "description": this.state.post,
-                "title": this.state.title,
-                "topic": this.state.topic,
-            })
-        }).then((results) => {
-            return results.json(); //return data in JSON (since its JSON data)
-        }).then((data) => {
-            this.setState({ errorFetch: false })
-
-            if (data.success === true) {
-                alert("Post Created")
-                alert(data.id)
-            }
-            else {
-                message.error({ content: "Oops... Form fields cannot be left blank" });
-            }
-
-        }).catch((error) => {
-            message.error({ content: "Oops, connection error" });
-        })
-    }
 
     componentDidMount() {
         var self = this;
@@ -86,7 +109,15 @@ export default class CreatePost extends Component {
                     }
                 },
                 attribution: false
-            })
+            }
+        )
+        if (clicked === false) {
+            FormInput[0] = this.state.post
+            FormInput[1] = this.state.title
+            FormInput[2] = this.state.topic
+            console.log(FormInput)
+        }
+        
     }
 
     handleTitle(e) {
@@ -115,29 +146,26 @@ export default class CreatePost extends Component {
                             Posting
                         </span>
                     }
-                    key='1'>
-                        <div class="tabcontainer">
-                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                <span>Your post </span>
-                                <Icon type="edit" theme='twoTone'></Icon>
-                            </Divider>
+                        key='1'>
+                        <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                            <span>Your post</span>
+                            <Icon type="edit" theme='twoTone'></Icon>
+                        </Divider>
 
-                            <div className="post-title-label">Title: </div>
-                            <Input className="post-title-input" onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." /> 
-                            <br/>
-                            <div className="post-title-label">Topic: </div>
-                            <Select className="post-title-input" value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
-                                <Option value="Mathematics">Mathematics</Option>
-                                <Option value="Physics">Physics</Option>
-                                <Option value="Economics">Economics</Option>
-                                <Option value="Chemistry">Chemistry</Option>
-                                <Option value="Biology">Biology</Option>
-                                <Option value="Computing">Computing</Option>
-                            </Select>
-                            <div id='createexampl'></div> {/*Text Editor*/}
-                            <Button type='primary' onClick={this.createPost.bind(this)}>{this.state.postState}</Button>
-                            {ifPosted}
-                        </div>
+
+                        <Input onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." />
+                        <Select value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
+                            <Option value="Mathematics">Mathematics</Option>
+                            <Option value="Physics">Physics</Option>
+                            <Option value="Economics">Economics</Option>
+                            <Option value="Chemistry">Chemistry</Option>
+                            <Option value="Biology">Biology</Option>
+                            <Option value="Computing">Computing</Option>
+                        </Select>
+                        <div id='createexampl'></div> {/*Text Editor*/}
+                        <Redirect />
+                        {ifPosted}
+
                     </TabPane>
 
                     <TabPane tab={
