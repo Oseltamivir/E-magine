@@ -59,7 +59,7 @@ class ExploreTopBar extends React.Component {
     render() {
         return (
             <div id="TopOptions" style={{ display: "flex" }}>
-                <NavLink to='/createpost'>
+                <NavLink to='/CreatePost'>
                     <Button type="primary" size="large" style={{ marginRight: "0" }}>
                         Create Post
                     <Icon type="plus" />
