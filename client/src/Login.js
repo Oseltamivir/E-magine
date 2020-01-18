@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { Input, message, Button, Icon, Layout, Form, Checkbox } from 'antd';
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
 import Background from './bg1.jpg';
@@ -40,12 +40,12 @@ class Login extends React.Component {
                     if (data.success == true) {
                         this.props.loginHandler(data.token)
                     }
-                    else {
-                        this.setState({ failedLogin: true })
+                    else { 
+                        message.error({ content: "Incorrect username or password" });
                     }
 
-                }).catch(() => {
-                    this.setState({ errorFetch: true })
+                }).catch((error) => {
+                    message.error({ content: "Oops... Error fetching response " });
                 })
             }
         });
@@ -106,21 +106,13 @@ class Login extends React.Component {
                                         <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
                                             Log in
                                     </Button>
-                                        <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
-                                    </div>
-                                </Form.Item>
-                                {/*Error Catching*/}
-                                {this.state.failedLogin && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
-                                )}
-                                {this.state.errorFetch && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
-                                )}
-                            </Form>
-                        </div>
-
-                    </Content>
-                </Layout>
+                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </Content>
+            </Layout>
         );
     }
 }
