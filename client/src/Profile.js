@@ -24,7 +24,7 @@ class Profile extends React.Component {
             description: "Hello, I am Tkai, your very friendly and ordinary question asker and answerer. I am trying to extend this text as long as I can, so excuse the really nonsensical stuff you will be seeing. Oh wait it's enough... almost there........", //Profile Description
             name: "Tkai", //User's name
             id: 343434, //User's ID
-            visitor: true, //Switch between visitor and own profile view
+            visitor: false, //Switch between visitor and own profile view
             location: "Singapore",
             workplace: "Student",
             study: "Hwa Chong Institution",
@@ -81,6 +81,11 @@ class Profile extends React.Component {
 
     };
 
+    logoutHandler = (e) => {
+        localStorage.clear();
+        window.location.replace("/");
+    };
+
 
     render() {
         return (
@@ -125,7 +130,10 @@ class Profile extends React.Component {
                             <div id="Buttons" style={{ marginBottom: "3vh" }}>
                                 <Button type="primary" onClick={this.toggle} icon="setting" size="large" style={{ marginRight: "0.7vw" }}>
                                     Edit Profile
-                                    </Button>
+                                </Button>
+                                <Button type="danger" onClick={this.logoutHandler} icon="logout" size="large">
+                                    Log Out
+                                </Button>
                             </div>
                         )}
 
