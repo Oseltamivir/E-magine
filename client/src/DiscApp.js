@@ -29,15 +29,12 @@ class DiscApp extends Component {
       method: 'get',
       headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
     }).then((results) => {
-      console.log("Got to results")
       return results.json(); //return data in JSON (since its JSON data)
     }).then((data) => {
-      console.log("Got to data")
 
       if (data.success === true) {
         this.setState({ data: data })
         message.error({ content: "Success" });
-        console.log(this.state.data)
       }
       else {
         message.error({ content: "Oops... unable to find post" });
