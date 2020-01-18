@@ -5,10 +5,10 @@ import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list'
 import { Button } from 'antd';
-import { Tabs, Icon, Divider } from 'antd';
+import { Tabs, Icon, Divider, Input } from 'antd';
 import { NavLink } from 'react-router-dom'
 const { TabPane } = Tabs;
-
+const { TextArea } = Input
 class Post extends Component {
   constructor(prop) {
     super(prop)
@@ -45,6 +45,9 @@ class Post extends Component {
     this.setState({ counter: this.state.counter - 1 })
   }
 
+  handleInput = (ev) => {
+    this.setState({ title: ev.target.value })
+  }
 
   componentDidMount() {
     var self = this;
@@ -54,12 +57,12 @@ class Post extends Component {
           self.setState({ post: this.html.get() });
         },
         initialized: function () {
-          this.html.set(this.props.location.post)
+          this.html.set(self.props.location.state.post)
         }
       },
       attribution: false
     })
-    this.setState(title:this.props.location.state.title)
+    this.setState({ title: self.props.location.state.title })
   }
   componentDidUpdate() {
     // create a variable to check if the thingy is open
@@ -73,7 +76,7 @@ class Post extends Component {
               self.setState({ post: this.html.get() });
             },
             initialized: function () {
-              this.html.set(self.state.post)
+              this.html.set(self.props.location.state.post)
             }
           },
           attribution: false
@@ -106,6 +109,7 @@ class Post extends Component {
               </Divider>
 
               <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
+                <TextArea value={this.state.title} onChange={this.handleInput} placeholder='Type title here'></TextArea>
                 <div id='exampl'></div>
                 <br />
                 <Button type='primary' onClick={this.postOrEdit}><NavLink to='/DiscApp'>{this.state.postState}</NavLink></Button>
