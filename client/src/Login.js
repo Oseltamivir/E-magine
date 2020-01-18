@@ -55,13 +55,13 @@ class Login extends React.Component {
 
                 <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
                     <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "40vh", width: "50vw", backgroundImage: "url("+ Background + ")", backgroundSize: 'auto' }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", width: "100%", backgroundImage: "url("+ Background + ")", backgroundSize: `cover`, overflow:`hidden` }}>
                             <div style={{ fontSize: "8vw", color: "white" }}>
                                 <Icon component={Logo} />
-                                <span style={{ fontWeight: "500" }}> Exegesis</span>
+                                <span style={{ fontWeight: "500",textShadow: '1px -1px 1px -1px #000000' }}> Exegesis</span>
                             </div>
                             <div style={{ color: "white", fontSize: "2vw" }}>
-                                <p>Redefining Learning™</p>
+                                <p style={{textShadow: '1px 1px 1px 1px #000000'}}>Redefining Learning™</p>
                             </div>
                         </div>
 
