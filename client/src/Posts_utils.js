@@ -6,6 +6,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list'
 import { Button } from 'antd';
 import { Tabs, Icon, Divider } from 'antd';
+import { NavLink } from 'react-router-dom'
 const { TabPane } = Tabs;
 
 class Post extends Component {
@@ -18,6 +19,7 @@ class Post extends Component {
       postState: 'Post!',
       post: '',
       counter: 0,
+      title: ''
 
 
     } //For storing text for post
@@ -105,7 +107,7 @@ class Post extends Component {
               <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
                 <div id='exampl'></div>
                 <br />
-                <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
+                <Button type='primary' onClick={this.postOrEdit}><NavLink to='/DiscApp'>{this.state.postState}</NavLink></Button>
                 {ifPosted}
               </form>
 
@@ -120,7 +122,7 @@ class Post extends Component {
                 <span>Preview </span>
                 <Icon type="camera" theme='twoTone'></Icon>
               </Divider>
-
+              <div dangerouslySetInnerHTML={{ __html: this.state.title }} className='preview'></div>
               <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
             </TabPane>
           </Tabs>
@@ -129,56 +131,13 @@ class Post extends Component {
       )
     }
     else {
-      if (this.props.user === this.props.poster) {
-        return (
-          <div>
-            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-              <span>Question </span>
-              <Icon type="question-circle" theme="twoTone" />
-            </Divider>
-            <p style = {{color: 'white'}}>Posted by {this.props.user} on {d.toDateString()}</p>
-            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
-            <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
-
-            <span class='votearea'>
-              <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
-                <Icon type="up-circle" theme="twoTone" />
-              </Button>
-              <p className='whittencounter'> {this.state.counter}</p>
-              <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
-                <Icon type="down-circle" theme="twoTone" />
-              </Button>
-            </span>
-
-            <Todo user={this.props.user} />
-          </div>)
-      }
-      else {
-        return (
-          <div>
-            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-              <span>Question </span>
-              <Icon type="question-circle" theme="twoTone" />
-            </Divider>
-            <p style = {{color: 'white'}}>Posted by {this.props.user} on {d.toDateString()}</p>
-            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
-
-            <span class='votearea'>
-              <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
-                <Icon type="up-circle" theme="twoTone" />
-              </Button>
-              <p className='whittencounter'> {this.state.counter}</p>
-              <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
-                <Icon type="down-circle" theme="twoTone" />
-              </Button>
-            </span>
-
-            <Todo user={this.props.user} />
-          </div>)
-      }
+      return (
+        <Todo user={this.props.user} />
+      )
     }
   }
 }
+
 export default Post
 
 
