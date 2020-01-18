@@ -11,7 +11,7 @@ const IconFont = Icon.createFromIconfontCN({
     scriptUrl: "//at.alicdn.com/t/font_1597763_p5whc4dho8h.js"
 });
 
-const IconMatcher = {"Mathematics":"area-chart", "Chemistry": "experiment", "Computing": "database"}
+const IconMatcher = {"Mathematics":"area-chart", "Chemistry": "experiment", "Computing": "database", "Physics": "rocket", "Economics": "inline-chart"}
 
 class Profile extends React.Component {
 
@@ -64,11 +64,11 @@ class Profile extends React.Component {
 
             }
             else {
-                alert("Failed")
+                message.error({content: "Oops, connection failed"})
             }
 
         }).catch((error) => {
-            alert("Failed")
+            message.error({content: "Oops, connection failed"})
         })
     }
 
@@ -106,7 +106,7 @@ class Profile extends React.Component {
 
         return (
             <div>
-                {this.state.profileData && (
+                {this.state.profileData && ( //Wait till profileData has been retrieved
                     <div id="feedContainer" className="feedContainer" style={{
                         overflow: "auto",
                         height: "85vh",
