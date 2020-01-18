@@ -37,7 +37,7 @@ function Redirect() { //Special hook function in order to use React Router's his
             
 
             if (data.success === true) {
-                alert("Post Created")
+                message.success({ content: "Post successfully created with id " + data.id  });
                 history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
             }
             else {
