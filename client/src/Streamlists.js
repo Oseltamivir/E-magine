@@ -5,6 +5,8 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button, Input, Icon } from 'antd'
 import Listmaker from './Listmaker.js'
 import { getElementError } from '@testing-library/react';
+import Streamlistmake from './Streamlistmake'
+import './streamchat.css'
 const { TextArea } = Input
 class Streamlist extends Component {
     constructor(prop) {
@@ -22,14 +24,14 @@ class Streamlist extends Component {
         return (
             <div className='todolist' >
                 <form onSubmit={this.addItem}>
-                    {/*<Streamlistmake
+                    <Streamlistmake
                         entries={this.state.items}
                         deleteItem={this.deleteItem.bind(this)}
                         user={this.props.user}
-                    />*/}
+                    />
                     <div id='Postbar'>
-                        <TextArea  placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
-                        <Button  size='large' type='primary' onClick={this.addItem}>Post</Button>
+                        <TextArea id = 'streamMessaging'placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+                        <Button size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
                 </form>
             </div>

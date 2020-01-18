@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Icon, Layout, Divider, Button } from 'antd'
 import Streamlist from './Streamlists'
 import ReactPlayer from 'react-player'
+import './streamchat.css'
 //This will be the discussion page mainframe
 const { Header, Content, Sider } = Layout;
 
@@ -43,7 +44,7 @@ class StreamDisc extends Component {
                             <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                                 <span>Video Title </span>
                             </Divider>
-                            <div style={{display: "flex", alignItems: "center", marginBottom: "2vh"}}>
+                            <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh" }}>
                                 <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
                                 <Button style={{ marginLeft: "2vw", backgroundColor: "#fffb8f" }}>Mathematics</Button>
                             </div>
@@ -62,6 +63,7 @@ class StreamDisc extends Component {
                         <h1 style={{ color: "white", fontSize: "2vw", textAlign: "center" }}>Stream Chat</h1>
                         <Divider></Divider>
                     </div>
+                    <Streamlist user={this.state.user} />
                     {/*Hello warren please put your very nice chat component here :D */}
                 </Sider>
             </Layout>

@@ -16,14 +16,34 @@ class Post extends Component {
       PostTitle: '',
       fileName: '',
       postState: 'Post!',
-      post: ''
+      post: '',
+      counter: 0,
 
 
     } //For storing text for post
     this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
   }
-  changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
-  postOrEdit = () => { this.state.postState === 'Post!' ? this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" }) }
+
+  changeText = (ev) => {
+    let val = ev.target.value;
+    let nam = ev.target.name;
+    this.setState({ [nam]: val })
+  }
+
+  postOrEdit = () => {
+    this.state.postState === 'Post!' ? //Note ternary operator here
+      this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" })
+  }
+
+  upvoteQuestion = () => {
+    this.setState({ counter: this.state.counter + 1 })
+  }
+
+  downvoteQuestion = () => {
+    this.setState({ counter: this.state.counter - 1 })
+  }
+
+
   componentDidMount() {
     var self = this;
     this.editor = new window.FroalaEditor('#exampl', {
@@ -31,6 +51,9 @@ class Post extends Component {
         contentChanged: function () {
           self.setState({ post: this.html.get() });
         },
+        initialized: function () {
+          this.html.set(self.state.post)
+        }
       },
       attribution: false
     })
@@ -46,6 +69,9 @@ class Post extends Component {
             contentChanged: function () {
               self.setState({ post: this.html.get() });
             },
+            initialized: function () {
+              this.html.set(self.state.post)
+            }
           },
           attribution: false
         })
@@ -60,7 +86,7 @@ class Post extends Component {
     else {
       ifPosted = '';
     }
-    if (this.props.user === this.props.poster) {
+    if (this.props.user === this.props.poster && this.state.postState !== 'Edit!') {
       return (
         <div id='postall'>
           <Tabs defaultActiveKey="1" tabBarStyle={this.tabcontainer}>
@@ -76,10 +102,10 @@ class Post extends Component {
                 <Icon type="edit" theme='twoTone'></Icon>
               </Divider>
 
-              <form id='post' onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
+              <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
                 <div id='exampl'></div>
                 <br />
-                <Button id='spaceout' type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
+                <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
                 {ifPosted}
               </form>
 
@@ -103,16 +129,54 @@ class Post extends Component {
       )
     }
     else {
-      return (
-        <div>
-          <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-            <span>Question </span>
-            <Icon type="question-circle" theme="twoTone" />
+      if (this.props.user === this.props.poster) {
+        return (
+          <div>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+              <span>Question </span>
+              <Icon type="question-circle" theme="twoTone" />
 
-          </Divider>
-          <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
-          <Todo user={this.props.user} />
-        </div>)
+            </Divider>
+            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+            <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
+
+            <span class='votearea'>
+              <Button type='primary' onClick={() => this.upvoteQuestion}>
+                <Icon type="up-circle" theme="twoTone" />
+              </Button>
+              <p> {this.state.counter}</p>
+              <br />
+              <Button type='primary' onClick={() => this.downvoteQuestion}>
+                <Icon type="down-circle" theme="twoTone" />
+              </Button>
+            </span>
+
+            <Todo user={this.props.user} />
+          </div>)
+      }
+      else {
+        return (
+          <div>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+              <span>Question </span>
+              <Icon type="question-circle" theme="twoTone" />
+
+            </Divider>
+            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+
+            <span class='votearea'>
+              <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
+                <Icon type="up-circle" theme="twoTone" />
+              </Button>
+              <p className='whittencounter'> {this.state.counter}</p>
+              <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
+                <Icon type="down-circle" theme="twoTone" />
+              </Button>
+            </span>
+
+            <Todo user={this.props.user} />
+          </div>)
+      }
     }
   }
 }

@@ -1,24 +1,46 @@
 import React from 'react';
-import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Input } from 'antd';
-import CarouselSlide from "./CauroselSlide.js";
-import ExploreTopBar from "./ExploreTopBar";
+import { Card, message, Spin, List, Divider, Button, Icon, Avatar } from 'antd';
 import './index.css';
-import { Link } from 'react-router-dom'
+
 import InfiniteScroll from 'react-infinite-scroller';
-import ExploreCategories from './ExploreCategories';
 
 const { Meta } = Card;
 
-const { Search } = Input;
+const Categories = {
+    "Maths": {
+        cover: (require(".//assets/maths.jpeg")),
+        fullName: "Mathematics Posts"
+    },
+    "Physics": {
+        cover: (require(".//assets/physics.jpeg")),
+        fullName: "Physics Posts"
+    },
+    "Chemistry": {
+        cover: (require(".//assets/chem.jpeg")),
+        fullName: "Chemistry Posts"
+    },
+    "Computing": {
+        cover: (require(".//assets/comp.jpeg")),
+        fullName: "Computing Posts"
+    },
+    "Economics": {
+        cover: (require(".//assets/economics.jpg")),
+        fullName: "Economics Posts"
+    },
+
+};
+
+var currentPage = "";
 
 
-export default class Explore extends React.Component {
+class ExploreTopicPage extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             data: [],
+            yourPostsData: [],
             hasMore: true,
             loading: false,
         };
@@ -28,8 +50,9 @@ export default class Explore extends React.Component {
         alert("Live chat in development...")
     }
 
-    componentDidMount() { //Fetch data once first when component loads
+    componentWillMount() { //Fetch data once
         this.fetchData();
+        currentPage = this.props.match.params.topic;
     }
 
     fetchData() {
@@ -41,6 +64,10 @@ export default class Explore extends React.Component {
                 const currentData = this.state.data
                 this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
+
+                if (this.state.yourPostsData.length === 0) {
+                    this.setState({ yourPostsData: retrievedData })
+                }
             })
     }
 
@@ -75,39 +102,16 @@ export default class Explore extends React.Component {
                 msOverflowStyle: "none",
                 overflowX: "hidden",
             }}>
-                <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "5vh" }}>
-                    <Link to='/DiscApp'>
-                        Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
-                    </Link>
-                    <br />
-                    <Link to='/StreamsDiscussion'>
-                        I discuss about Jugemu here(LINK TO STREAM DISCUSSIONS PAGE FOR DEBUGGING PURPOSES)
-                    </Link>
-                    <br />
-                    <Link to={{
-                        pathname: '/Topicpage',
-                        state: { topicName: 'Computing' }
-                    }}>
-                        Computing
-                    </Link>
-                    <ExploreTopBar />
-                    
+                <div id="Header" style={{ positon: "relative", width: "82vw", height: "50vh", textAlign: "center", borderStyle: "solid", borderWidth: "0px 0px 3px 0px", borderColor: "#1890ff", boxShadow: "0px 10px 10px #0a0a0a", marginBottom: "5vh" }}>
+                    <img alt="Banner" style={{ width: "100%", height: "100%" }} src={Categories[currentPage].cover} />
+                    <h1 style={{
+                        color: "white",
+                        position: "relative",
+                        bottom: "60%",
+                        fontSize: "3vw",
+                        backgroundColor: "rgba(0, 21, 41, 0.90)",
+                    }}>{Categories[currentPage].fullName} <Icon type="play-square" theme="twoTone" /></h1>
                 </div>
-
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Categories </span>
-                    <Icon type="unordered-list"></Icon>
-                </Divider>
-
-                <div id="Category">
-                    <ExploreCategories />
-                </div>
-
-
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Hot Posts </span>
-                    <Icon type="fire" theme="twoTone" twoToneColor='red' />
-                </Divider>
 
                 <InfiniteScroll
                     initialLoad={false}
@@ -116,8 +120,9 @@ export default class Explore extends React.Component {
                     hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
                     useWindow={false}
                 >
+
                     <List
-                        grid={{ gutter: 30, column: 3 }}
+                        grid={{ gutter: 20, column: 3 }}
                         dataSource={this.state.data}
                         locale={{
                             emptyText: (
@@ -156,7 +161,7 @@ export default class Explore extends React.Component {
                                                 </div>
                                             }
                                         />
-                                    </Card> {/*Pass entire datasource as prop*/}
+                                    </Card>
                                 </div>
                             </List.Item>
                         )}
@@ -168,11 +173,9 @@ export default class Explore extends React.Component {
                         </div>
                     )}
                 </InfiniteScroll>
-
-
             </div>
         );
     }
 }
 
-
+export default ExploreTopicPage;

@@ -18,56 +18,85 @@ class Listmaker extends Component {
 
     }
     createItem = (items) => {
-        return (
-            <li key={items.key}>
-                <div>
-                    <p className='timetext'>{this.postTime(items)}</p>
-                    <p className='replytext'>{items.text}</p>
-                </div>
-                <span>
-                    <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
+        if (items.user === this.props.user) {
+            return (
+                <li key={items.key}>
+                    <div>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
+                    <span>
+                        <Button type={'danger'}
+                            onClick={() => { this.props.deleteItem(items.key) }}>Delete
                     </Button>
-                    <span className='votearea'>
-                        <Button onClick={() => { this.props.upvoteReply(items.key) }} type='primary'>
-                            <Icon type="up-circle" theme="twoTone" />
-                        </Button>
-                        <p className='whittencounter'>
-                            {items.counter}
-                        </p>
-                        <Button onClick={() => { this.props.downvoteReply(items.key) }} type='primary'>
-                            <Icon type="down-circle" theme="twoTone" />
-                        </Button>
                     </span>
-                </span>
-                <br />
-            </li>
-        );
+                    <br />
+                </li>
+            );
+        }
+        else {
+            return (
+                <li key={items.key}>
+                    <div>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
+                    <br />
+                </li>
+            );
+        }
     }
     createAnswers = (items) => {
-        return (
-            <li key={items.key}>
-                <div className='listpart'>
-                    <p className='timetext'>{this.postTime(items)}</p>
-                    <p className='replytext'>{items.text}</p>
-                </div>
-                <span>
-                    <Button type={'danger'} onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
+        if (items.user === this.props.user) {
+            return (
+                <li key={items.key}>
+                    <div className='listpart'>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
+                    <span>
+                        <Button type={'danger'}
+                            onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
                     </Button>
+                        <span class='votearea'>
+                            <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
+                                <Icon type="up-circle" theme="twoTone" />
+                            </Button>
+                            <p class='whittencounter'>
+                                {items.counter}
+                            </p>
+                            <Button
+                                onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
+                                <Icon type="down-circle" theme="twoTone" />
+                            </Button>
+                        </span>
+                    </span>
+                    <br />
+                </li>
+            );
+        }
+        else {
+            return (
+                <li key={items.key}>
+                    <div className='listpart'>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
                     <span class='votearea'>
                         <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
                             <Icon type="up-circle" theme="twoTone" />
                         </Button>
-                        <p class='whitencounter'>
+                        <p className='whittencounter'>
                             {items.counter}
                         </p>
                         <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
                             <Icon type="down-circle" theme="twoTone" />
                         </Button>
                     </span>
-                </span>
-                <br />
-            </li>
-        );
+                    <br />
+                </li>
+            )
+        }
     }
     render() {
         const toDoEntries = this.props.entries;

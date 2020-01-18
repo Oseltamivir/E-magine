@@ -4,13 +4,6 @@ import { Input, Icon, Button, Modal, Select, Tooltip } from 'antd';
 const { Search, TextArea } = Input;
 const { Option } = Select;
 
-const selectBefore = (
-    <Select defaultValue="https://www.youtube.com/" style={{ width: "18vw" }}>
-        <Option value="https://www.youtube.com/">https://www.youtube.com/</Option>
-        <Option value="https://www.twitch.tv/">https://www.twitch.tv/</Option>
-    </Select>
-);
-
 var inputValues = {
     Link: "",
     Title: "",
@@ -18,7 +11,7 @@ var inputValues = {
     Topic: "",
 }
 
-class StreamsTopBar extends React.Component {
+class ExploreTopBar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -68,11 +61,11 @@ class StreamsTopBar extends React.Component {
         return (
             <div id="TopOptions" style={{ display: "flex" }}>
                 <Button type="primary" size="large" style={{ marginRight: "0" }} onClick={this.showModal.bind(this)}>
-                    Create Stream
+                    Create Post
                     <Icon type="plus" />
                 </Button>
                 <Search
-                    placeholder="Search homework streams by people all across the globe!"
+                    placeholder="Search homework posts by people all across the globe!"
                     enterButton="Search"
                     size="large"
                     onSearch={value => console.log(value)}
@@ -80,23 +73,18 @@ class StreamsTopBar extends React.Component {
                     style={{ width: "50vw", marginLeft: "2vw", backgroundColor: "#002140" }}
                 />
                 <Modal
-                    title="Create Stream"
+                    title="Create Post"
                     visible={this.state.visible}
                     onOk={this.handleOk.bind(this)}
                     onCancel={this.handleCancel.bind(this)}
                     centered={true}
-                    okText="Start Stream"
+                    okText="Start Posting!"
                     onOk={this.submitForm.bind(this)}
                 >
-                    <h3>Youtube/Twitch Stream Link</h3>
-                    <Tooltip placement="bottomRight" title={<p>Paste the end part of the YouTube/Twitch stream link <br />(E.g watch?v=SIGQSgifs6s or twitchChannelName )</p>}>
-                        <Input onChange={this.linkOnChange.bind(this)} value={this.state.Link} addonBefore={selectBefore} placeholder="Enter end part" />
-                    </Tooltip>
-
-                    <h3 style={{ marginTop: "3vh" }}>Stream Title</h3>
+                    <h3 style={{ marginTop: "3vh" }}>Post Title</h3>
                     <Input onChange={this.titleOnChange.bind(this)} value={this.state.Title} placeholder="E.g Vectors Revision!" />
 
-                    <h3 style={{ marginTop: "3vh" }}>Stream Description</h3>
+                    <h3 style={{ marginTop: "3vh" }}>Post Description</h3>
                     <TextArea onChange={this.descOnChange.bind(this)} value={this.state.Desc} allowClear placeholder="E.g Revision before CA1!" rows={5} />
 
                     <h3 style={{ marginTop: "3vh" }}>Topic</h3>
@@ -114,4 +102,4 @@ class StreamsTopBar extends React.Component {
     }
 }
 
-export default StreamsTopBar;
+export default ExploreTopBar;
