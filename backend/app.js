@@ -1,7 +1,15 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const fileUpload = require('express-fileupload')
 
 const apiv1 = require('./api/v1');
+
+app.use(cors({credentials: true, origin: true}));
+
+app.use(fileUpload({
+  limits: { fileSize: 10 * 1024 * 1024 },
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
