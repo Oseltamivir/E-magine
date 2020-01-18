@@ -33,7 +33,9 @@ class Login extends React.Component {
                 }).then((results) => {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
+
                     this.setState({ errorFetch: false })
+
 
                     if (data.success == true) {
                         this.props.loginHandler(data.token)

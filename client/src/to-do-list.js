@@ -86,13 +86,11 @@ class Todo extends Component {
         return (
             <div className='todolist' >
                 <form onSubmit={this.addItem}>
-                    <form onSubmit={this.addAnswer}>
                         <Listmaker
                             answers={this.state.answerItems}
                             entries={this.state.items}
                             deleteItem={this.deleteItem.bind(this)}
                             user={this.props.user}
-                            deleteAnswer={this.deleteAnswer.bind(this)}
                             upvoteAnswer={this.upvoteAnswer.bind(this)}
                             downvoteAnswer={this.downvoteAnswer.bind(this)}
                         />
@@ -106,7 +104,6 @@ class Todo extends Component {
                                 <Icon type="star" theme="twoTone" />Add Answer
                         </Button>
                         </div>
-                    </form>
                 </form>
             </div>
         )

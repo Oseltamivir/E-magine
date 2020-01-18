@@ -3,11 +3,10 @@ import logo from './logo.svg';
 import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import Todo from './to-do-list'
 import { Button } from 'antd';
-import { Tabs, Icon, Divider } from 'antd';
+import { Tabs, Icon, Divider, Input } from 'antd';
 const { TabPane } = Tabs;
-
+const { TextArea } = Input
 export default class CreatePost extends Component {
     constructor(prop) {
         super(prop)
@@ -17,14 +16,18 @@ export default class CreatePost extends Component {
             fileName: '',
             postState: 'Post!',
             post: '',
-            user: 'Bob'
+            user: 'Bob',
+            title: ''
 
 
         } //For storing text for post
         this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
     }
-    changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
     postOrEdit = () => { this.state.postState === 'Post!' ? this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" }) }
+    handleInput = (ev) => {
+        this.setState({ title: ev.target.value })
+    }
+
     componentDidMount() {
         var self = this;
         this.editor = new window.FroalaEditor('#createexampl', {
@@ -43,7 +46,7 @@ export default class CreatePost extends Component {
         // create a variable to check if the thingy is open
         // if it is not and user is poster, create editor
         var self = this;
-        this.editor = new window.FroalaEditor('#exampl',
+        this.editor = new window.FroalaEditor('#createexampl',
             {
                 events: {
                     contentChanged: function () {
@@ -81,6 +84,7 @@ export default class CreatePost extends Component {
                         </Divider>
 
                         <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
+                            <TextArea value={this.state.title} onChange={this.handleInput} placeholder='Type title here'></TextArea>
                             <div id='createexampl'></div>
                             <br />
                             <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
@@ -98,7 +102,7 @@ export default class CreatePost extends Component {
                             <span>Preview </span>
                             <Icon type="camera" theme='twoTone'></Icon>
                         </Divider>
-
+                        <div className = 'qntitle' dangerouslySetInnerHTML={{__html:this.state.title}}></div>
                         <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
                     </TabPane>
                 </Tabs>

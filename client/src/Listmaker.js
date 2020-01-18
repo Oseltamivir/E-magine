@@ -26,9 +26,7 @@ class Listmaker extends Component {
                         <p className='replytext'>{items.text}</p>
                     </div>
                     <span>
-                        <Button type={'danger'}
-                            onClick={() => { this.props.deleteItem(items.key) }}>Delete
-                    </Button>
+                       <p onClick={() => { this.props.deleteItem(items.key) }} style = {{color:'#ff4422',fontSize:'120%',float:'right'}}>X</p>
                     </span>
                     <br />
                 </li>
@@ -55,9 +53,6 @@ class Listmaker extends Component {
                         <p className='replytext'>{items.text}</p>
                     </div>
                     <span>
-                        <Button type={'danger'}
-                            onClick={() => { this.props.deleteAnswer(items.key) }}>Delete
-                    </Button>
                         <span class='votearea'>
                             <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
                                 <Icon type="up-circle" theme="twoTone" />

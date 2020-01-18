@@ -127,12 +127,13 @@ class App extends React.Component {
       back: false,
       msgsrc: '',
       msgtxt: '',
+      notifies: 0,
       token: tokenStatus,
     };
   }
 
   passInfo = (sender, text) => {
-    this.setState({ msgsrc: sender, msgtxt: text })
+    this.setState({ msgsrc: sender, msgtxt: text, notifies:this.state.notifies+1 })
   }
 
   handleLogin(receivedtoken) {
@@ -317,7 +318,7 @@ class App extends React.Component {
                     <span style={{ fontWeight: "500" }}> Exegesis</span>
                   </div>
                   <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-                    <Badge count={5} offset={[-1, 1]}>
+                    <Badge count={this.state.notifies} offset={[-1, 1]}>
                       <Dropdown overlay={notification} trigger={['click']} placement="bottomLeft">
                         <Button type="primary" shape="circle" icon="bell" size="large" />
                       </Dropdown>
@@ -340,8 +341,8 @@ class App extends React.Component {
                   <Route exact path='/Streams/' component={Profile} />
                   <Route exact path='/Streams/:topic' component={streamsTopicPage} />
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
-                  <Route exact path='/Profile' component={Profile} />
-                  <Route exact path='/DiscApp' component={DiscApp} />
+                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
+                  <Route exact path='/DiscApp' component={DiscApp} /> 
                   <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' component={CreatePost} />
