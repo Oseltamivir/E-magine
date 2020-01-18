@@ -76,20 +76,6 @@ export default class Explore extends React.Component {
                 overflowX: "hidden",
             }}>
                 <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "5vh" }}>
-                    <Link to='/DiscApp'>
-                        Hello(LINK TO DISCUSSION PAGE FOR DEBUGGING PURPOSES)
-                    </Link>
-                    <br />
-                    <Link to='/StreamsDiscussion'>
-                        I discuss about Jugemu here(LINK TO STREAM DISCUSSIONS PAGE FOR DEBUGGING PURPOSES)
-                    </Link>
-                    <br />
-                    <Link to={{
-                        pathname: '/Topicpage',
-                        state: { topicName: 'Computing' }
-                    }}>
-                        Computing
-                    </Link>
                     <ExploreTopBar />
                     
                 </div>
