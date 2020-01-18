@@ -21,7 +21,7 @@ class Login extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                fetch('http://test.exegesisapp.tech:8080/api/v1/auth/login', {
+                fetch(window.baseURL + '/api/v1/auth/login', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
