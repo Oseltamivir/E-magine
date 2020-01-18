@@ -1,7 +1,8 @@
 import React from 'react';
-import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { Input, Button, Icon, Layout, Form, Checkbox, message } from 'antd';
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
+import Background from './bg1.jpg';
 
 const { Content } = Layout
 
@@ -11,8 +12,6 @@ class Register extends React.Component {
         super(props);
 
         this.state = {
-            failedLogin: false,
-            errorFetch: false,
         };
     }
 
@@ -21,8 +20,8 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => { //validate fields
             if (!err) { //if error false
                 console.log('Received values of form: ', values); //print out values received
-                fetch(window.baseURL + '/api/v1/auth/login', {
-                    method: 'post',
+                fetch(window.baseURL + '/api/v1/auth/register', {
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         "username": values.username,
@@ -32,17 +31,17 @@ class Register extends React.Component {
                 }).then((results) => {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
-                    this.setState({ errorFetch: false })
 
                     if (data.success == true) {
+                        message.success({ content: "Successfully Registered! Welcome to Exegesis" });
                         this.props.loginHandler(data.token)
                     }
                     else {
-                        this.setState({ failedLogin: true })
+                        message.error({ content: "All blanks must be filled in" });
                     }
 
                 }).catch((error) => {
-                    this.setState({ errorFetch: true })
+                    message.error({ content: "Connection error" });
                 })
             }
         });
@@ -51,7 +50,7 @@ class Register extends React.Component {
     compareToFirstPassword = (rule, value, callback) => {
         const { form } = this.props;
         if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent');
+            callback('The two passwords that you entered are inconsistent');
         } else {
             callback();
         }
@@ -63,7 +62,7 @@ class Register extends React.Component {
 
             <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
                 <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "40vh", width: "50vw" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", width: "80vw", backgroundImage: "url("+ Background + ")", backgroundSize: `cover`, overflow:`hidden`  }}>
                         <div style={{ fontSize: "8vw", color: "white" }}>
                             <Icon component={Logo} />
                             <span style={{ fontWeight: "500" }}> Exegesis</span>
@@ -73,7 +72,7 @@ class Register extends React.Component {
                         </div>
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "50vw", boxShadow: "-5px 0px 20px black" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "40vw", boxShadow: "-5px 0px 20px black" }}>
                         <h1 style={{ color: "white", fontSize: "3vw" }}>Register <Icon type="edit" theme="twoTone" /> </h1>
                         <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
                             <Form.Item>
@@ -131,13 +130,6 @@ class Register extends React.Component {
                                     </Button>
                                 </div>
                             </Form.Item>
-                            {/*Error Catching*/}
-                            {this.state.failedLogin && (
-                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
-                            )}
-                            {this.state.errorFetch && (
-                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
-                            )}
                         </Form>
                     </div>
                 </Content>

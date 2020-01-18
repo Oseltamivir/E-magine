@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { Input, Button, Icon, Layout, Form, Checkbox, message } from 'antd';
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
@@ -39,6 +39,7 @@ class Login extends React.Component {
 
 
                     if (data.success === true) {
+                        message.success({ content: "Successfully Logged In!" });
                         this.props.loginHandler(data.token)
                     }
                     else { 

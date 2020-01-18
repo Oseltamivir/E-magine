@@ -412,7 +412,8 @@ class App extends React.Component {
         {!this.state.token && (
         <div>
           {this.state.isRegister && (
-          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>)}
+          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>
+          )}
           <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalLoginForm>
         </div>
         )}
