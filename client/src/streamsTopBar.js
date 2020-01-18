@@ -19,7 +19,7 @@ var inputValues = {
     Topic: "",
 }
 
-
+var sub
 function OkModal() { //Special hook function in order to use React Router's history.push 
     const history = useHistory();
 
@@ -73,7 +73,7 @@ class StreamsTopBar extends React.Component {
             Topic: "",
         };
     }
-
+    
     linkOnChange(e) {
         this.setState({ Link: e.target.value })
         inputValues.Link = e.target.value
@@ -93,6 +93,10 @@ class StreamsTopBar extends React.Component {
 
     showModal() {
         this.setState({ visible: true })
+    }
+
+    handleCancel() {
+        this.setState({ visible: false })
     }
 
     render() {
@@ -116,6 +120,7 @@ class StreamsTopBar extends React.Component {
                     visible={this.state.visible}
                     centered={true}
                     okText="Start Stream"
+                    onCancel={this.handleCancel.bind(this)}
                 >
                     <h3>Youtube/Twitch Stream Link</h3>
                     <Tooltip placement="bottomRight" title={<p>Paste the end part of the YouTube/Twitch stream link <br />(E.g watch?v=SIGQSgifs6s or twitchChannelName )</p>}>
