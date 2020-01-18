@@ -11,18 +11,37 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
+            failedLogin: false,
+            errorFetch: false,
         };
     }
 
     handleSubmit = e => {
-        var successful = true
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                if (successful === true) {//If successful login...
-                    this.props.loginHandler(true)
-                }
+                fetch('http://10.25.97.97:8080/api/v1/auth/login', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        "username": values.username,
+                        "password": values.password,
+                    })
+                }).then((results) => {
+                    return results.json(); //return data in JSON (since its JSON data)
+                }).then((data) => {
+                    this.setState({errorFetch: false})
+                    if (data.success == true) {
+                        this.props.loginHandler(data.success, data.token)
+                    }
+                    else { 
+                        this.setState({failedLogin: true})
+                    }
+
+                }).catch((error) => {
+                    this.setState({errorFetch: true})
+                })
             }
         });
     };
@@ -85,6 +104,13 @@ class Login extends React.Component {
                                     <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
                                 </div>
                             </Form.Item>
+                            {/*Error Catching*/}
+                                {this.state.failedLogin && (
+                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
+                                )}
+                                {this.state.errorFetch && (
+                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
+                                )}
                         </Form>
                     </div>
                 </Content>

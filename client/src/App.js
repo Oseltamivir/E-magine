@@ -123,15 +123,16 @@ class App extends React.Component {
       back: false,
       msgsrc: '',
       msgtxt: '',
-      loggedIn: true,
+      loggedIn: false,
+      token: '',
     };
   }
 
   passInfo = (sender, text) => {
     this.setState({ msgsrc: sender, msgtxt: text })
   }
-  handleLogin(loginStatus) {
-    this.setState({ loggedIn: loginStatus })
+  handleLogin(loginStatus, receivedtoken) {
+    this.setState({ loggedIn: loginStatus, token: receivedtoken})
   }
 
   componentDidUpdate() {
