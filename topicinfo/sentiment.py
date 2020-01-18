@@ -62,9 +62,9 @@ def analyse(to_upload: list) -> None:
     for obj in out_B.objects.all():
         if obj.key[0] != '.': #if file is not hidden file
             download_and_delete(obj.key, out_B, '/tmp/SCSE/%s' % basename(obj.key))
-
+    
     #get rid of the buckets
-    for f in (delete_all_objects, lambda b: b.delete()):
-        map(f, (in_B, out_B))
+    for b in (in_B, out_B):
+        purge(b)
 
 analyse([f for f in argv[1:] if access(f, R_OK)])

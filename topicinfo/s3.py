@@ -23,10 +23,6 @@ def download_and_delete(k: str, b, f: str=None) -> None:
     print('wrote output to %s' % f)
     obj.delete()
 
-def clean(b) -> None:
-    for obj in b.objects.all():
-        obj.delete()
-
 def display(b) -> None:
     for obj in b.objects.all():
         print(obj.key)
@@ -38,6 +34,10 @@ def delete_all_objects(bucket) -> None:
                     'VersionId': obj_version.id})
     print(res)
     bucket.delete_objects(Delete={'Objects': res})
+
+def purge(bucket) -> None:
+    delete_all_objects(bucket)
+    bucket.delete()
 
 if __name__ == '__main__':
     #this function is here to document the usage of this lib
