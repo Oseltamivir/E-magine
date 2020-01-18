@@ -22,6 +22,9 @@ import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'rea
 
 const { Header, Content, Sider } = Layout;
 
+var baseURL = "test.exegesisapp.tech";
+
+
 
 const data = [
   {
@@ -115,6 +118,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    let tokenStatus = localStorage.getItem('token')
 
     this.state = {
       current: "Feed",
@@ -123,16 +127,17 @@ class App extends React.Component {
       back: false,
       msgsrc: '',
       msgtxt: '',
-      loggedIn: false,
-      token: '',
+      token: tokenStatus,
     };
   }
 
   passInfo = (sender, text) => {
     this.setState({ msgsrc: sender, msgtxt: text })
   }
-  handleLogin(loginStatus, receivedtoken) {
-    this.setState({ loggedIn: loginStatus, token: receivedtoken})
+
+  handleLogin(receivedtoken) {
+    this.setState({token: receivedtoken})
+    localStorage.setItem('token', receivedtoken);
   }
 
   componentDidUpdate() {
@@ -221,6 +226,8 @@ class App extends React.Component {
         back: false,
       })
     }
+
+
   }
 
   onCollapse = (collapsed) => {
@@ -249,7 +256,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.loggedIn && (
+        {this.state.token && (
           <Layout style={{ height: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
@@ -354,7 +361,7 @@ class App extends React.Component {
 
           </Layout>
         )}
-        {this.state.loggedIn === false && (
+        {!this.state.token && (
           <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
         )}
       </div>
@@ -365,6 +372,21 @@ class App extends React.Component {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Messages extends React.Component {
   constructor(props) {
