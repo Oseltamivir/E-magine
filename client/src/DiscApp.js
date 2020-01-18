@@ -27,7 +27,7 @@ class DiscApp extends Component {
   fetchChannelInfo() {
     fetch(window.baseURL + '/api/v1/channels/' + this.state.channel_id, {
       method: 'get',
-      headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
+      headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
     }).then((results) => {
       return results.json(); //return data in JSON (since its JSON data)
     }).then((data) => {
@@ -47,22 +47,10 @@ class DiscApp extends Component {
   }
 
   componentDidMount() {
-    var fromCreatePost = true;
-    try { let x = this.props.location.state.channel_id; }
-    catch (e) {
-      if (e.name === "TypeError") {
-        fromCreatePost = false
-      }
-    }
-
-    if (fromCreatePost === true) { //For react-router hooks redirects
-      this.setState({ channel_id: this.props.location.state.channel_id, token: this.props.location.state.token }, this.fetchChannelInfo.bind(this))
-    }
-    else { //For <NavLink> redirects
-      this.setState({ channel_id: this.props.channel_id, token: this.props.token }, this.fetchChannelInfo.bind(this))
-    }
-
-
+    this.setState(
+      {channel_id: this.props.match.params.channel_id},
+      this.fetchChannelInfo.bind(this)
+      )
   }
   render() {
     return (
@@ -103,4 +91,4 @@ class DiscApp extends Component {
 }
 
 
-export default DiscApp
+export default DiscApp;
