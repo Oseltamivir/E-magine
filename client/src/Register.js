@@ -5,7 +5,7 @@ import './index.css';
 
 const { Content } = Layout
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,9 +18,9 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
+        this.props.form.validateFields((err, values) => { //validate fields
+            if (!err) { //if error false
+                console.log('Received values of form: ', values); //print out values received
                 fetch(window.baseURL + '/api/v1/auth/login', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
@@ -28,24 +28,34 @@ class Login extends React.Component {
                         "username": values.username,
                         "password": values.password,
                     })
+
                 }).then((results) => {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
-                    this.setState({errorFetch: false})
+                    this.setState({ errorFetch: false })
 
                     if (data.success == true) {
                         this.props.loginHandler(data.token)
                     }
-                    else { 
-                        this.setState({failedLogin: true})
+                    else {
+                        this.setState({ failedLogin: true })
                     }
 
                 }).catch((error) => {
-                    this.setState({errorFetch: true})
+                    this.setState({ errorFetch: true })
                 })
             }
         });
     };
+
+    compareToFirstPassword = (rule, value, callback) => {
+        const { form } = this.props;
+        if (value && value !== form.getFieldValue('password')) {
+          callback('Two passwords that you enter is inconsistent!');
+        } else {
+          callback();
+        }
+      };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -86,6 +96,26 @@ class Login extends React.Component {
                                         placeholder="Password"
                                     />,
                                 )}
+
+                            </Form.Item>
+                            <Form.Item label = "Confirm Password" hasFeedback>
+                                {getFieldDecorator('Confirm', {
+                                    rules: [{
+                                        required: true,
+                                        message: 'Please enter your Password again!'
+                                    },
+                                    {
+                                        validator:this.compareToFirstPassword,
+                                    }
+                                    ],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="password"
+                                        placeholder="Password"
+                                    />,
+                                )}
+
                             </Form.Item>
                             <Form.Item>
                                 <div id="RememberForget" style={{ display: "flex", marginBottom: "2vh" }}>
@@ -106,12 +136,12 @@ class Login extends React.Component {
                                 </div>
                             </Form.Item>
                             {/*Error Catching*/}
-                                {this.state.failedLogin && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
-                                )}
-                                {this.state.errorFetch && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
-                                )}
+                            {this.state.failedLogin && (
+                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
+                            )}
+                            {this.state.errorFetch && (
+                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
+                            )}
                         </Form>
                     </div>
                 </Content>
@@ -120,6 +150,6 @@ class Login extends React.Component {
     }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(Login);
+const WrappedNormalRegisterForm = Form.create({ name: 'normal_register' })(Register);
 
-export default WrappedNormalLoginForm;
+export default WrappedNormalRegisterForm;
