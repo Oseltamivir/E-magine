@@ -311,9 +311,8 @@ class Profile extends React.Component {
                                                             bordered={false}
                                                             title={item.title}
                                                             headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                                            bodyStyle={{ backgroundColor: "#001529" }}
+                                                            bodyStyle={{ backgroundColor: "#001529", height: "25vh" }}
                                                             style={{ boxShadow: "8px 0px 12px" }}
-                                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                                         >
                                                             <Meta
                                                                 title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button></div>}
@@ -375,7 +374,6 @@ class Profile extends React.Component {
                                                             headStyle={{ backgroundColor: "#1890ff", color: "white" }}
                                                             bodyStyle={{ backgroundColor: "#001529" }}
                                                             style={{ boxShadow: "8px 0px 12px" }}
-                                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                                         >
                                                             <Meta
                                                                 title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button></div>}
