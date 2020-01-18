@@ -52,11 +52,10 @@ class Login extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div styles={{ backgroundImage: `url(${Background})` }}>
 
                 <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
                     <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "40vh", width: "50vw" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "40vh", width: "50vw", backgroundImage: "url("+ Background + ")", backgroundSize: 'auto' }}>
                             <div style={{ fontSize: "8vw", color: "white" }}>
                                 <Icon component={Logo} />
                                 <span style={{ fontWeight: "500" }}> Exegesis</span>
@@ -120,7 +119,6 @@ class Login extends React.Component {
 
                     </Content>
                 </Layout>
-            </div>
         );
     }
 }
