@@ -124,11 +124,12 @@ class App extends React.Component {
       msgsrc: '',
       msgtxt: '',
       loggedIn: true,
+      notifies: 0
     };
   }
 
   passInfo = (sender, text) => {
-    this.setState({ msgsrc: sender, msgtxt: text })
+    this.setState({ msgsrc: sender, msgtxt: text, notifies:this.state.notifies+1 })
   }
   handleLogin(loginStatus) {
     this.setState({ loggedIn: loginStatus })
@@ -309,7 +310,7 @@ class App extends React.Component {
                     <span style={{ fontWeight: "500" }}> Exegesis</span>
                   </div>
                   <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-                    <Badge count={5} offset={[-1, 1]}>
+                    <Badge count={this.state.notifies} offset={[-1, 1]}>
                       <Dropdown overlay={notification} trigger={['click']} placement="bottomLeft">
                         <Button type="primary" shape="circle" icon="bell" size="large" />
                       </Dropdown>
