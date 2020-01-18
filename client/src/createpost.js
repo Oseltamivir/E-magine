@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
-import { Tabs, Icon, Divider, Input } from 'antd';
+import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
 const { TabPane } = Tabs;
-const { TextArea } = Input
+
+const { Option } = Select;
+
 export default class CreatePost extends Component {
-    constructor(prop) {
-        super(prop)
+    constructor(props) {
+        super(props)
+
+
         this.state = {
-            Postnote: '',
-            PostTitle: '',
+            token: this.props.token,
             fileName: '',
             postState: 'Post!',
             post: '',
             user: 'Bob',
-            title: ''
+            title: '',
+            topic: '',
 
 
         } //For storing text for post
@@ -25,31 +28,33 @@ export default class CreatePost extends Component {
     }
     changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
 
-    }
-        })
-            alert("Connection Failed")
-        }).catch((error) => {
-
-            }
-                alert("Missing Type")
-            else {
-
-        }).then((data) => {
-            return results.json(); //return data in JSON (since its JSON data)
-        }).then((results) => {
-                "description": ''
-            })
-                "timestamp": Date.now(),
-                "type": 0,
+    createPost() { //Fetch profile info
+        fetch(window.baseURL + '/api/v1/channels', {
+            method: 'post',
             headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
             body: JSON.stringify({
-            method: 'post',
-        fetch(window.baseURL + '/api/v1/channels', {
-    fetchProfileData() { //Fetch profile info
+                "type": 0,
+                "timestamp": Date.now(),
+                "description": this.state.post,
+                "title": this.state.title,
+                "topic": this.state.topic,
+            })
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+            this.setState({ errorFetch: false })
 
-    postOrEdit = () => { this.state.postState === 'Post!' ? this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" }) }
-    handleInput = (ev) => {
-        this.setState({ title: ev.target.value })
+            if (data.success === true) {
+                alert("Post Created")
+                alert(data.id)
+            }
+            else {
+                message.error({ content: "Oops... Form fields cannot be left blank" });
+            }
+
+        }).catch((error) => {
+            message.error({ content: "Oops, connection error" });
+        })
     }
 
     componentDidMount() {
@@ -83,6 +88,15 @@ export default class CreatePost extends Component {
                 attribution: false
             })
     }
+
+    handleTitle(e) {
+        this.setState({ title: e.target.value })
+    }
+
+    topicOnChange(e) {
+        this.setState({ topic: e })
+    }
+
     render() {
         let ifPosted = ''
         let d = new Date()
@@ -107,13 +121,18 @@ export default class CreatePost extends Component {
                             <Icon type="edit" theme='twoTone'></Icon>
                         </Divider>
 
-                        <form onSubmit={this.func = (ev) => { ev.preventDefault(); alert('Posted!') }}>
-                            <TextArea value={this.state.title} onChange={this.handleInput} placeholder='Type title here'></TextArea>
-                            <div id='createexampl'></div>
-                            <br />
-                            <Button type='primary' onClick={this.postOrEdit}>{this.state.postState}</Button>
-                            {ifPosted}
-                        </form>
+                        <Input onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." />
+                        <Select value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
+                            <Option value="Mathematics">Mathematics</Option>
+                            <Option value="Physics">Physics</Option>
+                            <Option value="Economics">Economics</Option>
+                            <Option value="Chemistry">Chemistry</Option>
+                            <Option value="Biology">Biology</Option>
+                            <Option value="Computing">Computing</Option>
+                        </Select>
+                        <div id='createexampl'></div> {/*Text Editor*/}
+                        <Button type='primary' onClick={this.createPost.bind(this)}>{this.state.postState}</Button>
+                        {ifPosted}
 
                     </TabPane>
                     <TabPane tab={
@@ -126,7 +145,7 @@ export default class CreatePost extends Component {
                             <span>Preview </span>
                             <Icon type="camera" theme='twoTone'></Icon>
                         </Divider>
-                        <div className = 'qntitle' dangerouslySetInnerHTML={{__html:this.state.title}}></div>
+                        <div className='qntitle' dangerouslySetInnerHTML={{ __html: this.state.title }}></div>
                         <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
                     </TabPane>
                 </Tabs>
