@@ -74,7 +74,7 @@ class Register extends React.Component {
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "50vw", boxShadow: "-5px 0px 20px black" }}>
-                        <h1 style={{ color: "white", fontSize: "3vw" }}>Sign In <Icon type="unlock" theme="twoTone" /> </h1>
+                        <h1 style={{ color: "white", fontSize: "3vw" }}>Register <Icon type="edit" theme="twoTone" /> </h1>
                         <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
                             <Form.Item>
                                 {getFieldDecorator('username', {
@@ -98,7 +98,7 @@ class Register extends React.Component {
                                 )}
 
                             </Form.Item>
-                            <Form.Item label = "Confirm Password" hasFeedback>
+                            <Form.Item hasFeedback>
                                 {getFieldDecorator('Confirm', {
                                     rules: [{
                                         required: true,
@@ -112,7 +112,7 @@ class Register extends React.Component {
                                     <Input
                                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         type="password"
-                                        placeholder="Password"
+                                        placeholder="Confirm Password"
                                     />,
                                 )}
 
@@ -123,16 +123,11 @@ class Register extends React.Component {
                                         valuePropName: 'checked',
                                         initialValue: true,
                                     })(<Checkbox style={{ color: "#cccccc", fontSize: "120%" }}>Remember me</Checkbox>)}
-
-                                    <a className="login-form-forgot" style={{ marginLeft: "auto", fontSize: "120%" }} href="">
-                                        Forgot password
-                                    </a>
                                 </div>
                                 <div>
                                     <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
-                                        Log in
+                                        Register!
                                     </Button>
-                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
                                 </div>
                             </Form.Item>
                             {/*Error Catching*/}
