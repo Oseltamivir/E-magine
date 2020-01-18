@@ -252,10 +252,24 @@ router.post('/channels', async (req, res) => {
     return;
   }
 
+  if (!data.hasOwnProperty('description')) {
+    res.status(400).json({success: false, error: 'Missing channel description!'});
+    return;
+  }
+
+  if (!data.hasOwnProperty('title')) {
+    res.status(400).json({success: false, error: 'Missing channel title!'});
+    return;
+  }
+
+  if (!data.hasOwnProperty('topic')) {
+    res.status(400).json({success: false, error: 'Missing channel topic!'});
+    return;
+  }
+
   // TODO: Error trapping (channel type, etc)
 
   const id = simpleflake().toString();
-
   data.id = Long.fromString(id);
 
   await db.collection('channels').insertOne(data);
