@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Button, Input, Icon } from 'antd'
+import { Button, Input, Icon, Divider } from 'antd'
 import Listmaker from './Listmaker.js'
 import { getElementError } from '@testing-library/react';
+import { NavLink } from 'react-router-dom';
 const { TextArea } = Input
 class Todo extends Component {
     constructor(prop) {
@@ -83,31 +84,101 @@ class Todo extends Component {
         else { alert('Wrong Input') }
     }
     render() {
+        let d = new Date
+        if (this.state.user === this.state.poster) { 
         return (
             <div className='todolist' >
-                <form onSubmit={this.addItem}>
-                        <Listmaker
-                            answers={this.state.answerItems}
-                            entries={this.state.items}
-                            deleteItem={this.deleteItem.bind(this)}
-                            user={this.props.user}
-                            upvoteAnswer={this.upvoteAnswer.bind(this)}
-                            downvoteAnswer={this.downvoteAnswer.bind(this)}
-                        />
-                        <div id='Postbar'>
-                            <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+                {/*This is where dividers and question preview goes to */}
+                <div>
+                    <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                        <span>Question </span>
+                        <Icon type="question-circle" theme="twoTone" />
+                    </Divider>
+                    <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
+                    <div dangerouslySetInnerHTML={{__html: this.props.title}}className = 'preview'></div>
+                    <div dangerouslySetInnerHTML={{ __html: this.props.post }} className='preview'></div>
+                    <Button type='primary' onClick={this.postOrEdit}><NavLink to = {{pathname:'/Posts_utils', state:{title:this.props.title, post:this.props.post}}}>Edit Post</NavLink></Button>
 
-                            <Button id='posttwo' size='large' type='primary'
-                                onClick={this.addItem}>Post</Button>
-                            <Button id='postthree' size='large' type='primary'
-                                onClick={this.addAnswer}>
-                                <Icon type="star" theme="twoTone" />Add Answer
+                    <span className ='votearea'>
+                        <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
+                            <Icon type="up-circle" theme="twoTone" />
                         </Button>
-                        </div>
+                        <p className='whittencounter'> {this.state.counter}</p>
+                        <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
+                            <Icon type="down-circle" theme="twoTone" />
+                        </Button>
+                    </span>
+                </div>
+                <form onSubmit={this.addItem}>
+                    <Listmaker
+                        answers={this.state.answerItems}
+                        entries={this.state.items}
+                        deleteItem={this.deleteItem.bind(this)}
+                        user={this.props.user}
+                        upvoteAnswer={this.upvoteAnswer.bind(this)}
+                        downvoteAnswer={this.downvoteAnswer.bind(this)}
+                    />
+                    <div id='Postbar'>
+                        <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+
+                        <Button id='posttwo' size='large' type='primary'
+                            onClick={this.addItem}>Post</Button>
+                        <Button id='postthree' size='large' type='primary'
+                            onClick={this.addAnswer}>
+                            <Icon type="star" theme="twoTone" />Add Answer
+                        </Button>
+                    </div>
                 </form>
             </div>
         )
     }
+    else{
+        return(
+        <div className='todolist' >
+        {/*This is where dividers and question preview goes to */}
+        <div>
+            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+              <span>Question </span>
+              <Icon type="question-circle" theme="twoTone" />
+            </Divider>
+            <p style = {{color: 'white'}}>Posted by {this.props.user} on {d.toDateString()}</p>
+            <div dangerouslySetInnerHTML={{__html: this.props.title}}className = 'preview'></div>
+            <div dangerouslySetInnerHTML={{ __html: this.props.post }} className='preview'></div>
+
+            <span className='votearea'>
+              <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
+                <Icon type="up-circle" theme="twoTone" />
+              </Button>
+              <p className='whittencounter'> {this.state.counter}</p>
+              <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
+                <Icon type="down-circle" theme="twoTone" />
+              </Button>
+            </span>
+        </div>
+        <form onSubmit={this.addItem}>
+            <Listmaker
+                answers={this.state.answerItems}
+                entries={this.state.items}
+                deleteItem={this.deleteItem.bind(this)}
+                user={this.props.user}
+                upvoteAnswer={this.upvoteAnswer.bind(this)}
+                downvoteAnswer={this.downvoteAnswer.bind(this)}
+            />
+            <div id='Postbar'>
+                <TextArea id='Messaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+
+                <Button id='posttwo' size='large' type='primary'
+                    onClick={this.addItem}>Post</Button>
+                <Button id='postthree' size='large' type='primary'
+                    onClick={this.addAnswer}>
+                    <Icon type="star" theme="twoTone" />Add Answer
+                </Button>
+            </div>
+        </form>
+    </div>
+)
+    }
+}
 }
 
 

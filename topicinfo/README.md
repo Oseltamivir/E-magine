@@ -39,5 +39,5 @@ The python script will crash with absolute certainty iff
 1. Windows is involved
 2. The dependencies above were ignored
 3. ~/.aws/credentials is not valid/present
-4. Any credentials other than mine (152334H) are used, because the variables CLASSIFIER and role_ARN are hardcoded
+4. Any credentials other than mine (152334H) are used, because the variables `CLASSIFIER` and `role_ARN` are hardcoded (Ideally, this will be fixed later)
 

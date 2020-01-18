@@ -3,10 +3,13 @@ import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
+
 import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
 const { TabPane } = Tabs;
 
 const { Option } = Select;
+
+import { NavLink } from 'react-router-dom'
 
 export default class CreatePost extends Component {
     constructor(props) {
@@ -121,6 +124,7 @@ export default class CreatePost extends Component {
                             <Icon type="edit" theme='twoTone'></Icon>
                         </Divider>
 
+
                         <Input onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." />
                         <Select value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
                             <Option value="Mathematics">Mathematics</Option>
@@ -133,6 +137,7 @@ export default class CreatePost extends Component {
                         <div id='createexampl'></div> {/*Text Editor*/}
                         <Button type='primary' onClick={this.createPost.bind(this)}>{this.state.postState}</Button>
                         {ifPosted}
+
 
                     </TabPane>
                     <TabPane tab={
