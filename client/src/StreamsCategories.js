@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Icon, Spin, List } from 'antd';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './index.css';
 
 const { Meta } = Card;
@@ -34,6 +34,12 @@ const Categories = [
 ];
 
 class StreamsCategories extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
+      }
 
 
     render() {
@@ -52,7 +58,7 @@ class StreamsCategories extends React.Component {
                 renderItem={item => (
                     <List.Item key={item.id}>
                         <Link to={"Streams/" + item.topic}>
-                            <div onClick={this.cardClick(item.title)} key={item.id}>
+                            <div key={item.id}>
                                 <Card
                                     hoverable
                                     type="inner"
