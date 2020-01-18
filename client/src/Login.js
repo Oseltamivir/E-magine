@@ -103,7 +103,7 @@ class Login extends React.Component {
                                     <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
                                         Log in
                                     </Button>
-                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <NavLink to = '/Register'>register now!</NavLink></p>
+                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a onClick = {this.props.register}>register now!</a></p>
                                 </div>
                             </Form.Item>
                             {/*Error Catching*/}
