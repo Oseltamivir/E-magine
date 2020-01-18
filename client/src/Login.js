@@ -2,8 +2,10 @@ import React from 'react';
 import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
+import Background from './bg1.jpg';
 
 const { Content } = Layout
+
 
 class Login extends React.Component {
 
@@ -31,17 +33,19 @@ class Login extends React.Component {
                 }).then((results) => {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
-                    this.setState({errorFetch: false})
+
+                    this.setState({ errorFetch: false })
+
 
                     if (data.success == true) {
                         this.props.loginHandler(data.token)
                     }
-                    else { 
-                        this.setState({failedLogin: true})
+                    else {
+                        this.setState({ failedLogin: true })
                     }
 
-                }).catch((error) => {
-                    this.setState({errorFetch: true})
+                }).catch(() => {
+                    this.setState({ errorFetch: true })
                 })
             }
         });
@@ -51,71 +55,72 @@ class Login extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
 
-            <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
-                <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "40vh", width: "50vw" }}>
-                        <div style={{ fontSize: "8vw", color: "white" }}>
-                            <Icon component={Logo} />
-                            <span style={{ fontWeight: "500" }}> Exegesis</span>
+                <Layout style={{ backgroundColor: "#002140", width: "100vw", height: "100vh" }}>
+                    <Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", width: "100%", backgroundImage: "url("+ Background + ")", backgroundSize: `cover`, overflow:`hidden` }}>
+                            <div style={{ fontSize: "8vw", color: "white" }}>
+                                <Icon component={Logo} />
+                                <span style={{ fontWeight: "500",textShadow: '1px -1px 1px -1px #000000' }}> Exegesis</span>
+                            </div>
+                            <div style={{ color: "white", fontSize: "2vw" }}>
+                                <p style={{textShadow: '1px 1px 1px 1px #000000'}}>Redefining Learning™</p>
+                            </div>
                         </div>
-                        <div style={{ color: "white", fontSize: "2vw" }}>
-                            <p>Redefining Learning™</p>
-                        </div>
-                    </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "50vw", boxShadow: "-5px 0px 20px black" }}>
-                        <h1 style={{ color: "white", fontSize: "3vw" }}>Sign In <Icon type="unlock" theme="twoTone" /> </h1>
-                        <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
-                            <Form.Item>
-                                {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: 'Please enter your username!' }],
-                                })(
-                                    <Input
-                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        placeholder="Username"
-                                    />,
-                                )}
-                            </Form.Item>
-                            <Form.Item>
-                                {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: 'Please enter your Password!' }],
-                                })(
-                                    <Input
-                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        type="password"
-                                        placeholder="Password"
-                                    />,
-                                )}
-                            </Form.Item>
-                            <Form.Item>
-                                <div id="RememberForget" style={{ display: "flex", marginBottom: "2vh" }}>
-                                    {getFieldDecorator('remember', {
-                                        valuePropName: 'checked',
-                                        initialValue: true,
-                                    })(<Checkbox style={{ color: "#cccccc", fontSize: "120%" }}>Remember me</Checkbox>)}
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", backgroundColor: "#001529", width: "50vw", boxShadow: "-5px 0px 20px black" }}>
+                            <h1 style={{ color: "white", fontSize: "3vw" }}>Sign In <Icon type="unlock" theme="twoTone" /> </h1>
+                            <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
+                                <Form.Item>
+                                    {getFieldDecorator('username', {
+                                        rules: [{ required: true, message: 'Please enter your username!' }],
+                                    })(
+                                        <Input
+                                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            placeholder="Username"
+                                        />,
+                                    )}
+                                </Form.Item>
+                                <Form.Item>
+                                    {getFieldDecorator('password', {
+                                        rules: [{ required: true, message: 'Please enter your Password!' }],
+                                    })(
+                                        <Input
+                                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            type="password"
+                                            placeholder="Password"
+                                        />,
+                                    )}
+                                </Form.Item>
+                                <Form.Item>
+                                    <div id="RememberForget" style={{ display: "flex", marginBottom: "2vh" }}>
+                                        {getFieldDecorator('remember', {
+                                            valuePropName: 'checked',
+                                            initialValue: true,
+                                        })(<Checkbox style={{ color: "#cccccc", fontSize: "120%" }}>Remember me</Checkbox>)}
 
-                                    <a className="login-form-forgot" style={{ marginLeft: "auto", fontSize: "120%" }} href="">
-                                        Forgot password
+                                        <a className="login-form-forgot" style={{ marginLeft: "auto", fontSize: "120%" }} href="">
+                                            Forgot password
                                     </a>
-                                </div>
-                                <div>
-                                    <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
-                                        Log in
+                                    </div>
+                                    <div>
+                                        <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
+                                            Log in
                                     </Button>
-                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
-                                </div>
-                            </Form.Item>
-                            {/*Error Catching*/}
+                                        <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
+                                    </div>
+                                </Form.Item>
+                                {/*Error Catching*/}
                                 {this.state.failedLogin && (
                                     <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
                                 )}
                                 {this.state.errorFetch && (
                                     <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
                                 )}
-                        </Form>
-                    </div>
-                </Content>
-            </Layout>
+                            </Form>
+                        </div>
+
+                    </Content>
+                </Layout>
         );
     }
 }
