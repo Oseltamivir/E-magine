@@ -109,8 +109,6 @@ function BackButton() { //Special hook function in order to use React Router's h
   );
 }
 
-
-
 var previousLocation = "";
 var previousFullLocation = "";
 
@@ -227,8 +225,46 @@ class App extends React.Component {
         back: false,
       })
     }
+  }
 
+  checkWS () {
+    if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
+      this.GatewayClient = new WebSocket(window.location.protocol === 'https:' ? 'wss://' : 'ws://' + baseHost);
+      this.GatewayClient.onopen = (e) => {
+        console.log('[GATEWAY] Connected to gateway server!');
+      };
+  
+      this.GatewayClient.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.op === 0) {
+          // Hello
+          console.log('[GATEWAY] Hello from server, heartbeat_interval: ' + data.heartbeat_interval);
+          const login = {op: 1, token: localStorage.getItem('token')};
+          this.GatewayClient.send(JSON.stringify(login));
+        }
+        else if (data.op === 2) {
+          // Ready
+          console.log('[GATEWAY] Ready!');
+        }
+        else if (data.op === 3) {
+          // Message
+          console.log('[GATEWAY] Received message:', JSON.stringify(data.message));
+        }
+        else if (data.op === 10) {
+          // Heartbeat
+          const hb = {time: data.time, op: 11};
+          this.GatewayClient.send(JSON.stringify(hb));
+        }
+        else if (data.op === 11) {
+          // Heartbeat ACK
+          console.log('[GATEWAY] Latency: ' + (Date.now() - data.time) + 'ms.');
+        } 
+      }
 
+      this.GatewayClient.onclose = e => {
+        console.log('[GATEWAY] Closed: ', e.code, e.reason);
+      }
+    }
   }
 
   onCollapse = (collapsed) => {
@@ -255,6 +291,7 @@ class App extends React.Component {
   }
 
   render() {
+    this.checkWS();
     return (
       <div>
         {this.state.token && (
