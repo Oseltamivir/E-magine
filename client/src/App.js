@@ -14,6 +14,7 @@ import DirectMsgs from './DirectMessages'
 import CreatePost from './createpost'
 import ExploreTopicPage from './ExploreTopicPage'
 import { ReactComponent as Logo } from './logo.svg';
+import env from './env.json';
 
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
@@ -22,6 +23,8 @@ import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'rea
 
 const { Header, Content, Sider } = Layout;
 
+var baseHost = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech:8080";
+window.baseURL = window.location.protocol + '//' + baseHost;
 
 const data = [
   {
@@ -115,6 +118,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    let tokenStatus = localStorage.getItem('token')
 
     this.state = {
       current: "Feed",
@@ -123,16 +127,18 @@ class App extends React.Component {
       back: false,
       msgsrc: '',
       msgtxt: '',
-      loggedIn: true,
-      notifies: 0
+      notifies: 0,
+      token: tokenStatus,
     };
   }
 
   passInfo = (sender, text) => {
     this.setState({ msgsrc: sender, msgtxt: text, notifies:this.state.notifies+1 })
   }
-  handleLogin(loginStatus) {
-    this.setState({ loggedIn: loginStatus })
+
+  handleLogin(receivedtoken) {
+    this.setState({token: receivedtoken})
+    localStorage.setItem('token', receivedtoken);
   }
 
   componentDidUpdate() {
@@ -221,6 +227,8 @@ class App extends React.Component {
         back: false,
       })
     }
+
+
   }
 
   onCollapse = (collapsed) => {
@@ -249,7 +257,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.loggedIn && (
+        {this.state.token && (
           <Layout style={{ height: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
@@ -333,8 +341,8 @@ class App extends React.Component {
                   <Route exact path='/Streams/' component={Profile} />
                   <Route exact path='/Streams/:topic' component={streamsTopicPage} />
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
-                  <Route exact path='/Profile' component={Profile} />
-                  <Route exact path='/DiscApp' component={DiscApp} />
+                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
+                  <Route exact path='/DiscApp' component={DiscApp} /> 
                   <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' component={CreatePost} />
@@ -354,7 +362,7 @@ class App extends React.Component {
 
           </Layout>
         )}
-        {this.state.loggedIn === false && (
+        {!this.state.token && (
           <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
         )}
       </div>
@@ -365,6 +373,21 @@ class App extends React.Component {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Messages extends React.Component {
   constructor(props) {

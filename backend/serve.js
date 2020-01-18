@@ -1,20 +1,13 @@
-const express = require('express');
-const app = express();
+const ws = require('@discordjs/uws').Server;
+const server = require('http').createServer();
 
-const apiv1 = require('./api/v1');
+const app = require('./app');
+const Gateway = require('./gateway/v1');
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+const wss = new ws({ server });
+const gateway = new Gateway(wss);
 
-app.use((req, res, next) => {
-  console.log(`[LOG] ${req.method} - ${req.url}`);
-  next();
-});
+app.set('gateway', gateway);
+server.on('request', app);
 
-console.log('[LOG] Loading v1 API');
-app.use('/api/v1', apiv1);
-
-console.log('[LOG] Registering default api version to 1');
-app.use('/api', apiv1);
-
-app.listen(8080, () => console.log('[LOG] Backend server is ready'));
+server.listen(8080, () => console.log('[LOG] Backend server is ready'));

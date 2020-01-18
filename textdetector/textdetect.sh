@@ -26,4 +26,4 @@ c_or_d 'error: `jq` not installed. Try apt-getting jq' `which jq > /dev/null`
 API='https://662uaw6eqb.execute-api.us-east-1.amazonaws.com/v1/upload'
 resp="$(curl -sX POST -H "Content-Type: image/$ct" --data-binary @"$file" "$API")"
 c_or_d "error: API curl returned non-zero error code of $?"
-echo -e $(echo "$resp"|jq .body) #lack of outer quotes is intentional
+echo -e $(echo "$resp"|jq .body)|grep Detected\ text|sed 's/[^:]*://'|tr \\n \ 
