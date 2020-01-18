@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list.js'
-import { Button, message, Spin } from 'antd'
+import { message, Spin } from 'antd'
 
 
 
@@ -53,7 +53,7 @@ class DiscApp extends Component {
     var fromCreatePost = true;
     try { let x = this.props.location.state.channel_id; }
     catch (e) {
-      if (e.name == "TypeError") {
+      if (e.name === "TypeError") {
         fromCreatePost = false
       }
     }
