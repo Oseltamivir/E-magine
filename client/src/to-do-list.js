@@ -5,6 +5,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button, Input, Icon, Divider } from 'antd'
 import Listmaker from './Listmaker.js'
 import { getElementError } from '@testing-library/react';
+import { NavLink } from 'react-router-dom';
 const { TextArea } = Input
 class Todo extends Component {
     constructor(prop) {
@@ -96,7 +97,7 @@ class Todo extends Component {
                     <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
                     <div dangerouslySetInnerHTML={{__html: this.props.title}}className = 'preview'></div>
                     <div dangerouslySetInnerHTML={{ __html: this.props.post }} className='preview'></div>
-                    <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
+                    <Button type='primary' onClick={this.postOrEdit}><NavLink to = {{pathname:'/Posts_utils', state:{title:this.props.title, post:this.props.post}}}>Edit Post</NavLink></Button>
 
                     <span className ='votearea'>
                         <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
