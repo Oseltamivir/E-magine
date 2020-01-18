@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, Icon, Button, Modal, Select, Tooltip } from 'antd';
+import { Input, Icon, Button, Modal, Select, Tooltip, message } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 const { Search, TextArea } = Input;
 const { Option } = Select;
@@ -18,6 +19,48 @@ var inputValues = {
     Topic: "",
 }
 
+
+function OkModal() { //Special hook function in order to use React Router's history.push 
+    const history = useHistory();
+
+    function HandleClick() {
+
+        fetch(window.baseURL + '/api/v1/channels', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+            body: JSON.stringify({
+                "type": 1,
+                "timestamp": Date.now(),
+                "streamURL": inputValues.Link,
+                "title": inputValues.Title,
+                "description": inputValues.Desc,
+                "topic": inputValues.Topic
+            })
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+
+            if (data.success === true) {
+                message.success({content: "Stream created with id: " + data.id})
+                //history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
+            }
+            else {
+                message.error({ content: "Oops... Form fields cannot be left blank" });
+            }
+
+
+        }).catch((error) => {
+            message.error({ content: "Oops, connection error" });
+        })
+
+    }
+
+    return (
+        <Button type='primary' onClick={HandleClick}>Create Stream</Button>
+    );
+}
+
 class StreamsTopBar extends React.Component {
     constructor(props) {
         super(props);
@@ -33,32 +76,23 @@ class StreamsTopBar extends React.Component {
 
     linkOnChange(e) {
         this.setState({ Link: e.target.value })
+        inputValues.Link = e.target.value
     }
     titleOnChange(e) {
         this.setState({ Title: e.target.value })
+        inputValues.Title = e.target.value
     }
     descOnChange(e) {
         this.setState({ Desc: e.target.value })
+        inputValues.Desc = e.target.value
     }
     topicOnChange(e) {
         this.setState({ Topic: e })
+        inputValues.Topic = e
     }
 
     showModal() {
         this.setState({ visible: true })
-    }
-
-    handleOk() {
-        this.setState({ visible: false })
-        inputValues.Link = this.state.Link
-        inputValues.Title = this.state.Title
-        inputValues.Desc = this.state.Desc
-        inputValues.Topic = this.state.Topic
-        console.log(inputValues)
-    }
-
-    handleCancel() {
-        this.setState({ visible: false })
     }
 
     render() {
@@ -78,9 +112,8 @@ class StreamsTopBar extends React.Component {
                 />
                 <Modal
                     title="Create Stream"
+                    footer={null}
                     visible={this.state.visible}
-                    onOk={this.handleOk.bind(this)}
-                    onCancel={this.handleCancel.bind(this)}
                     centered={true}
                     okText="Start Stream"
                 >
@@ -104,6 +137,11 @@ class StreamsTopBar extends React.Component {
                         <Option value="Biology">Biology</Option>
                         <Option value="Computing">Computing</Option>
                     </Select>
+
+                    <div id="okButton" style={{marginTop: "3vh"}}>
+                        <OkModal />
+                    </div>
+
                 </Modal>
             </div>
         );
