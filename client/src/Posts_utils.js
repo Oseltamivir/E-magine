@@ -139,14 +139,14 @@ class Post extends Component {
             </Divider>
             <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
             <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
-            
+
             <span class='votearea'>
-              <Button type=  'primary' onClick={() => this.upvoteQuestion}>
+              <Button type='primary' onClick={() => this.upvoteQuestion}>
                 <Icon type="up-circle" theme="twoTone" />
               </Button>
               <p> {this.state.counter}</p>
-              <br/>
-              <Button type=  'primary' onClick={() => this.downvoteQuestion}>
+              <br />
+              <Button type='primary' onClick={() => this.downvoteQuestion}>
                 <Icon type="down-circle" theme="twoTone" />
               </Button>
             </span>
@@ -163,13 +163,13 @@ class Post extends Component {
 
             </Divider>
             <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
-           
+
             <span class='votearea'>
-              <Button type=  'primary' onClick={() => {this.upvoteQuestion()}}>
+              <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
                 <Icon type="up-circle" theme="twoTone" />
               </Button>
-              <p> {this.state.counter}</p>
-              <Button type=  'primary' onClick={() => {this.downvoteQuestion()}}>
+              <p className='whittencounter'> {this.state.counter}</p>
+              <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
                 <Icon type="down-circle" theme="twoTone" />
               </Button>
             </span>
