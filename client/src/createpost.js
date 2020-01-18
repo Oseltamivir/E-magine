@@ -31,7 +31,7 @@ function Redirect() { //Special hook function in order to use React Router's his
                 "timestamp": Date.now(),
                 "description": FormInput[0],
                 "title": FormInput[1],
-                "topic": FormInput[2],
+                "topic": FormInput[2]
             })
         }).then((results) => {
             return results.json(); //return data in JSON (since its JSON data)
@@ -40,8 +40,7 @@ function Redirect() { //Special hook function in order to use React Router's his
 
             if (data.success === true) {
                 alert("Post Created")
-                history.push("/Profile");
-                alert(data.id)
+                history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
             }
             else {
                 message.error({ content: "Oops... Form fields cannot be left blank" });
@@ -50,8 +49,8 @@ function Redirect() { //Special hook function in order to use React Router's his
             clicked = false;
 
         }).catch((error) => {
+            clicked = false;
             message.error({ content: "Oops, connection error" });
-            message.error({content: error});
         })
         
     }
