@@ -19,6 +19,7 @@
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
     "aws-sdk": "^2.601.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.4.1",
     "reallydangerous": "^2.1.0",
