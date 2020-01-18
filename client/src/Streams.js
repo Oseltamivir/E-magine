@@ -3,7 +3,7 @@ import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Inp
 import CarouselSlide from "./CauroselSlide.js";
 import StreamsTopBar from "./streamsTopBar";
 import './index.css';
-
+import { NavLink } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroller';
 import StreamsCategories from './StreamsCategories';
 
@@ -24,9 +24,6 @@ class Streams extends React.Component {
         };
     }
 
-    cardClick() {
-        alert("Live chat in development...")
-    }
 
     componentDidMount() { //Fetch data once first when component loads
         this.fetchData();
@@ -111,8 +108,8 @@ class Streams extends React.Component {
 
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                        <span>Hot Streams </span>
-                        <Icon type="fire" theme="twoTone" twoToneColor = 'red' />
+                    <span>Hot Streams </span>
+                    <Icon type="fire" theme="twoTone" twoToneColor='red' />
                 </Divider>
 
                 <InfiniteScroll
@@ -134,35 +131,37 @@ class Streams extends React.Component {
                         }}
                         renderItem={item => (
                             <List.Item key={item.id}>
-                                <div onClick={this.cardClick} key={item.id}>
-                                    <Card
-                                        hoverable
-                                        type="inner"
-                                        bordered={false}
-                                        title="Video Title"
-                                        headStyle={{ backgroundColor: "#1890ff", color: "white", }}
-                                        bodyStyle={{ backgroundColor: "#001529" }}
-                                        style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
-                                    >
-                                        <Meta
-                                            title={
-                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
-                                                        Tkai
+                                <div key={item.id}>
+                                    <NavLink to = '/StreamsDiscussion'>
+                                        <Card
+                                            hoverable
+                                            type="inner"
+                                            bordered={false}
+                                            title="Video Title"
+                                            headStyle={{ backgroundColor: "#1890ff", color: "white", }}
+                                            bodyStyle={{ backgroundColor: "#001529" }}
+                                            style={{ boxShadow: "8px 0px 12px" }}
+                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+                                        >
+                                            <Meta
+                                                title={
+                                                    <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                                                        <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                            Tkai
                                                     </Avatar>
-                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
-                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
-                                                </div>
-                                            }
-                                            description={
-                                                <div id="Description">
-                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                                    <p style={{ color: "white" }}>{item.name.title}</p>
-                                                </div>
-                                            }
-                                        />
-                                    </Card> {/*Pass entire datasource as prop*/}
+                                                        <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
+                                                        <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                    </div>
+                                                }
+                                                description={
+                                                    <div id="Description">
+                                                        <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
+                                                        <p style={{ color: "white" }}>{item.name.title}</p>
+                                                    </div>
+                                                }
+                                            />
+                                        </Card> {/*Pass entire datasource as prop*/}
+                                    </NavLink>
                                 </div>
                             </List.Item>
                         )}
