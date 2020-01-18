@@ -11,7 +11,7 @@ const IconFont = Icon.createFromIconfontCN({
     scriptUrl: "//at.alicdn.com/t/font_1597763_p5whc4dho8h.js"
 });
 
-const IconMatcher = {"Mathematics":"area-chart", "Chemistry": "experiment", "Computing": "database", "Physics": "rocket", "Economics": "inline-chart"}
+const IconMatcher = { "Mathematics": "area-chart", "Chemistry": "experiment", "Computing": "database", "Physics": "rocket", "Economics": "inline-chart" }
 
 class Profile extends React.Component {
 
@@ -22,6 +22,7 @@ class Profile extends React.Component {
         this.state = {
             profileData: null,
             yourPostsData: [],
+            yourSolutionsData: [],
             token: this.props.token,
             hasMore: true,
             loading: false,
@@ -39,15 +40,44 @@ class Profile extends React.Component {
     }
 
     fetchPostsData() { //Fetch user's posts
-        fetch("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo") //Fetch data from webpage
-            .then((results) => {
-                return results.json(); //return data in JSON (since its JSON data)
-            }).then((data) => {
-                const retrievedData = data.results
+        fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=0', {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                const retrievedData = data.posts
                 const currentData = this.state.yourPostsData
                 this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
-            })
+
+                console.log(data.posts)
+            }
+        }).catch((error) => {
+            message.error({ content: "Oops, posts loading connection failed" })
+        })
+    }
+
+    fetchSolutionsData() { //Fetch user's posts
+        fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=2', {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                const retrievedData = data.posts
+                const currentData = this.state.yourSolutionsData
+                this.setState({ yourSolutionsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
+                this.setState({ loading: false, }) //Done loading, set loading state to false
+
+            }
+        }).catch((error) => {
+            message.error({ content: "Oops, posts loading connection failed" })
+        })
     }
 
     fetchProfileData() { //Fetch profile info
@@ -64,11 +94,11 @@ class Profile extends React.Component {
 
             }
             else {
-                message.error({content: "Oops, connection failed"})
+                message.error({ content: "Oops, connection failed" })
             }
 
         }).catch((error) => {
-            message.error({content: "Oops, connection failed"})
+            message.error({ content: "Oops, connection failed" })
         })
     }
 
@@ -80,16 +110,34 @@ class Profile extends React.Component {
             loading: true,
         });
 
-        if (this.state.yourPostsData.length > 50) { //Limit number of posts displayed
-            message.warning({ content: "Oops, we ran out of posts for now..." });
+        if (this.state.yourPostsData.length % 10 !== 0) { //Lack of posts - suggests no more posts
+            message.warning({ content: "All posts loaded" });
             this.setState({
                 hasMore: false,
                 loading: false,
             });
-
         }
         else {
             this.fetchPostsData();
+        }
+
+    };
+
+    handleInfiniteOnLoadSolutions = () => {
+
+        this.setState({
+            loading: true,
+        });
+
+        if (this.state.yourPostsData.length % 10 !== 0) { //Lack of posts - suggests no more posts
+            message.warning({ content: "All solutions loaded" });
+            this.setState({
+                hasMore: false,
+                loading: false,
+            });
+        }
+        else {
+            this.fetchSolutionsData();
         }
 
     };
@@ -245,11 +293,12 @@ class Profile extends React.Component {
                                     >
                                         <List
                                             grid={{ gutter: 20, column: 2 }}
-                                            dataSource={this.state.data}
+                                            dataSource={this.state.yourPostsData}
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Spin size="large" />
+                                                        <Icon type="folder-open" />
+                                                        <h1 style={{color: "white", fontSize: "5vw"}}>It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -260,15 +309,15 @@ class Profile extends React.Component {
                                                             hoverable
                                                             type="inner"
                                                             bordered={false}
-                                                            title="Mathematics - Differential Equations"
+                                                            title={item.title}
                                                             headStyle={{ backgroundColor: "#1890ff", color: "white" }}
                                                             bodyStyle={{ backgroundColor: "#001529" }}
                                                             style={{ boxShadow: "8px 0px 12px" }}
                                                             cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                                         >
                                                             <Meta
-                                                                title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                                description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                                title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button></div>}
+                                                                description={<div dangerouslySetInnerHTML={{ __html: item.description }} style={{ color: "#cccccc" }}></div>}
                                                             />
                                                         </Card>
                                                     </div>
@@ -300,18 +349,18 @@ class Profile extends React.Component {
                                     <InfiniteScroll
                                         initialLoad={false}
                                         pageStart={0}
-                                        loadMore={this.handleInfiniteOnLoad.bind(this)} //Function to handle infinite load
+                                        loadMore={this.handleInfiniteOnLoadSolutions.bind(this)} //Function to handle infinite load
                                         hasMore={!this.state.loading && this.state.hasMore} //If [Not Loading] && [Has More Content], then true
                                         useWindow={false}
                                         getScrollParent={() => document.getElementById('feedContainer')}
                                     >
                                         <List
                                             grid={{ gutter: 20, column: 2 }}
-                                            dataSource={this.state.data}
+                                            dataSource={this.state.yourSolutionsData}
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Spin size="large" />
+                                                        <h1 style={{color: "white", fontSize: "2vw"}}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -322,15 +371,15 @@ class Profile extends React.Component {
                                                             hoverable
                                                             type="inner"
                                                             bordered={false}
-                                                            title="Mathematics - Differential Equations"
+                                                            title={item.title}
                                                             headStyle={{ backgroundColor: "#1890ff", color: "white" }}
                                                             bodyStyle={{ backgroundColor: "#001529" }}
                                                             style={{ boxShadow: "8px 0px 12px" }}
-                                                            cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
+                                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                                         >
                                                             <Meta
-                                                                title={<p style={{ color: "white" }}>First Name: {item.name.first}</p>}
-                                                                description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                                                title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button></div>}
+                                                                description={<div dangerouslySetInnerHTML={{ __html: item.description }} style={{ color: "#cccccc" }}></div>}
                                                             />
                                                         </Card>
                                                     </div>
