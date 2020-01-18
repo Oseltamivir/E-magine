@@ -345,7 +345,7 @@ class App extends React.Component {
                   <Route exact path='/DiscApp' component={DiscApp} /> 
                   <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-                  <Route exact path='/createpost' component={CreatePost} />
+                  <Route exact path='/createpost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
                   <Route exact path='/DirectMessages' render={() =>
                     <DirectMsgs func={this.passInfo.bind(this)} />
                   }
