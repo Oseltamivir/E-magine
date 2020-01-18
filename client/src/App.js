@@ -25,7 +25,8 @@ import WrappedNormalRegisterForm from './Register';
 const { Header, Content, Sider } = Layout;
 
 var baseHost = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech:8080";
-window.baseURL = window.location.protocol + '//' + baseHost;
+//window.baseURL = window.location.protocol + '//' + baseHost;
+window.baseURL = "https:" + '//' + baseHost; //Hardcode for now due to http being unavailable
 
 const data = [
   {
@@ -302,7 +303,7 @@ class App extends React.Component {
     this.checkWS();
     return (
       <div>
-        {!this.state.token && (
+        {this.state.token && (
           <Layout style={{ height: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
@@ -409,7 +410,7 @@ class App extends React.Component {
 
           </Layout>
         )}
-        {this.state.token && (
+        {!this.state.token && (
         <div>
           {this.state.isRegister && (
           <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>
