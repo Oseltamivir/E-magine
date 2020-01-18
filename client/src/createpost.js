@@ -146,26 +146,29 @@ export default class CreatePost extends Component {
                             Posting
                         </span>
                     }
-                        key='1'>
-                        <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                            <span>Your post</span>
-                            <Icon type="edit" theme='twoTone'></Icon>
-                        </Divider>
+                    key='1'>
+                        <div className="tabcontainer">
+                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                <span>Your post</span>
+                                <Icon type="edit" theme='twoTone'></Icon>
+                            </Divider>
 
-
-                        <Input onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." />
-                        <Select value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
-                            <Option value="Mathematics">Mathematics</Option>
-                            <Option value="Physics">Physics</Option>
-                            <Option value="Economics">Economics</Option>
-                            <Option value="Chemistry">Chemistry</Option>
-                            <Option value="Biology">Biology</Option>
-                            <Option value="Computing">Computing</Option>
-                        </Select>
-                        <div id='createexampl'></div> {/*Text Editor*/}
-                        <Redirect />
-                        {ifPosted}
-
+                            <div className="post-title-label">Title: </div>
+                            <Input className="post-title-input" onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." /> 
+                            <br/>
+                            <div className="post-title-label">Topic: </div>
+                            <Select className="post-title-input" value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
+                                <Option value="Mathematics">Mathematics</Option>
+                                <Option value="Physics">Physics</Option>
+                                <Option value="Economics">Economics</Option>
+                                <Option value="Chemistry">Chemistry</Option>
+                                <Option value="Biology">Biology</Option>
+                                <Option value="Computing">Computing</Option>
+                            </Select>
+                            <div id='createexampl'></div> {/*Text Editor*/}
+                            <Redirect />
+                            {ifPosted}
+                        </div>
                     </TabPane>
 
                     <TabPane tab={
