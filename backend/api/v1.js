@@ -335,7 +335,7 @@ router.post('/auth/register', async (req, res) => {
 
   const user = {
     username,
-    id,
+    id: Long.fromString(id),
     password: hashed,
     displayName: username,
     avatar: null,
