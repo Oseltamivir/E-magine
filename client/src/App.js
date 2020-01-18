@@ -13,6 +13,7 @@ import WrappedNormalLoginForm from './Login';
 import DirectMsgs from './DirectMessages'
 import CreatePost from './createpost'
 import ExploreTopicPage from './ExploreTopicPage'
+import Post from './Posts_utils'
 import { ReactComponent as Logo } from './logo.svg';
 import env from './env.json';
 
@@ -350,6 +351,7 @@ class App extends React.Component {
                     <DirectMsgs func={this.passInfo.bind(this)} />
                   }
                   />
+                  <Route exact path='/Posts_utils' component={Post} />
 
                 </Switch>
               </Content>
