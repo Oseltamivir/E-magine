@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
 
@@ -31,17 +32,17 @@ class Login extends React.Component {
                 }).then((results) => {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
-                    this.setState({errorFetch: false})
+                    this.setState({ errorFetch: false })
 
                     if (data.success == true) {
                         this.props.loginHandler(data.token)
                     }
-                    else { 
-                        this.setState({failedLogin: true})
+                    else {
+                        this.setState({ failedLogin: true })
                     }
 
                 }).catch((error) => {
-                    this.setState({errorFetch: true})
+                    this.setState({ errorFetch: true })
                 })
             }
         });
@@ -102,16 +103,16 @@ class Login extends React.Component {
                                     <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
                                         Log in
                                     </Button>
-                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
+                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <NavLink to = '/Register'>register now!</NavLink></p>
                                 </div>
                             </Form.Item>
                             {/*Error Catching*/}
-                                {this.state.failedLogin && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
-                                )}
-                                {this.state.errorFetch && (
-                                    <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
-                                )}
+                            {this.state.failedLogin && (
+                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Invalid Username or Password</p>
+                            )}
+                            {this.state.errorFetch && (
+                                <p style={{ color: "red", fontSize: "115%", marginTop: "0.8vh", textAlign: "center" }}>Error fetching response, please contact an administrator</p>
+                            )}
                         </Form>
                     </div>
                 </Content>
