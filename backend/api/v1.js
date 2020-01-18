@@ -299,14 +299,58 @@ router.post('/channels', async (req, res) => {
     return;
   }
 
-  // TODO: Error trapping (channel type, etc)
-
   const id = simpleflake().toString();
   data.id = Long.fromString(id);
   data.author = Long.fromString(req.user);
 
   await db.collection('channels').insertOne(data);
   res.json({success: true, id});
+});
+
+/* Registration endpoint */
+router.post('/auth/register', async (req, res) => {
+  const data = req.body;
+
+  if (!data.hasOwnProperty('username')) {
+    res.status(400).json({success: false, error: 'Missing username field!'});
+    return;
+  }
+
+  if (!data.hasOwnProperty('password')) {
+    res.status(400).json({success: false, error: 'Missing password field!'});
+    return;
+  }
+
+  const username = data.username;
+  const password = data.password;
+
+  const taken = await db.collection('users').findOne({username: username});
+  if (taken) {
+    res.status(403).json({success: false, error: 'Username is taken!'});
+    return;
+  }
+
+  const hashed = crypto.createHash('sha256').update(password).digest('hex');
+  const id = simpleflake().toString();
+
+  const user = {
+    username,
+    id,
+    password: hashed,
+    displayName: username,
+    avatar: null,
+    followerCount: 0,
+    karma: 0,
+    postCount: 0,
+    solutions: 0,
+    description: "",
+    credentials: {},
+    areas: []
+  }
+
+  await db.collection('users').insertOne(user);
+  const token = signer.sign(Buffer.from(user.id).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
+  res.json({success: true, token});
 });
 
 module.exports = router;
