@@ -7,18 +7,7 @@ Test image detection by running the command,
 ```
 ~# cd E-magine/textdetector
 ~/E-magine/textdetector# ./textdetector.sh ~/chem_homework.png
-...
-Detected text:nicotine
-Confidence: 98.61%
-Id: 35
-Parent Id: 3
-Type:WORD
-
-Detected text:receptors
-Confidence: 98.74%
-Id: 36
-Parent Id: 3
-Type:WORD
-...
+Why does W2Br10 conduct electricity in the liquid state?
+~/E-magine/textdetector#
 ```
 
