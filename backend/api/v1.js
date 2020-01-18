@@ -185,6 +185,7 @@ router.get('/channels/:channelID/posts', async (req, res) => {
   res.json({success: true, posts: results});
 });
 
+/* Create a post on a channel */
 router.post('/channels/:channelID/posts', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
@@ -226,13 +227,38 @@ router.post('/channels/:channelID/posts', async (req, res) => {
     }
   });
 
-  // TODO: Error trapping
+  // TODO: Error trapping (message type, etc)
 
   data.id = Long.fromString(data.id);
   data.channel_id = Long.fromString(data.channel_id);
   data.author = Long.fromString(data.author);
 
   await db.collection('posts').insertOne(data);
+  res.json({success: true, id});
+});
+
+/* Create a channel (stream/discussion) */
+router.post('/channels', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const data = req.body;
+  if (!data.hasOwnProperty('timestamp')) {
+    res.status(400).json({success: false, error: 'Missing timestamp of channel creation!'});
+    return;
+  }
+
+  if (!data.hasOwnProperty('type')) {
+    res.status(400).json({success: false, error: 'Missing channel type!'});
+    return;
+  }
+
+  // TODO: Error trapping (channel type, etc)
+
+  const id = simpleflake().toString();
+
+  data.id = Long.fromString(id);
+
+  await db.collection('channels').insertOne(data);
   res.json({success: true, id});
 });
 
