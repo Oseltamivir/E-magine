@@ -5,10 +5,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
 import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
 const { TabPane } = Tabs;
-
 const { Option } = Select;
-
-
 
 export default class CreatePost extends Component {
     constructor(props) {
@@ -70,6 +67,7 @@ export default class CreatePost extends Component {
                     this.html.set(self.state.post)
                 }
             },
+            height: 250,
             attribution: false
         })
     }
