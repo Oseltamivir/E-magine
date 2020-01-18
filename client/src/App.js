@@ -131,6 +131,7 @@ class App extends React.Component {
       msgtxt: '',
       notifies: 0,
       token: tokenStatus,
+      isRegister: false
     };
   }
 
@@ -141,6 +142,10 @@ class App extends React.Component {
   handleLogin(receivedtoken) {
     this.setState({ token: receivedtoken })
     localStorage.setItem('token', receivedtoken);
+  }
+
+  toRegister = () =>{
+    this.setState({isRegister: !this.state.isRegister})
   }
 
   componentDidUpdate() {
@@ -187,8 +192,10 @@ class App extends React.Component {
         })
       }
     }
+  
   }
 
+  
   componentDidMount() {
     /*[TODO:] Work on sessions so that the login status will be kept when page is reloaded */
     //Ensures correct menu.item is selected when page changes without clicking on menu.items
@@ -229,10 +236,7 @@ class App extends React.Component {
         back: false,
       })
     }
-
-
   }
-
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
   }; //Collapse function for menu sider
@@ -353,7 +357,6 @@ class App extends React.Component {
                   }
                   />
                   <Route exact path='/Posts_utils' component={Post} />
-                  <Route exact path='/Register' component={WrappedNormalRegisterForm} />
 
                 </Switch>
               </Content>
@@ -368,8 +371,9 @@ class App extends React.Component {
         )}
         {!this.state.token && (
         <div>
-          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)}></WrappedNormalRegisterForm>
-          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
+          {this.state.isRegister && (
+          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>)}
+          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalLoginForm>
         </div>
         )}
       </div>
