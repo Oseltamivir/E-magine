@@ -94,7 +94,8 @@ class Todo extends Component {
                         <Icon type="question-circle" theme="twoTone" />
                     </Divider>
                     <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
-                    <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+                    <div dangerouslySetInnerHTML={{__html: this.props.title}}className = 'preview'></div>
+                    <div dangerouslySetInnerHTML={{ __html: this.props.post }} className='preview'></div>
                     <Button type='primary' onClick={this.postOrEdit}>Edit Post</Button>
 
                     <span className ='votearea'>
