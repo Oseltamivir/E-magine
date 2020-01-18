@@ -267,10 +267,16 @@ router.post('/channels', async (req, res) => {
     return;
   }
 
+  if (data.type == 1 && !data.hasOwnProperty('streamURL')) {
+    res.status(400).json({success: false, error: 'Missing stream URL'});
+    return;
+  }
+
   // TODO: Error trapping (channel type, etc)
 
   const id = simpleflake().toString();
   data.id = Long.fromString(id);
+  data.author = Long.fromString(req.user);
 
   await db.collection('channels').insertOne(data);
   res.json({success: true, id});
