@@ -54,7 +54,7 @@ def analyse(to_upload: list) -> None:
 
     #check that the job worked
     if (resp := info())['JobStatus'] != 'COMPLETED':
-        print(bcolors.FAIL + "PANIC: " + bcolors.ENDC + "JOB %s FAILED; dumping info" % job['JobId'])
+        print("PANIC: JOB %s FAILED; dumping info" % job['JobId'])
         print(job)
         print(resp)
         exit(1)
@@ -64,6 +64,7 @@ def analyse(to_upload: list) -> None:
             download_and_delete(obj.key, out_B, '/tmp/SCSE/%s' % basename(obj.key))
     
     #get rid of the buckets
-    map(purge, (in_B, out_B))
+    for b in (in_B, out_B):
+        purge(b)
 
 analyse([f for f in argv[1:] if access(f, R_OK)])
