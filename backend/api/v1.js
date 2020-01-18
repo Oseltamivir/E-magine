@@ -127,16 +127,40 @@ router.get('/posts/me', async(req, res) => {
     if (limit > 50) limit = 50;
   }
 
-  const results = await db.collection('posts').find({author: Long.fromString(req.user), type}, {_id: 0}).limit(limit).toArray();
-  // clean results by removing Long data formats
-  results.forEach(res => {
-    res.id = res.id.toString();
-    res.author = res.id.toString();
-    res.channel_id = res.channel_id.toString();
-    delete res._id;
-  });
+  if (type == 0) {
+    const results = await db.collection('channels').find({type, author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+    results.forEach(res => {
+      res.id = res.id.toString();
+      delete res._id;
+      delete res.members;
+      delete res.author;
+    });
 
-  res.json({success: true, posts: results});
+    res.json({success: true, posts: results});
+  }
+  else if (type == 1) {
+    const results = await db.collection('channels').find({type, author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+    results.forEach(res => {
+      res.id = res.id.toString();
+      delete res._id;
+      delete res.members;
+      delete res.author;
+    });
+
+    res.json({success: true, posts: results});
+  }
+  else if (type == 2) {
+    const results = await db.collection('posts').find({type, author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+    // clean results by removing Long data formats
+    results.forEach(res => {
+      res.id = res.id.toString();
+      res.channel_id = res.channel_id.toString();
+      delete res._id;
+      delete res.author;
+    });
+  
+    res.json({success: true, posts: results});
+  }
 });
 
 /* Fetch channel data from channel ID */
