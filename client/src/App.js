@@ -6,7 +6,6 @@ import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
 import DiscApp from './DiscApp.js';
-import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
 import WrappedNormalLoginForm from './Login';
@@ -18,7 +17,7 @@ import { ReactComponent as Logo } from './logo.svg';
 import env from './env.json';
 
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 
@@ -344,7 +343,6 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
                   <Route exact path='/DiscApp' component={DiscApp} /> 
-                  <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
                   <Route exact path='/DirectMessages' render={() =>
@@ -486,7 +484,7 @@ class Messages extends React.Component {
     if (item.text.length > 25) {
       item.text = item.text.slice(0, 35) + '...'
     }
-    if (this.state.newItem.sender != item.sender || this.state.newItem.text != item.text) {
+    if (this.state.newItem.sender !== item.sender || this.state.newItem.text !== item.text) {
       this.addItem(item)
     }
     return (

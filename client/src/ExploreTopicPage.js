@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, message, Spin, List, Divider, Button, Icon, Avatar } from 'antd';
+import { Card, message, Spin, List, Button, Icon, Avatar } from 'antd';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Button, Input, Icon } from 'antd'
-import Listmaker from './Listmaker.js'
-import { getElementError } from '@testing-library/react';
+import { Button, Input } from 'antd'
 import Streamlistmake from './Streamlistmake'
 import './streamchat.css'
 const { TextArea } = Input
@@ -30,7 +27,7 @@ class Streamlist extends Component {
                         user={this.props.user}
                     />
                     <div id='Postbar'>
-                        <TextArea id = 'streamMessaging'placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
+                        <TextArea id='streamMessaging' placeholder='Type something here' value={this.state.currentText} onChange={this.handleItem}></TextArea>
                         <Button size='large' type='primary' onClick={this.addItem}>Post</Button>
                     </div>
                 </form>

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Button, Input, Icon } from 'antd'
-import Listmaker from './Listmaker.js'
-import { getElementError } from '@testing-library/react';
+import { Button, Input } from 'antd'
 import DirectMessagesMessages from './DirectMessagesMessages'
 const { TextArea } = Input
 

@@ -37,7 +37,7 @@ class Login extends React.Component {
                     this.setState({ errorFetch: false })
 
 
-                    if (data.success == true) {
+                    if (data.success === true) {
                         this.props.loginHandler(data.token)
                     }
                     else { 

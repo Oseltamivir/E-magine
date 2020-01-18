@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
-import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -60,7 +59,7 @@ class Profile extends React.Component {
         }).then((data) => {
             this.setState({ errorFetch: false })
 
-            if (data.success == true) {
+            if (data.success === true) {
                 this.setState({ profileData: data.profile })
 
             }

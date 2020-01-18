@@ -6,7 +6,7 @@ import Streamlist from './Streamlists'
 import ReactPlayer from 'react-player'
 import './streamchat.css'
 //This will be the discussion page mainframe
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 class StreamDisc extends Component {
     constructor() {
