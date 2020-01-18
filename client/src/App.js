@@ -134,11 +134,11 @@ class App extends React.Component {
   }
 
   passInfo = (sender, text) => {
-    this.setState({ msgsrc: sender, msgtxt: text, notifies:this.state.notifies+1 })
+    this.setState({ msgsrc: sender, msgtxt: text, notifies: this.state.notifies + 1 })
   }
 
   handleLogin(receivedtoken) {
-    this.setState({token: receivedtoken})
+    this.setState({ token: receivedtoken })
     localStorage.setItem('token', receivedtoken);
   }
 
@@ -342,8 +342,8 @@ class App extends React.Component {
                   <Route exact path='/Streams/' component={Profile} />
                   <Route exact path='/Streams/:topic' component={streamsTopicPage} />
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
-                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
-                  <Route exact path='/DiscApp' component={DiscApp} /> 
+                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
+                  <Route exact path='/DiscApp' component={DiscApp} />
                   <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' component={CreatePost} />
@@ -352,6 +352,7 @@ class App extends React.Component {
                   }
                   />
                   <Route exact path='/Posts_utils' component={Post} />
+                  <Route exact path='/Register' component={Register} />
 
                 </Switch>
               </Content>
