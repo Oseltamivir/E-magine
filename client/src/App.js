@@ -389,7 +389,7 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
 
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
-                  <Route exact path='/DiscApp' component={DiscApp} />
+                  <Route exact path='/DiscApp/:channel_id' component={DiscApp} />
 
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/CreatePost' render={(props) => <CreatePost {...props} token={this.state.token} />} />

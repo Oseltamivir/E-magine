@@ -3,6 +3,7 @@ import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from '
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
+import { NavLink } from 'react-router-dom';
 
 const { Meta } = Card;
 const { TabPane } = Tabs;
@@ -91,7 +92,7 @@ class Profile extends React.Component {
 
             if (data.success === true) {
                 this.setState({ profileData: data.profile })
-
+                
             }
             else {
                 message.error({ content: "Oops, connection failed" })
@@ -304,7 +305,7 @@ class Profile extends React.Component {
                                             }}
                                             renderItem={item => (
                                                 <List.Item key={item.id}>
-                                                    <div onClick={this.cardClick} key={item.id}>
+                                                    <NavLink to={"/DiscApp/" + item.channel_id}>
                                                         <Card
                                                             hoverable
                                                             type="inner"
@@ -319,7 +320,7 @@ class Profile extends React.Component {
                                                                 description={<div dangerouslySetInnerHTML={{ __html: item.description }} style={{ color: "#cccccc" }}></div>}
                                                             />
                                                         </Card>
-                                                    </div>
+                                                    </NavLink>
                                                 </List.Item>
                                             )}
                                         />
