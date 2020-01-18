@@ -20,7 +20,6 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 fetch('http://test.exegesisapp.tech:8080/api/v1/auth/login', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
@@ -32,7 +31,7 @@ class Login extends React.Component {
                     return results.json(); //return data in JSON (since its JSON data)
                 }).then((data) => {
                     this.setState({errorFetch: false})
-                    
+
                     if (data.success == true) {
                         this.props.loginHandler(data.token)
                     }
