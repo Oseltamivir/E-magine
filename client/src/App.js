@@ -14,6 +14,7 @@ import DirectMsgs from './DirectMessages'
 import CreatePost from './createpost'
 import ExploreTopicPage from './ExploreTopicPage'
 import { ReactComponent as Logo } from './logo.svg';
+import env from './env.json';
 
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
@@ -22,7 +23,7 @@ import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'rea
 
 const { Header, Content, Sider } = Layout;
 
-var baseURL = "test.exegesisapp.tech";
+var baseURL = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech";
 
 
 
