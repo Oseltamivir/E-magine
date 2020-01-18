@@ -302,7 +302,7 @@ class App extends React.Component {
     this.checkWS();
     return (
       <div>
-        {this.state.token && (
+        {!this.state.token && (
           <Layout style={{ height: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
@@ -340,8 +340,8 @@ class App extends React.Component {
                   </NavLink>
                 </Menu.Item>
 
-                <Menu.Item key="Create Post" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
-                  <NavLink to="/createpost">
+                <Menu.Item key="CreatePost" style={{ fontSize: "1.4vw", height: "10vh", display: "flex", alignItems: "center" }}>
+                  <NavLink to="/CreatePost">
                     <Icon type="plus-square" theme="twoTone" twoToneColor="#0050b3" />
                     <span>Create Post</span>
                   </NavLink>
@@ -391,7 +391,7 @@ class App extends React.Component {
                   <Route exact path='/DiscApp' component={DiscApp} />
 
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
-                  <Route exact path='/createpost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
+                  <Route exact path='/CreatePost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
                   <Route exact path='/DirectMessages' render={() =>
                     <DirectMsgs func={this.passInfo.bind(this)} />
                   }
@@ -409,7 +409,7 @@ class App extends React.Component {
 
           </Layout>
         )}
-        {!this.state.token && (
+        {this.state.token && (
         <div>
           {this.state.isRegister && (
           <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>
