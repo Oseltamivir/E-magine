@@ -299,8 +299,6 @@ router.post('/channels', async (req, res) => {
     return;
   }
 
-  // TODO: Error trapping (channel type, etc)
-
   const id = simpleflake().toString();
   data.id = Long.fromString(id);
   data.author = Long.fromString(req.user);
