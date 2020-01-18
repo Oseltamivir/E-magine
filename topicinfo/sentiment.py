@@ -54,7 +54,7 @@ def analyse(to_upload: list) -> None:
 
     #check that the job worked
     if (resp := info())['JobStatus'] != 'COMPLETED':
-        print("PANIC: JOB %s FAILED; dumping info" % job['JobId'])
+        print(bcolors.FAIL + "PANIC: " + bcolors.ENDC + "JOB %s FAILED; dumping info" % job['JobId'])
         print(job)
         print(resp)
         exit(1)
