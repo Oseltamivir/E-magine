@@ -50,18 +50,15 @@ class StreamsTopBar extends React.Component {
 
     handleOk() {
         this.setState({ visible: false })
-    }
-
-    handleCancel() {
-        this.setState({ visible: false })
-    }
-
-    submitForm(e) {
         inputValues.Link = this.state.Link
         inputValues.Title = this.state.Title
         inputValues.Desc = this.state.Desc
         inputValues.Topic = this.state.Topic
         console.log(inputValues)
+    }
+
+    handleCancel() {
+        this.setState({ visible: false })
     }
 
     render() {
@@ -86,7 +83,6 @@ class StreamsTopBar extends React.Component {
                     onCancel={this.handleCancel.bind(this)}
                     centered={true}
                     okText="Start Stream"
-                    onOk={this.submitForm.bind(this)}
                 >
                     <h3>Youtube/Twitch Stream Link</h3>
                     <Tooltip placement="bottomRight" title={<p>Paste the end part of the YouTube/Twitch stream link <br />(E.g watch?v=SIGQSgifs6s or twitchChannelName )</p>}>

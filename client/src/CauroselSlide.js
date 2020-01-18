@@ -3,10 +3,6 @@ import {Row, Col, Avatar, Icon} from 'antd';
 import ReactPlayer from 'react-player'
 
 class CarouselSlide extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return (

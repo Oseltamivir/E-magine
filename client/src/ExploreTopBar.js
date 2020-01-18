@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Icon, Button, Modal, Select, Tooltip } from 'antd';
+import { Input, Icon, Button, Modal, Select } from 'antd';
 
 const { Search, TextArea } = Input;
 const { Option } = Select;
@@ -43,18 +43,15 @@ class ExploreTopBar extends React.Component {
 
     handleOk() {
         this.setState({ visible: false })
-    }
-
-    handleCancel() {
-        this.setState({ visible: false })
-    }
-
-    submitForm(e) {
         inputValues.Link = this.state.Link
         inputValues.Title = this.state.Title
         inputValues.Desc = this.state.Desc
         inputValues.Topic = this.state.Topic
         console.log(inputValues)
+    }
+
+    handleCancel() {
+        this.setState({ visible: false })
     }
 
     render() {
@@ -79,7 +76,6 @@ class ExploreTopBar extends React.Component {
                     onCancel={this.handleCancel.bind(this)}
                     centered={true}
                     okText="Start Posting!"
-                    onOk={this.submitForm.bind(this)}
                 >
                     <h3 style={{ marginTop: "3vh" }}>Post Title</h3>
                     <Input onChange={this.titleOnChange.bind(this)} value={this.state.Title} placeholder="E.g Vectors Revision!" />
