@@ -23,6 +23,30 @@ export default class CreatePost extends Component {
         } //For storing text for post
         this.tabcontainer = { color: "white", backgroundColor: "#001529", boxShadow: "3px 3px 10px #0a0a0a" }
     }
+    changeText = (ev) => { let val = ev.target.value; let nam = ev.target.name; this.setState({ [nam]: val }) }
+
+    }
+        })
+            alert("Connection Failed")
+        }).catch((error) => {
+
+            }
+                alert("Missing Type")
+            else {
+
+        }).then((data) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((results) => {
+                "description": ''
+            })
+                "timestamp": Date.now(),
+                "type": 0,
+            headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
+            body: JSON.stringify({
+            method: 'post',
+        fetch(window.baseURL + '/api/v1/channels', {
+    fetchProfileData() { //Fetch profile info
+
     postOrEdit = () => { this.state.postState === 'Post!' ? this.setState({ postState: "Edit!" }) : this.setState({ postState: "Post!" }) }
     handleInput = (ev) => {
         this.setState({ title: ev.target.value })
