@@ -8,6 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const Long = require('mongodb').Long;
 
 const crypto = require('crypto');
+const { simpleflake } = require('simpleflakes');
 
 const env = require('../env.json');
 
@@ -182,6 +183,83 @@ router.get('/channels/:channelID/posts', async (req, res) => {
   });
 
   res.json({success: true, posts: results});
+});
+
+/* Create a post on a channel */
+router.post('/channels/:channelID/posts', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const channelID = req.params.channelID;
+  const data = req.body;
+
+  if (!data.hasOwnProperty('type')) {
+    res.status(400).json({success: false, error: 'Missing message type!'});
+    return;
+  }
+  
+  if (!data.hasOwnProperty('content')) {
+    res.status(400).json({success: false, error: 'Missing message content!'});
+    return;
+  }
+
+  const channel = await db.collection('channels').findOne({id: Long.fromString(channelID)});
+  if (!channel) {
+    res.status(404).json({success: false, error: 'Channel not found!'});
+    return;
+  }
+
+  if (channel.type != 0 && data.type == 1) {
+    res.status(400).json({success: false, error: 'Invalid post type'});
+    return;
+  }
+
+  const id = simpleflake().toString();
+  data.id = id;
+  data.channel_id = channelID;
+  data.author = req.user;
+
+  const gateway = req.app.get('gateway');
+  channel.members.forEach(member => {
+    const memberID = member.toString();
+    const client = gateway.clients.get(memberID);
+    if (client) {
+      client.sendMessage(data);
+    }
+  });
+
+  // TODO: Error trapping (message type, etc)
+
+  data.id = Long.fromString(data.id);
+  data.channel_id = Long.fromString(data.channel_id);
+  data.author = Long.fromString(data.author);
+
+  await db.collection('posts').insertOne(data);
+  res.json({success: true, id});
+});
+
+/* Create a channel (stream/discussion) */
+router.post('/channels', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const data = req.body;
+  if (!data.hasOwnProperty('timestamp')) {
+    res.status(400).json({success: false, error: 'Missing timestamp of channel creation!'});
+    return;
+  }
+
+  if (!data.hasOwnProperty('type')) {
+    res.status(400).json({success: false, error: 'Missing channel type!'});
+    return;
+  }
+
+  // TODO: Error trapping (channel type, etc)
+
+  const id = simpleflake().toString();
+
+  data.id = Long.fromString(id);
+
+  await db.collection('channels').insertOne(data);
+  res.json({success: true, id});
 });
 
 module.exports = router;

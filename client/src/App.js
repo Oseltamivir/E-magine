@@ -23,9 +23,8 @@ import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'rea
 
 const { Header, Content, Sider } = Layout;
 
-var baseURL = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech";
-
-
+var baseHost = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech:8080";
+window.baseURL = window.location.protocol + '//' + baseHost;
 
 const data = [
   {

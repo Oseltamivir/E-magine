@@ -61,6 +61,7 @@ class Gateway {
 
     try {
       user = signer.unsign(token);
+      user = Buffer.from(user, 'base64').toString();
     }
     catch (e) {
       // bad token
