@@ -20,6 +20,7 @@ import env from './env.json';
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
+import WrappedNormalRegisterForm from './Register';
 
 
 const { Header, Content, Sider } = Layout;
@@ -352,7 +353,7 @@ class App extends React.Component {
                   }
                   />
                   <Route exact path='/Posts_utils' component={Post} />
-                  <Route exact path='/Register' component={Register} />
+                  <Route exact path='/Register' component={WrappedNormalRegisterForm} />
 
                 </Switch>
               </Content>
@@ -366,7 +367,10 @@ class App extends React.Component {
           </Layout>
         )}
         {!this.state.token && (
+        <div>
+          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)}></WrappedNormalRegisterForm>
           <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
+        </div>
         )}
       </div>
 
