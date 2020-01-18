@@ -112,6 +112,9 @@ router.get('/posts/me', async(req, res) => {
   let before = "";
   let after = "";
 
+  let type = parseInt(req.query.type);
+  if (isNaN(type)) type = 0;
+
   if (req.query.hasOwnProperty('limit')) {
     limit = parseInt(req.query.limit);
 
@@ -124,7 +127,7 @@ router.get('/posts/me', async(req, res) => {
     if (limit > 50) limit = 50;
   }
 
-  const results = await db.collection('posts').find({author: Long.fromString(req.user)}, {_id: 0}).limit(limit).toArray();
+  const results = await db.collection('posts').find({author: Long.fromString(req.user), type}, {_id: 0}).limit(limit).toArray();
   // clean results by removing Long data formats
   results.forEach(res => {
     res.id = res.id.toString();
