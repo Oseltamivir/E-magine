@@ -304,7 +304,7 @@ class App extends React.Component {
     return (
       <div>
         {this.state.token && (
-          <Layout style={{ height: '100vh' }}>
+          <Layout style={{ maxHeight: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
               <Menu
