@@ -214,10 +214,24 @@ router.post('/channels/:channelID/posts', async (req, res) => {
 
   const id = simpleflake().toString();
   data.id = id;
+  data.channel_id = channelID;
+  data.author = req.user;
 
-  // TODO: Gateway message event
+  const gateway = req.app.get('gateway');
+  channel.members.forEach(member => {
+    const memberID = member.toString();
+    const client = gateway.clients.get(memberID);
+    if (client) {
+      client.sendMessage(data);
+    }
+  });
 
   // TODO: Error trapping
+
+  data.id = Long.fromString(data.id);
+  data.channel_id = Long.fromString(data.channel_id);
+  data.author = Long.fromString(data.author);
+
   await db.collection('posts').insertOne(data);
   res.json({success: true, id});
 });
