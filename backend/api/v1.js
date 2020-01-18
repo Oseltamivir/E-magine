@@ -8,6 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const Long = require('mongodb').Long;
 
 const crypto = require('crypto');
+const { simpleflake } = require('simpleflakes');
 
 const env = require('../env.json');
 
@@ -182,6 +183,43 @@ router.get('/channels/:channelID/posts', async (req, res) => {
   });
 
   res.json({success: true, posts: results});
+});
+
+router.post('/channels/:channelID/posts', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const channelID = req.params.channelID;
+  const data = req.body;
+
+  if (!data.hasOwnProperty('type')) {
+    res.status(400).json({success: false, error: 'Missing message type!'});
+    return;
+  }
+  
+  if (!data.hasOwnProperty('content')) {
+    res.status(400).json({success: false, error: 'Missing message content!'});
+    return;
+  }
+
+  const channel = await db.collection('channels').findOne({id: Long.fromString(channelID)});
+  if (!channel) {
+    res.status(404).json({success: false, error: 'Channel not found!'});
+    return;
+  }
+
+  if (channel.type != 0 && data.type == 1) {
+    res.status(400).json({success: false, error: 'Invalid post type'});
+    return;
+  }
+
+  const id = simpleflake().toString();
+  data.id = id;
+
+  // TODO: Gateway message event
+
+  // TODO: Error trapping
+  await db.collection('posts').insertOne(data);
+  res.json({success: true, id});
 });
 
 module.exports = router;
