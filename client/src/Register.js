@@ -51,11 +51,11 @@ class Register extends React.Component {
     compareToFirstPassword = (rule, value, callback) => {
         const { form } = this.props;
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you enter is inconsistent!');
+            callback('Two passwords that you enter is inconsistent');
         } else {
-          callback();
+            callback();
         }
-      };
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -78,7 +78,7 @@ class Register extends React.Component {
                         <Form layout="vertical" onSubmit={this.handleSubmit} className="login-form" style={{ width: "30vw" }}>
                             <Form.Item>
                                 {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: 'Please enter your username!' }],
+                                    rules: [{ required: true, message: 'Please enter your username' }],
                                 })(
                                     <Input
                                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -88,7 +88,7 @@ class Register extends React.Component {
                             </Form.Item>
                             <Form.Item>
                                 {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: 'Please enter your Password!' }],
+                                    rules: [{ required: true, message: 'Please enter your Password' }],
                                 })(
                                     <Input
                                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -102,10 +102,10 @@ class Register extends React.Component {
                                 {getFieldDecorator('Confirm', {
                                     rules: [{
                                         required: true,
-                                        message: 'Please enter your Password again!'
+                                        message: 'Please enter your Password again'
                                     },
                                     {
-                                        validator:this.compareToFirstPassword,
+                                        validator: this.compareToFirstPassword,
                                     }
                                     ],
                                 })(
@@ -123,6 +123,7 @@ class Register extends React.Component {
                                         valuePropName: 'checked',
                                         initialValue: true,
                                     })(<Checkbox style={{ color: "#cccccc", fontSize: "120%" }}>Remember me</Checkbox>)}
+                                    <a className="register-form-cancel" style={{ marginLeft: "auto", fontSize: "120%" }} onClick = {this.props.register}>Cancel Registration</a>
                                 </div>
                                 <div>
                                     <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
