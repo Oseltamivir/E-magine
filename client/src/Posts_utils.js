@@ -54,11 +54,12 @@ class Post extends Component {
           self.setState({ post: this.html.get() });
         },
         initialized: function () {
-          this.html.set(self.state.post)
+          this.html.set(this.props.location.post)
         }
       },
       attribution: false
     })
+    this.setState(title:this.props.location.state.title)
   }
   componentDidUpdate() {
     // create a variable to check if the thingy is open
