@@ -6,7 +6,6 @@ import Explore from './Explore';
 import Streams from './Streams';
 import Profile from './Profile';
 import DiscApp from './DiscApp.js';
-import Topicpage from './Topicpage';
 import streamsTopicPage from './streamsTopicPage';
 import StreamDisc from './StreamsDiscussion'
 import WrappedNormalLoginForm from './Login';
@@ -18,7 +17,7 @@ import { ReactComponent as Logo } from './logo.svg';
 import env from './env.json';
 
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Card, Divider } from 'antd';
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 
 
@@ -109,8 +108,6 @@ function BackButton() { //Special hook function in order to use React Router's h
     <Button type="primary" onClick={ClickHandler} icon="left" size="large" style={{ marginRight: "2vw", marginLeft: "-1vw" }} />
   );
 }
-
-
 
 var previousLocation = "";
 var previousFullLocation = "";
@@ -228,8 +225,46 @@ class App extends React.Component {
         back: false,
       })
     }
+  }
 
+  checkWS () {
+    if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
+      this.GatewayClient = new WebSocket(window.location.protocol === 'https:' ? 'wss://' : 'ws://' + baseHost);
+      this.GatewayClient.onopen = (e) => {
+        console.log('[GATEWAY] Connected to gateway server!');
+      };
+  
+      this.GatewayClient.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.op === 0) {
+          // Hello
+          console.log('[GATEWAY] Hello from server, heartbeat_interval: ' + data.heartbeat_interval);
+          const login = {op: 1, token: localStorage.getItem('token')};
+          this.GatewayClient.send(JSON.stringify(login));
+        }
+        else if (data.op === 2) {
+          // Ready
+          console.log('[GATEWAY] Ready!');
+        }
+        else if (data.op === 3) {
+          // Message
+          console.log('[GATEWAY] Received message:', JSON.stringify(data.message));
+        }
+        else if (data.op === 10) {
+          // Heartbeat
+          const hb = {time: data.time, op: 11};
+          this.GatewayClient.send(JSON.stringify(hb));
+        }
+        else if (data.op === 11) {
+          // Heartbeat ACK
+          console.log('[GATEWAY] Latency: ' + (Date.now() - data.time) + 'ms.');
+        } 
+      }
 
+      this.GatewayClient.onclose = e => {
+        console.log('[GATEWAY] Closed: ', e.code, e.reason);
+      }
+    }
   }
 
   onCollapse = (collapsed) => {
@@ -256,6 +291,7 @@ class App extends React.Component {
   }
 
   render() {
+    this.checkWS();
     return (
       <div>
         {this.state.token && (
@@ -344,7 +380,6 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
                   <Route exact path='/DiscApp' component={DiscApp} /> 
-                  <Route exact path='/Topicpage' component={Topicpage} />
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
                   <Route exact path='/DirectMessages' render={() =>
@@ -486,7 +521,7 @@ class Messages extends React.Component {
     if (item.text.length > 25) {
       item.text = item.text.slice(0, 35) + '...'
     }
-    if (this.state.newItem.sender != item.sender || this.state.newItem.text != item.text) {
+    if (this.state.newItem.sender !== item.sender || this.state.newItem.text !== item.text) {
       this.addItem(item)
     }
     return (

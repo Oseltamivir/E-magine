@@ -3,10 +3,8 @@ import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
-
 import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
 import { useHistory} from 'react-router-dom';
-
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -92,6 +90,7 @@ export default class CreatePost extends Component {
                     this.html.set(self.state.post)
                 }
             },
+            height: 250,
             attribution: false
         })
     }
@@ -145,7 +144,7 @@ export default class CreatePost extends Component {
                         <span>
                             <Icon type="edit" theme="twoTone" />
                             Posting
-                </span>
+                        </span>
                     }
                         key='1'>
                         <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
@@ -167,20 +166,23 @@ export default class CreatePost extends Component {
                         <Redirect />
                         {ifPosted}
 
-
                     </TabPane>
+
                     <TabPane tab={
                         <span>
                             <Icon type="camera" theme="twoTone" />
                             Preview
-            </span>}
-                        key='2'>
-                        <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                            <span>Preview </span>
-                            <Icon type="camera" theme='twoTone'></Icon>
-                        </Divider>
-                        <div className='qntitle' dangerouslySetInnerHTML={{ __html: this.state.title }}></div>
-                        <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+                        </span>
+                    }
+                    key='2'>
+                        <div class="tabcontainer">
+                            <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                                <span>Preview </span>
+                                <Icon type="camera" theme='twoTone'></Icon>
+                            </Divider>
+                            <div className='qntitle' dangerouslySetInnerHTML={{ __html: this.state.title }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: this.state.post }} className='preview'></div>
+                        </div>
                     </TabPane>
                 </Tabs>
             </div>

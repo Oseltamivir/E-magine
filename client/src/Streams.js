@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button, Input } from 'antd';
+import { Card, message, Carousel, Avatar, Icon, Spin, List, Divider, Button } from 'antd';
 import CarouselSlide from "./CauroselSlide.js";
 import StreamsTopBar from "./streamsTopBar";
 import './index.css';
@@ -8,9 +8,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import StreamsCategories from './StreamsCategories';
 
 const { Meta } = Card;
-
-const { Search } = Input;
-
 
 class Streams extends React.Component {
 

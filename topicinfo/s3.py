@@ -41,17 +41,9 @@ def purge(bucket) -> None:
 
 if __name__ == '__main__':
     #this function is here to document the usage of this lib
-    #the first line of this function explicitly assumes that ~/.aws/credentials exists
+    #boto3.resource() explicitly assumes that ~/.aws/credentials exists
     import boto3
     s3r = boto3.resource('s3', region_name=LOCATE)
-    '''TRASH='scsething'
+    TRASH='scsething'
     bucket = s3r.Bucket(name=TRASH)
-    display(bucket)'''
-    bucket = s3r.Bucket(name='7cc72314-9da7-47d1-8553-36be510211af')
     display(bucket)
-    
-    from os.path import basename
-    for obj in bucket.objects.all():
-        if obj.key[0] != '.': #if file is not hidden file
-            download_and_delete(obj.key, bucket, '/tmp/SCSE/%s' % basename(obj.key))
-
