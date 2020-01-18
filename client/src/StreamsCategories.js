@@ -36,10 +36,6 @@ const Categories = [
 class StreamsCategories extends React.Component {
 
 
-    cardClick() {
-
-    }
-
     render() {
 
         return (

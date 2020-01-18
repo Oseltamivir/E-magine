@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, message, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { Input, Button, Icon, Layout, Form, Checkbox } from 'antd';
+import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from './logo.svg';
 import './index.css';
 import Background from './bg1.jpg';
@@ -101,12 +102,13 @@ class Login extends React.Component {
                                         <a className="login-form-forgot" style={{ marginLeft: "auto", fontSize: "120%" }} href="">
                                             Forgot password
                                     </a>
-                                    </div>
-                                    <div>
-                                        <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
-                                            Log in
-                                      </Button>
-                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a href="">register now!</a></p>
+
+                                </div>
+                                <div>
+                                    <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: "100%" }}>
+                                        Log in
+                                    </Button>
+                                    <p style={{ color: "#cccccc", fontSize: "115%", marginTop: "0.8vh" }}>Or <a onClick = {this.props.register}>register now!</a></p>
                                 </div>
                             </Form.Item>
                         </Form>

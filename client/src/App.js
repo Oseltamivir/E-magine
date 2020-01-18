@@ -19,6 +19,7 @@ import env from './env.json';
 
 import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Divider } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
+import WrappedNormalRegisterForm from './Register';
 
 
 const { Header, Content, Sider } = Layout;
@@ -127,16 +128,21 @@ class App extends React.Component {
       msgtxt: '',
       notifies: 0,
       token: tokenStatus,
+      isRegister: false
     };
   }
 
   passInfo = (sender, text) => {
-    this.setState({ msgsrc: sender, msgtxt: text, notifies:this.state.notifies+1 })
+    this.setState({ msgsrc: sender, msgtxt: text, notifies: this.state.notifies + 1 })
   }
 
   handleLogin(receivedtoken) {
-    this.setState({token: receivedtoken})
+    this.setState({ token: receivedtoken })
     localStorage.setItem('token', receivedtoken);
+  }
+
+  toRegister = () =>{
+    this.setState({isRegister: !this.state.isRegister})
   }
 
   componentDidUpdate() {
@@ -183,8 +189,10 @@ class App extends React.Component {
         })
       }
     }
+  
   }
 
+  
   componentDidMount() {
     /*[TODO:] Work on sessions so that the login status will be kept when page is reloaded */
     //Ensures correct menu.item is selected when page changes without clicking on menu.items
@@ -265,8 +273,8 @@ class App extends React.Component {
         console.log('[GATEWAY] Closed: ', e.code, e.reason);
       }
     }
+    
   }
-
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
   }; //Collapse function for menu sider
@@ -378,8 +386,11 @@ class App extends React.Component {
                   <Route exact path='/Streams/' component={Profile} />
                   <Route exact path='/Streams/:topic' component={streamsTopicPage} />
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
-                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />}/>
-                  <Route exact path='/DiscApp' component={DiscApp} /> 
+
+                  <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
+                  <Route exact path='/DiscApp' component={DiscApp} />
+                  <Route exact path='/Topicpage' component={Topicpage} />
+
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/createpost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
                   <Route exact path='/DirectMessages' render={() =>
@@ -400,7 +411,11 @@ class App extends React.Component {
           </Layout>
         )}
         {!this.state.token && (
-          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)}></WrappedNormalLoginForm>
+        <div>
+          {this.state.isRegister && (
+          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>)}
+          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalLoginForm>
+        </div>
         )}
       </div>
 

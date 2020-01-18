@@ -1,5 +1,7 @@
 import React from 'react';
-import { Input, Icon, Button, Modal, Select } from 'antd';
+
+import { Input, Icon, Button, Modal, Select, Tooltip } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const { Search, TextArea } = Input;
 const { Option } = Select;
@@ -57,10 +59,13 @@ class ExploreTopBar extends React.Component {
     render() {
         return (
             <div id="TopOptions" style={{ display: "flex" }}>
-                <Button type="primary" size="large" style={{ marginRight: "0" }} onClick={this.showModal.bind(this)}>
-                    Create Post
+                <NavLink to='/createpost'>
+                    <Button type="primary" size="large" style={{ marginRight: "0" }}>
+                        Create Post
                     <Icon type="plus" />
-                </Button>
+                    </Button>
+                </NavLink>
+                
                 <Search
                     placeholder="Search homework posts by people all across the globe!"
                     enterButton="Search"
@@ -69,30 +74,6 @@ class ExploreTopBar extends React.Component {
                     allowClear
                     style={{ width: "50vw", marginLeft: "2vw", backgroundColor: "#002140" }}
                 />
-                <Modal
-                    title="Create Post"
-                    visible={this.state.visible}
-                    onOk={this.handleOk.bind(this)}
-                    onCancel={this.handleCancel.bind(this)}
-                    centered={true}
-                    okText="Start Posting!"
-                >
-                    <h3 style={{ marginTop: "3vh" }}>Post Title</h3>
-                    <Input onChange={this.titleOnChange.bind(this)} value={this.state.Title} placeholder="E.g Vectors Revision!" />
-
-                    <h3 style={{ marginTop: "3vh" }}>Post Description</h3>
-                    <TextArea onChange={this.descOnChange.bind(this)} value={this.state.Desc} allowClear placeholder="E.g Revision before CA1!" rows={5} />
-
-                    <h3 style={{ marginTop: "3vh" }}>Topic</h3>
-                    <Select value={this.state.Topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
-                        <Option value="Mathematics">Mathematics</Option>
-                        <Option value="Physics">Physics</Option>
-                        <Option value="Economics">Economics</Option>
-                        <Option value="Chemistry">Chemistry</Option>
-                        <Option value="Biology">Biology</Option>
-                        <Option value="Computing">Computing</Option>
-                    </Select>
-                </Modal>
             </div>
         );
     }
