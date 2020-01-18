@@ -34,7 +34,7 @@ class DiscApp extends Component {
 
       if (data.success === true) {
         this.setState({ data: data })
-        message.error({ content: "Success" });
+        message.success({ content: "Loaded." });
       }
       else {
         message.error({ content: "Oops... unable to find post" });

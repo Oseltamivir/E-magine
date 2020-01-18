@@ -70,7 +70,7 @@ class Feed extends React.Component {
         return (
             <div className="feedContainer" style={{
                 overflow: "auto",
-                height: "87vh",
+                height: "86vh",
                 width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
@@ -88,12 +88,12 @@ class Feed extends React.Component {
                         dataSource={this.state.yourPostsData}
                         locale={{
                             emptyText: (
-                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", marginRight: "10vw" }}>
-                                    <Spin size="large" />
+                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                    <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                 </div>
                             )
                         }}
-                        style={{ marginRight: "-5vw" }}
+                        style={{ minWidth: "60vw", marginRight: "-5vw" }}
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <div onClick={this.cardClick} key={item.id}>
@@ -140,7 +140,7 @@ class Feed extends React.Component {
                         locale={{
                             emptyText: (
                                 <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                    <Spin size="large" />
+                                    <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                 </div>
                             )
                         }}
