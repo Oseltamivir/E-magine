@@ -18,10 +18,10 @@ export default class Streamlistmake extends Component {
         return (
             <li key={items.key} className = 'list_component'>
                 <div>
+                <p onClick={() => { this.props.deleteItem(items.key) }} style = {{marginLeft:'-20px', color:'#ff4422',fontSize:'120%', float:"left"}}>X</p>
                     <p className='timetext'>{this.postTime(items)}</p>
                     <p className='replytext'>{items.text}</p>
                 </div>
-                <p onClick={() => { this.props.deleteItem(items.key) }} style = {{marginLeft:'-20px', color:'#ff4422',fontSize:'120%', float:"left"}}>X</p>
                 <br />
             </li>
         );
