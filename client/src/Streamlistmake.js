@@ -14,28 +14,32 @@ export default class Streamlistmake extends Component {
 
     }
     createItem = (items) => {
-        if (this.props.user === items.user){
-        return (
-            <li key={items.key}>
-                <div>
-                    <p className='timetext'>{this.postTime(items)}</p>
-                    <p className='replytext'>{items.text}</p>
-                </div>
-                    <Button type={'danger'} onClick={() => { this.props.deleteItem(items.key) }}>Delete
-                    </Button>
-                <br />
-            </li>
-        );
+        if (this.props.user === items.user) {
+            return (
+                <li key={items.key} className='list_component'>
+                    <div>
+                        <Icon onClick={() => { this.props.deleteItem(items.key) }}
+                            style={{ marginLeft: '-20px', color: '#ff4422', float: "left" }}
+                            type="close-circle"
+                            theme="twoTone"
+                            twoToneColor='red'>
+                        </Icon>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
+                    <br />
+                </li>
+            );
         }
-        else{
-            return(
-            <li key={items.key}>
-                <div>
-                    <p className='timetext'>{this.postTime(items)}</p>
-                    <p className='replytext'>{items.text}</p>
-                </div>
-                <br />
-            </li>
+        else {
+            return (
+                <li key={items.key}>
+                    <div>
+                        <p className='timetext'>{this.postTime(items)}</p>
+                        <p className='replytext'>{items.text}</p>
+                    </div>
+                    <br />
+                </li>
             )
         }
     }
@@ -44,10 +48,6 @@ export default class Streamlistmake extends Component {
         const streamListItems = toDoStreamItems.map(this.createItem);
         return (
             <div id='streamlistdesign'>
-                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                    <span>Chat Messages</span>
-                    <Icon type="edit" theme="twoTone" />
-                </Divider>
                 <ul id='streamreplylist'>{streamListItems}</ul>
             </div>
         )

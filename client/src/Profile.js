@@ -316,7 +316,7 @@ class Profile extends React.Component {
                                         <Card
                                             type="inner"
                                             bordered={false}
-                                            title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center" }}><Icon type="crown" theme="twoTone" twoToneColor="#d4b106" /> Knowledge Areas</p>}
+                                            title={<p style={{ color: "white", fontSize: "1.4vw", textAlign: "center" }}><Icon type="crown" theme="twoTone" twoToneColor="#d4b106" /> knowledgeable Areas</p>}
                                             headStyle={{ backgroundColor: "#1890ff", width: "20vw" }}
                                             bodyStyle={{ backgroundColor: "#001529", width: "20vw", height: "30vh" }}
                                             style={{ boxShadow: "8px 0px 12px", width: "20vw" }}
