@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Icon, Layout, Divider, Button } from 'antd'
+import { Icon, Layout, Divider, Button, message } from 'antd'
 import Streamlist from './Streamlists'
 import ReactPlayer from 'react-player'
 import './streamchat.css'
@@ -16,8 +16,41 @@ class StreamDisc extends Component {
             notifications: 9999, //Stores number of notifications  
             poster: 'YEET6',
             items: {},
+            channel_id: "",
+            data: [],
         }
     }
+
+    componentDidMount() {
+        this.setState(
+            {channel_id: this.props.match.params.channel_id},
+            this.fetchChannelInfo.bind(this)
+            )
+    }
+
+    fetchChannelInfo() {
+        fetch(window.baseURL + '/api/v1/channels/' + this.state.channel_id, {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                this.setState({ data: data.channel })
+                message.success({ content: "Loaded." });
+                console.log(this.state.data)
+            }
+            else {
+                message.error({ content: "Oops... unable to find post" });
+            }
+
+        }).catch((error) => {
+            message.error({ content: "Oops, connection error" });
+            message.error({ content: error });
+        })
+    }
+
     render() {
         return (
             <Layout style={{
@@ -38,17 +71,17 @@ class StreamDisc extends Component {
                     }}>
 
                         <div id="video" style={{ backgroundColor: "black" }}>
-                            <ReactPlayer url={"https://www.twitch.tv/chess"} height="90vh" width="auto" />
+                            <ReactPlayer url={this.state.data.streamURL} height="90vh" width="auto" />
                         </div>
                         <div id="desc" style={{ margin: "5px 13px" }}>
                             <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
-                                <span>Video Title </span>
+                                <span>{this.state.data.title} </span>
                             </Divider>
                             <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh" }}>
                                 <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                <Button style={{ marginLeft: "2vw", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                <Button style={{ marginLeft: "2vw", backgroundColor: "#fffb8f" }}>{this.state.data.topic}</Button>
                             </div>
-                            <p style={{ color: "#cccccc" }}>Hello this is the description</p>
+                            <p style={{ color: "#cccccc" }}>{this.state.data.description}</p>
                         </div>
                     </div>
 
@@ -63,7 +96,7 @@ class StreamDisc extends Component {
                         <h1 style={{ color: "white", fontSize: "2vw", textAlign: "center" }}>Stream Chat</h1>
                         <Divider></Divider>
                     </div>
-                    <Streamlist user={this.state.user} />
+                    {/*<Streamlist user={this.state.user} />*/}
                     {/*Hello warren please put your very nice chat component here :D */}
                 </Sider>
             </Layout>
