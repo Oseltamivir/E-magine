@@ -259,6 +259,28 @@ class App extends React.Component {
     })
   }
 
+  fetchMessageFromChannel (channelID) {
+    fetch(window.baseURL + `/api/v1/channels/${channelID}/posts`, {
+      headers: {'Authorization': localStorage.getItem('token')}
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if (data.posts.length == 0) return;
+      if(this.state.messages.hasOwnProperty(channelID) === true) {
+        const merge = [...this.state.messages[channelID]];
+        const ids = data.posts.map(post => post.id);
+        merge.forEach(prev => {
+          if (ids.indexOf(prev) > -1) data.posts.push(prev);
+        });
+        this.state.messages[channelID] = data.posts;
+      }
+      else {
+        this.state.messages[channelID] = data.posts;
+      }
+      this.setState(this.state);
+    });
+  }
+
 
   checkWS() {
     if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
@@ -420,7 +442,7 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
 
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
-                  <Route exact path='/DiscApp/:channel_id' component={(props) => <DiscApp {...props} messages={this.state.messages} />} />
+                  <Route exact path='/DiscApp/:channel_id' component={(props) => <DiscApp {...props} messages={this.state.messages} fetchMessageFromChannel={this.fetchMessageFromChannel.bind(this)}/>} />
 
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/CreatePost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
