@@ -5,7 +5,6 @@ import { Icon, Layout, Divider, Button, message } from 'antd'
 import Streamlist from './Streamlists'
 import ReactPlayer from 'react-player'
 import './streamchat.css'
-//This will be the discussion page mainframe
 const { Content, Sider } = Layout;
 
 class StreamDisc extends Component {
@@ -96,8 +95,7 @@ class StreamDisc extends Component {
                         <h1 style={{ color: "white", fontSize: "2vw", textAlign: "center" }}>Stream Chat</h1>
                         <Divider></Divider>
                     </div>
-                    {/*<Streamlist user={this.state.user} />*/}
-                    {/*Hello warren please put your very nice chat component here :D */}
+                    <Streamlist user={this.state.user} channelID={this.props.match.params.channel_id} messages={this.props.messages[this.props.match.params.channel_id]} fetchMessageFromChannel={this.props.fetchMessageFromChannel} />
                 </Sider>
             </Layout>
         )
