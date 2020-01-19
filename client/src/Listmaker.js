@@ -7,20 +7,19 @@ import { Button, Divider, Icon } from 'antd'
 
 class Listmaker extends Component {
     postTime = (items) => {
-        let d = new Date()
+        let d = new Date(items.timestamp)
         return items.user + ' posted this at ' + d.toDateString()
-
     }
     createItem = (items) => {
-        if (items.user === this.props.user) {
+        if (items.author === this.props.user) {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <span>
-                       <p onClick={() => { this.props.deleteItem(items.key) }} style = {{color:'#ff4422',fontSize:'120%',float:'right'}}>X</p>
+                       <p onClick={() => { this.props.deleteItem(items.id) }} style = {{color:'#ff4422',fontSize:'120%',float:'right'}}>X</p>
                     </span>
                     <br />
                 </li>
@@ -28,10 +27,10 @@ class Listmaker extends Component {
         }
         else {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <br />
                 </li>
