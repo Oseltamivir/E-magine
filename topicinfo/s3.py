@@ -20,7 +20,7 @@ def download_and_delete(k: str, b, f: str=None) -> None:
     from os.path import dirname
     Path(dirname(f)).mkdir(parents=True, exist_ok=True)
     resp = obj.download_file(f) #py 3.6
-    print('wrote output to %s' % f)
+    #print('wrote output to %s' % f)
     obj.delete()
 
 def display(b) -> None:
@@ -32,7 +32,7 @@ def delete_all_objects(bucket) -> None:
     for obj_version in bucket.object_versions.all():
         res.append({'Key': obj_version.object_key,
                     'VersionId': obj_version.id})
-    print(res)
+    #print(res)
     bucket.delete_objects(Delete={'Objects': res})
 
 def purge(bucket) -> None:
@@ -43,7 +43,10 @@ if __name__ == '__main__':
     #this function is here to document the usage of this lib
     #boto3.resource() explicitly assumes that ~/.aws/credentials exists
     import boto3
-    s3r = boto3.resource('s3', region_name=LOCATE)
+    s = boto3.Session(profile_name='devel')
+    s3r = s.resource('s3', region_name=LOCATE)
     TRASH='scsething'
     bucket = s3r.Bucket(name=TRASH)
+    display(bucket)
+    upload('requirements.txt', bucket)
     display(bucket)
