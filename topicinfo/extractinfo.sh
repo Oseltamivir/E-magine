@@ -32,12 +32,14 @@ $0 - detect the topics of text from FILE[S]
 $0 FILE [FILE...]
 API response will be written to /tmp/SCSE/resp.txt
 EOF
-    return 0
+    exit 0
 fi
 curl -s https://cs9h6xl157.execute-api.us-east-1.amazonaws.com/session > ~/.aws/credentials
 assert 'getting temp authorization...' 'unknown API error' 'written to ~/.aws/credentials'
 py="$(findpy)"
 assert 'checking python version...' 'cannot find python>=3.8' "$py"
+"$py" -m pip show boto3 > /dev/null
+assert 'checking pip...' 'module "boto3" not found.' 'boto3 installed'
 assert 'checking other dependencies...' '`jq` not found. Try apt installing it.' "$(which jq)"
 "$py" sentiment.py "$@"
 if [ -f /tmp/SCSE/resp.txt ]
