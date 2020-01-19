@@ -100,7 +100,7 @@ class Todo extends Component {
                         <Icon type="question-circle" theme="twoTone" />
                     </Divider>
                     <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
-                    <div dangerouslySetInnerHTML={{__html: this.state.data.channel.title}}className = 'preview'></div>
+                    <div dangerouslySetInnerHTML={{__html: this.state.data.channel.title}}className = 'title_preview'></div>
                     <div dangerouslySetInnerHTML={{ __html: this.state.data.channel.description }} className='preview'></div>
                     <Button type='primary' onClick={this.postOrEdit}><NavLink to = {{pathname:'/Posts_utils', state:{title:this.props.title, post:this.props.post}}}>Edit Post</NavLink></Button>
 
