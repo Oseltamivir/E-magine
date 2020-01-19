@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './DiscApp.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import Todo from './to-do-list.js'
-import { message, Spin } from 'antd'
-
-
+import { message, Button, Icon, Divider  } from 'antd'
 
 //This will be the discussion page mainframe
 class DiscApp extends Component {
@@ -12,7 +10,7 @@ class DiscApp extends Component {
     super(props)
 
     this.state = {
-      data: null,
+      data: [],
       token: '',
       channel_id: '',
       user: 'YEET6',
@@ -33,7 +31,7 @@ class DiscApp extends Component {
     }).then((data) => {
 
       if (data.success === true) {
-        this.setState({ data: data })
+        this.setState({ data: data.channel })
         message.success({ content: "Loaded." });
         console.log(this.state.data)
       }
@@ -54,13 +52,13 @@ class DiscApp extends Component {
       )
   }
   render() {
+    let d = new Date()
     return (
       <div>
-        {this.state.data && (
           <div id='All'>
 
             <div id='header'>
-              <h1 id='Category'>{this.state.data.channel.topic}
+              <h1 id='Category'>{this.state.data.topic}
                 <span id='Status'>
                   {/*Button type='primary' size='small' id='pfp' onClick={this.changeUser = () => {
                 this.state.user === 'user' ? this.setState({ user: 'YEET6' }) : this.setState({ user: 'user' })
@@ -74,17 +72,40 @@ class DiscApp extends Component {
 
 
             {/*Posting utilities here*/}
-            <Todo token={this.state.user} data={this.state.data} messages={this.props.messages[this.state.data.channel.id]} fetchMessageFromChannel={this.props.fetchMessageFromChannel}/>
+            
+            <div className='todolist' >
+              <div>
+                <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
+                    <span>Question </span>
+                    <Icon type="question-circle" theme="twoTone" />
+                </Divider>
+                <p style={{ color: 'white' }}>Posted by {this.props.user} on {d.toDateString()}</p>
+                <div dangerouslySetInnerHTML={{ __html: this.state.data.title }} className='title_preview'></div>
+                <div dangerouslySetInnerHTML={{ __html: this.state.data.description }} className='preview'></div>
+                {/*<Button type='primary' onClick={this.postOrEdit}><NavLink to={{ pathname: '/Posts_utils', state: { title: this.props.title, post: this.props.post } }}>Edit Post</NavLink></Button>*/}
+
+                <span className='votearea'>
+                    <Button type='primary' onClick={() => { this.upvoteQuestion() }}>
+                        <Icon type="up-circle" theme="twoTone" />
+                    </Button>
+                    <p className='whittencounter'> {this.state.counter}</p>
+                    <Button type='primary' onClick={() => { this.downvoteQuestion() }}>
+                        <Icon type="down-circle" theme="twoTone" />
+                    </Button>
+                </span>
+              </div>
+              <Todo token={this.state.user} channelID={this.props.match.params.channel_id} messages={this.props.messages[this.props.match.params.channel_id]} fetchMessageFromChannel={this.props.fetchMessageFromChannel}/>
+            </div>
             <br />
             {/*div for all*/}
 
           </div>
-        )}
-        {!this.state.data && (
+
+        {/*!this.state.data && (
           <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
             <Spin size="large" />
           </div>
-        )}
+        )*/}
       </div>
     )
   }
