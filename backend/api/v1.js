@@ -92,7 +92,7 @@ router.get('/users/:id', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
   const id = req.params.id;
-  const profile = await db.collection('users').findOne({id}, {_id: 0, password: 0});
+  const profile = await db.collection('users').findOne({id: Long.fromString(id)}, {_id: 0, password: 0});
   
   // Some error trapping
   if (!profile) {
@@ -204,7 +204,7 @@ router.get('/channels/:channelID/posts', async (req, res) => {
   // clean results by removing Long data formats
   results.forEach(res => {
     res.id = res.id.toString();
-    res.author = res.id.toString();
+    res.author = res.author.toString();
     res.channel_id = res.channel_id.toString();
     delete res._id;
   });
@@ -248,9 +248,10 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   const gateway = req.app.get('gateway');
   channel.members.forEach(member => {
     const memberID = member.toString();
-    const client = gateway.clients.get(memberID);
-    if (client) {
-      client.sendMessage(data);
+    if (gateway.clients.has(memberID)) {
+      gateway.clients.get(memberID).forEach(memb => {
+        memb.sendMessage(data);
+      });
     }
   });
 
@@ -259,6 +260,12 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   data.id = Long.fromString(data.id);
   data.channel_id = Long.fromString(data.channel_id);
   data.author = Long.fromString(data.author);
+
+  const membs = [...channel.members].map(v => v.toString());
+  if (membs.indexOf(data.author.toString()) == -1) {
+    channel.members.push(data.author);
+    await db.collection('channels').updateOne({id: channel.id}, {'$set': {members: channel.members}});
+  }
 
   await db.collection('posts').insertOne(data);
   res.json({success: true, id});
@@ -302,6 +309,7 @@ router.post('/channels', async (req, res) => {
   const id = simpleflake().toString();
   data.id = Long.fromString(id);
   data.author = Long.fromString(req.user);
+  data.members = [data.author];
 
   await db.collection('channels').insertOne(data);
   res.json({success: true, id});

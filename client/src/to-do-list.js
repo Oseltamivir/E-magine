@@ -16,14 +16,38 @@ class Todo extends Component {
             currentState: { key: '', text: '', user: '', counter: '' },
             currentText: '',
             currentAnswers: { key: '', text: '', user: '', counter: '' },
-            answerItems: []
+            answerItems: [],
+            messages: this.props.messages || []
         }
+    }
 
+    componentDidMount () {
+        this.fetchPostsData();
     }
 
     fetchPostsData() {
-        
+        if (this.state.messages.length == 0) {
+            this.props.fetchMessageFromChannel(this.state.data.channel.id);
+        }
     }
+
+    createPost(text) {
+        const msg = {
+            timestamp: Date.now(),
+            content: text,
+            type: 0
+        }
+
+        fetch(window.baseURL + `/api/v1/channels/${this.state.data.channel.id}/posts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': window.localStorage.getItem('token')
+            },
+            body: JSON.stringify(msg)
+        })
+    }
+
     upvoteAnswer = (key) => {
         let ind = this.state.answerItems.findIndex(x => x.key === key);
         const newAnswer = {
@@ -68,6 +92,7 @@ class Todo extends Component {
         };
         if (newState.text !== '') {
             let item = [...this.state.items, newState];
+            this.createPost(this.state.currentText);
             this.setState({ currentState: newState, items: item, currentText: '' })
         }
         else { alert('Wrong Input') }
@@ -117,9 +142,9 @@ class Todo extends Component {
                 <form onSubmit={this.addItem}>
                     <Listmaker
                         answers={this.state.answerItems}
-                        entries={this.state.items}
+                        entries={this.state.messages}
                         deleteItem={this.deleteItem.bind(this)}
-                        user={this.props.user}
+                        user={atob(localStorage.getItem('token').split('.')[0])}
                         upvoteAnswer={this.upvoteAnswer.bind(this)}
                         downvoteAnswer={this.downvoteAnswer.bind(this)}
                     />

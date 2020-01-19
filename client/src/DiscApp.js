@@ -61,7 +61,6 @@ class DiscApp extends Component {
 
             <div id='header'>
               <h1 id='Category'>{this.state.data.channel.topic}
-              <p>List of members in channel: {this.state.data.channel.members}</p>
                 <span id='Status'>
                   {/*Button type='primary' size='small' id='pfp' onClick={this.changeUser = () => {
                 this.state.user === 'user' ? this.setState({ user: 'YEET6' }) : this.setState({ user: 'user' })
@@ -75,7 +74,7 @@ class DiscApp extends Component {
 
 
             {/*Posting utilities here*/}
-            <Todo token={this.state.user} data={this.state.data} />
+            <Todo token={this.state.user} data={this.state.data} messages={this.props.messages[this.state.data.channel.id]} fetchMessageFromChannel={this.props.fetchMessageFromChannel}/>
             <br />
             {/*div for all*/}
 

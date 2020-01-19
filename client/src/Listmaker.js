@@ -6,21 +6,43 @@ import { Button, Divider, Icon } from 'antd'
 
 
 class Listmaker extends Component {
-    postTime = (items) => {
-        let d = new Date()
-        return items.user + ' posted this at ' + d.toDateString()
+    constructor (props) {
+        super(props);
 
+        this.state = {
+            users: {}
+        }
+    }
+
+    fetchUser (items) {
+        if (this.state.users.hasOwnProperty(items.author)) return;
+        fetch(window.baseURL + '/api/v1/users/' + items.author, {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const users = this.state.users;
+            users[items.author] = data.profile.username;
+            this.setState({users});
+        });
+    }
+
+    postTime = (items) => {
+        let d = new Date(items.timestamp)
+        if (!this.state.users.hasOwnProperty(items.author)) this.fetchUser(items);
+        return (this.state.users[items.author] || '') + ' posted this at ' + d.toDateString()
     }
     createItem = (items) => {
-        if (items.user === this.props.user) {
+        if (items.author === this.props.user) {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <span>
-                       <p onClick={() => { this.props.deleteItem(items.key) }} style = {{color:'#ff4422',fontSize:'120%',float:'right'}}>X</p>
+                       <p onClick={() => { this.props.deleteItem(items.id) }} style = {{color:'#ff4422',fontSize:'120%',float:'right'}}>X</p>
                     </span>
                     <br />
                 </li>
@@ -28,10 +50,10 @@ class Listmaker extends Component {
         }
         else {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <br />
                 </li>
