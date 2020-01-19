@@ -1,6 +1,7 @@
 # Internal text recognition API documentation
 #### Main URL: https://662uaw6eqb.execute-api.us-east-1.amazonaws.com
 `POST /v1/upload`
+
 Run text recognition on an input image.
 
 *Header required: Content-Type*
@@ -9,7 +10,7 @@ Run text recognition on an input image.
 
 ###### Example request:
 
-` PNG)*!#&%*(!...  `
+` PNG)*!#&%*(!...<long binary file>  `
 
 The POST request has no parameters; send the raw binary representation of the image.
 
@@ -22,5 +23,6 @@ The POST request has no parameters; send the raw binary representation of the im
 ```
 Note that the json returned will have escaped '\n's instead of actual raw newlines.
 
+###### Expected failure response:
 On failure, the API will respond with an unpredictable python stack trace.
 
