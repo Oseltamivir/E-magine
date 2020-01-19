@@ -24,6 +24,9 @@ class Gateway {
   /* Listeners for messages and events from client */
   registerListener (ws) {
     ws.on('message', (msg) => this.messageHandler(ws, msg));
+    ws.on('close', (e) => {
+      ws.closed = true;
+    });
 
     setInterval(() => {
       this.sendHeartbeat(ws);
@@ -80,6 +83,7 @@ class Gateway {
   }
 
   sendHello (ws) {
+    if (ws.closed) return;
     const hello = {
       "op": 0,
       "heartbeat_interval": 45000
@@ -88,6 +92,7 @@ class Gateway {
   }
 
   sendHeartbeat (ws) {
+    if (ws.closed) return;
     const hb = {
       "op": 10,
       "time": Date.now()
@@ -96,6 +101,7 @@ class Gateway {
   }
 
   sendHeartbeatACK (ws, data) {
+    if (ws.closed) return;
     const hb_ack = {
       "op": 11,
       "time": data.time
@@ -111,6 +117,7 @@ class Client {
   }
 
   sendReady () {
+    if (this.ws.closed) return;
     const ready = {
       "op": 2,
       "user": this.user
@@ -119,6 +126,7 @@ class Client {
   }
 
   sendMessage (message) {
+    if (this.ws.closed) return;
     const msg = {
       "op": 3,
       "message": message
