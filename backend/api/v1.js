@@ -92,7 +92,7 @@ router.get('/users/:id', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
   const id = req.params.id;
-  const profile = await db.collection('users').findOne({id}, {_id: 0, password: 0});
+  const profile = await db.collection('users').findOne({id: Long.fromString(id)}, {_id: 0, password: 0});
   
   // Some error trapping
   if (!profile) {
@@ -251,7 +251,6 @@ router.post('/channels/:channelID/posts', async (req, res) => {
     if (gateway.clients.has(memberID)) {
       gateway.clients.get(memberID).forEach(memb => {
         memb.sendMessage(data);
-        console.log('send');
       });
     }
   });
