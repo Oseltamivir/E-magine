@@ -19,6 +19,7 @@ export default class Explore extends React.Component {
             data: [],
             hasMore: true,
             loading: false,
+            explorePostsData: [],
         };
     }
 
@@ -27,19 +28,28 @@ export default class Explore extends React.Component {
     }
 
     componentDidMount() { //Fetch data once first when component loads
-        this.fetchData();
+        this.fetchExploreData();
     }
 
-    fetchData() {
-        fetch("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo") //Fetch data from webpage
-            .then((results) => {
-                return results.json(); //return data in JSON (since its JSON data)
-            }).then((data) => {
-                const retrievedData = data.results
-                const currentData = this.state.data
-                this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
+    fetchExploreData() { //Fetch user's posts
+        fetch(window.baseURL + '/api/v1/explore', {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                const retrievedData = data.explore.questions
+                const currentData = this.state.explorePostsData
+                this.setState({ explorePostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
-            })
+
+                console.log(data.explore.questions)
+            }
+        }).catch((error) => {
+            message.error({ content: "Oops, posts loading connection failed" })
+        })
     }
 
 
@@ -58,7 +68,7 @@ export default class Explore extends React.Component {
 
         }
         else {
-            this.fetchData();
+            this.fetchExploreData();
         }
 
     };
@@ -75,7 +85,7 @@ export default class Explore extends React.Component {
             }}>
                 <div id="showcase" style={{ marginLeft: "1.3vw", marginBottom: "5vh" }}>
                     <ExploreTopBar />
-                    
+
                 </div>
 
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
@@ -102,7 +112,7 @@ export default class Explore extends React.Component {
                 >
                     <List
                         grid={{ gutter: 30, column: 3 }}
-                        dataSource={this.state.data}
+                        dataSource={this.state.explorePostsData}
                         locale={{
                             emptyText: (
                                 <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
@@ -117,28 +127,15 @@ export default class Explore extends React.Component {
                                         hoverable
                                         type="inner"
                                         bordered={false}
-                                        title="Post Title"
+                                        title={item.title}
                                         headStyle={{ backgroundColor: "#1890ff", color: "white", }}
                                         bodyStyle={{ backgroundColor: "#001529" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
+
                                     >
                                         <Meta
-                                            title={
-                                                <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
-                                                        Tkai
-                                                    </Avatar>
-                                                    <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
-                                                    <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
-                                                </div>
-                                            }
-                                            description={
-                                                <div id="Description">
-                                                    <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                                    <p style={{ color: "white" }}>{item.name.title}</p>
-                                                </div>
-                                            }
+                                            title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button></div>}
+                                            description={<div dangerouslySetInnerHTML={{ __html: item.description }} style={{ color: "#cccccc" }}></div>}
                                         />
                                     </Card> {/*Pass entire datasource as prop*/}
                                 </div>
