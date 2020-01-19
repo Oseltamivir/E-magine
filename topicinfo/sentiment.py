@@ -20,11 +20,15 @@ class bcolors:
 
 #constants
 CLASSIFIER = 'arn:aws:comprehend:us-east-1:553816289748:document-classifier/nlp'
+role_ARN = 'arn:aws:iam::553816289748:role/nlprole'
 role_ARN = "arn:aws:iam::553816289748:role/service-role/AmazonComprehendServiceRoleS3FullAccess-nlp"
+ses = boto3.Session(profile_name='devel')
 
+def err(s): return bcolors.FAIL + s + bcolors.ENDC
+def good(s): return bcolors.OKGREEN + s + bcolors.ENDC
 def analyse(to_upload: list) -> None: 
     #init buckets
-    s3r = boto3.resource('s3', region_name=LOCATE)
+    s3r = ses.resource('s3', region_name=LOCATE)
     IN_BUCKET = mkbucket(s3r)
     OUT_BUCKET = mkbucket(s3r)
     print('created buckets %s and %s' % (IN_BUCKET,OUT_BUCKET))
@@ -36,8 +40,8 @@ def analyse(to_upload: list) -> None:
 
     #start the comprehend job
     jobname = str(uuid4())
-    nlp = boto3.client('comprehend', region_name=LOCATE)
-    print(bcolors.OKGREEN + 'starting job ' + bcolors.ENDC + jobname)
+    nlp = ses.client('comprehend', region_name=LOCATE)
+    print(good('starting job ') + jobname)
     job = nlp.start_document_classification_job(
             JobName=jobname,
             DocumentClassifierArn=CLASSIFIER,
@@ -50,15 +54,16 @@ def analyse(to_upload: list) -> None:
     spin = cycle(['-','/','|','\\'])
     while info()['JobStatus'] in {'SUBMITTED', 'IN_PROGRESS'}:
         sleep(1)
-        print('job in progress... '+next(spin), end='\r')
-
+        print('job in progress (this takes many minutes)... '+next(spin), end='\r')
+    print('\t'*10, end='\r') #clear the progress spinner
+    
     #check that the job worked
     if (resp := info())['JobStatus'] != 'COMPLETED':
-        print("PANIC: JOB %s FAILED; dumping info" % job['JobId'])
+        print(err("PANIC: JOB ") + job['JobId'] + err(" FAILED") + "; dumping info")
         print(job)
         print(resp)
         exit(1)
-    print(bcolors.OKGREEN + 'job succeeded!' + bcolors.ENDC)
+    print(good('job succeeded!'))
     for obj in out_B.objects.all():
         if obj.key[0] != '.': #if file is not hidden file
             download_and_delete(obj.key, out_B, '/tmp/SCSE/%s' % basename(obj.key))
