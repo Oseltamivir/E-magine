@@ -335,7 +335,7 @@ router.post('/auth/register', async (req, res) => {
 
   const user = {
     username,
-    id,
+    id: Long.fromString(id),
     password: hashed,
     displayName: username,
     avatar: null,
@@ -351,6 +351,26 @@ router.post('/auth/register', async (req, res) => {
   await db.collection('users').insertOne(user);
   const token = signer.sign(Buffer.from(user.id).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
   res.json({success: true, token});
+});
+
+/* Explore endpoint (to get recent questions + hot stuff) */
+router.get('/explore', async (req, res) => {
+  if (!apiAuth(req, res)) return;
+
+  const questions = await db.collection('channels').find({type: 0}).sort( { id: -1 } ).limit(10).toArray();
+  const streams = await db.collection('channels').find({type: 1}).sort( { id: -1 } ).limit(10).toArray();
+
+  questions.forEach(question => {
+    question.id = question.id.toString();
+    question.author = question.author.toString();
+  });
+
+  streams.forEach(stream => {
+    stream.id = stream.id.toString();
+    stream.author = stream.author.toString();
+  });
+
+  res.json({success: true, explore: {streams, questions}});
 });
 
 module.exports = router;

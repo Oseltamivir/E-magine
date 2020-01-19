@@ -24,9 +24,8 @@ import WrappedNormalRegisterForm from './Register';
 
 const { Header, Content, Sider } = Layout;
 
-var baseHost = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech:8080";
-//window.baseURL = window.location.protocol + '//' + baseHost;
-window.baseURL = "https:" + '//' + baseHost; //Hardcode for now due to http being unavailable
+window.baseHost = env.prod ? "prod.exegesisapp.tech" : "test.exegesisapp.tech:8080";
+window.baseURL = (env.prod ? 'https://' : 'http://') + window.baseHost;
 
 const data = [
   {
@@ -263,7 +262,7 @@ class App extends React.Component {
 
   checkWS() {
     if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
-      this.GatewayClient = new WebSocket(window.location.protocol === 'https:' ? 'wss://' : 'ws://' + baseHost);
+      this.GatewayClient = new WebSocket(window.location.protocol === 'https:' ? 'wss://' : 'ws://' + window.baseHost);
       this.GatewayClient.onopen = (e) => {
         console.log('[GATEWAY] Connected to gateway server!');
       };
