@@ -69,9 +69,14 @@ class Gateway {
     }
 
     const client = new Client(ws, user);
-    this.clients.set(user, client);
+    if (this.clients.has(user)) {
+      this.clients.set(user, [...this.clients.get(user), client]);
+    }
+    else this.clients.set(user, [client]);
     ws.user = user;
     client.sendReady();
+
+    console.log('[GATEWAY] New client connected, ID:', user);
   }
 
   sendHello (ws) {

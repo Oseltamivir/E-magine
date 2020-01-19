@@ -248,9 +248,11 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   const gateway = req.app.get('gateway');
   channel.members.forEach(member => {
     const memberID = member.toString();
-    const client = gateway.clients.get(memberID);
-    if (client) {
-      client.sendMessage(data);
+    if (gateway.clients.has(memberID)) {
+      gateway.clients.get(memberID).forEach(memb => {
+        memb.sendMessage(data);
+        console.log('send');
+      });
     }
   });
 
