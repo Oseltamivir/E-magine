@@ -8,6 +8,8 @@ import { Tabs, Icon, Divider, Input } from 'antd';
 import { NavLink } from 'react-router-dom'
 const { TabPane } = Tabs;
 const { TextArea } = Input
+
+
 class Post extends Component {
   constructor(prop) {
     super(prop)

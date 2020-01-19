@@ -17,7 +17,7 @@ import { ReactComponent as Logo } from './logo.svg';
 import env from './env.json';
 
 
-import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Divider } from 'antd';
+import { Menu, Icon, Layout, Button, Badge, Dropdown, List, Avatar, Divider, message } from 'antd';
 import { NavLink, Switch, Route, withRouter, useHistory, useLocation } from 'react-router-dom';
 import WrappedNormalRegisterForm from './Register';
 
@@ -128,7 +128,8 @@ class App extends React.Component {
       msgtxt: '',
       notifies: 0,
       token: tokenStatus,
-      isRegister: false
+      isRegister: false,
+      messages: null,
     };
   }
 
@@ -141,8 +142,8 @@ class App extends React.Component {
     localStorage.setItem('token', receivedtoken);
   }
 
-  toRegister = () =>{
-    this.setState({isRegister: !this.state.isRegister})
+  toRegister = () => {
+    this.setState({ isRegister: !this.state.isRegister })
   }
 
   componentDidUpdate() {
@@ -189,10 +190,10 @@ class App extends React.Component {
         })
       }
     }
-  
+
   }
 
-  
+
   componentDidMount() {
     /*[TODO:] Work on sessions so that the login status will be kept when page is reloaded */
     //Ensures correct menu.item is selected when page changes without clicking on menu.items
@@ -235,19 +236,43 @@ class App extends React.Component {
     }
   }
 
-  checkWS () {
+  fetchChannelPosts() {
+    fetch(window.baseURL + '/api/v1/channels/' + this.state.channel_id , {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+    }).then((results) => {
+      return results.json(); //return data in JSON (since its JSON data)
+    }).then((data) => {
+
+      if (data.success === true) {
+        this.setState({ data: data })
+        message.success({ content: "Loaded." });
+        console.log(this.state.data)
+      }
+      else {
+        message.error({ content: "Oops... unable to find post" });
+      }
+
+    }).catch((error) => {
+      message.error({ content: "Oops, connection error" });
+      message.error({ content: error });
+    })
+  }
+
+
+  checkWS() {
     if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
       this.GatewayClient = new WebSocket(window.location.protocol === 'https:' ? 'wss://' : 'ws://' + window.baseHost);
       this.GatewayClient.onopen = (e) => {
         console.log('[GATEWAY] Connected to gateway server!');
       };
-  
+
       this.GatewayClient.onmessage = (e) => {
         const data = JSON.parse(e.data);
         if (data.op === 0) {
           // Hello
           console.log('[GATEWAY] Hello from server, heartbeat_interval: ' + data.heartbeat_interval);
-          const login = {op: 1, token: localStorage.getItem('token')};
+          const login = { op: 1, token: localStorage.getItem('token') };
           this.GatewayClient.send(JSON.stringify(login));
         }
         else if (data.op === 2) {
@@ -257,23 +282,30 @@ class App extends React.Component {
         else if (data.op === 3) {
           // Message
           console.log('[GATEWAY] Received message:', JSON.stringify(data.message));
+          if(this.state.messages.hasOwnProperty(data.message.channel_id) === true) {
+            this.state.messages[data.message.channel_id].push(data.message);
+          }
+          else {
+            this.state.messages[data.message.channel_id] = [data.message];
+          }
+          this.setState(this.state);
         }
         else if (data.op === 10) {
           // Heartbeat
-          const hb = {time: data.time, op: 11};
+          const hb = { time: data.time, op: 11 };
           this.GatewayClient.send(JSON.stringify(hb));
         }
         else if (data.op === 11) {
           // Heartbeat ACK
           console.log('[GATEWAY] Latency: ' + (Date.now() - data.time) + 'ms.');
-        } 
+        }
       }
 
       this.GatewayClient.onclose = e => {
         console.log('[GATEWAY] Closed: ', e.code, e.reason);
       }
     }
-    
+
   }
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
@@ -410,12 +442,12 @@ class App extends React.Component {
           </Layout>
         )}
         {!this.state.token && (
-        <div>
-          {this.state.isRegister && (
-          <WrappedNormalRegisterForm loginHandler = {this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalRegisterForm>
-          )}
-          <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)} register = {this.toRegister.bind(this)}></WrappedNormalLoginForm>
-        </div>
+          <div>
+            {this.state.isRegister && (
+              <WrappedNormalRegisterForm loginHandler={this.handleLogin.bind(this)} register={this.toRegister.bind(this)}></WrappedNormalRegisterForm>
+            )}
+            <WrappedNormalLoginForm loginHandler={this.handleLogin.bind(this)} register={this.toRegister.bind(this)}></WrappedNormalLoginForm>
+          </div>
         )}
       </div>
 
