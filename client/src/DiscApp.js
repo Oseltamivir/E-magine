@@ -74,7 +74,7 @@ class DiscApp extends Component {
 
 
             {/*Posting utilities here*/}
-            <Todo token={this.state.user} data={this.state.data} messages={this.props.messages[this.state.data.channel.id]} />
+            <Todo token={this.state.user} data={this.state.data} messages={this.props.messages[this.state.data.channel.id]} fetchMessageFromChannel={this.props.fetchMessageFromChannel}/>
             <br />
             {/*div for all*/}
 
