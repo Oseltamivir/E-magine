@@ -61,23 +61,23 @@ class Listmaker extends Component {
         }
     }
     createAnswers = (items) => {
-        if (items.user === this.props.user) {
+        if (items.author === this.props.user) {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div className='listpart'>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <span>
                         <span class='votearea'>
-                            <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
+                            <Button onClick={() => { this.props.upvoteAnswer(items.id) }} type='primary'>
                                 <Icon type="up-circle" theme="twoTone" />
                             </Button>
                             <p class='whittencounter'>
-                                {items.counter}
+                                {0}
                             </p>
                             <Button
-                                onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
+                                onClick={() => { this.props.downvoteAnswer(items.id) }} type='primary'>
                                 <Icon type="down-circle" theme="twoTone" />
                             </Button>
                         </span>
@@ -88,19 +88,19 @@ class Listmaker extends Component {
         }
         else {
             return (
-                <li key={items.key}>
+                <li key={items.id}>
                     <div className='listpart'>
                         <p className='timetext'>{this.postTime(items)}</p>
-                        <p className='replytext'>{items.text}</p>
+                        <p className='replytext'>{items.content}</p>
                     </div>
                     <span class='votearea'>
-                        <Button onClick={() => { this.props.upvoteAnswer(items.key) }} type='primary'>
+                        <Button onClick={() => { this.props.upvoteAnswer(items.id) }} type='primary'>
                             <Icon type="up-circle" theme="twoTone" />
                         </Button>
                         <p className='whittencounter'>
-                            {items.counter}
+                            {0}
                         </p>
-                        <Button onClick={() => { this.props.downvoteAnswer(items.key) }} type='primary'>
+                        <Button onClick={() => { this.props.downvoteAnswer(items.id) }} type='primary'>
                             <Icon type="down-circle" theme="twoTone" />
                         </Button>
                     </span>
@@ -110,8 +110,10 @@ class Listmaker extends Component {
         }
     }
     render() {
-        const toDoEntries = this.props.entries;
-        const toDoAnswers = this.props.answers
+        console.log(this.props.post)
+        console.log(this.props.answers)
+        const toDoEntries = this.props.post;
+        const toDoAnswers = this.props.answers;
         const listItems = toDoEntries.map(this.createItem);
         const listAnswers = toDoAnswers.map(this.createAnswers)
         return (
