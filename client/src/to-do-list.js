@@ -16,14 +16,36 @@ class Todo extends Component {
             currentState: { key: '', text: '', user: '', counter: '' },
             currentText: '',
             currentAnswers: { key: '', text: '', user: '', counter: '' },
-            answerItems: []
+            answerItems: [],
+            messages: this.props.messages || []
         }
+    }
 
+    componentDidUpdate () {
+        this.fetchPostsData();
     }
 
     fetchPostsData() {
-        
+        console.log(this.state.messages);
     }
+
+    createPost(text) {
+        const msg = {
+            timestamp: Date.now(),
+            content: text,
+            type: 0
+        }
+
+        fetch(window.baseURL + `/api/v1/channels/${this.state.data.channel.id}/posts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': window.localStorage.getItem('token')
+            },
+            body: JSON.stringify(msg)
+        })
+    }
+
     upvoteAnswer = (key) => {
         let ind = this.state.answerItems.findIndex(x => x.key === key);
         const newAnswer = {
