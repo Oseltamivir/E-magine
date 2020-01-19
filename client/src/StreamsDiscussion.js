@@ -55,7 +55,7 @@ class StreamDisc extends Component {
                 </Content>
 
 
-                <Sider collapsible width="20vw" trigger={null} collapsedWidth={0} style={{
+                <Sider collapsible width="40vw" trigger={null} collapsedWidth={0} style={{
                     backgroundColor: "#002140",
                     overflow: "auto",
                 }}>
