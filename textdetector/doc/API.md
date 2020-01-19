@@ -3,7 +3,15 @@
 
 #### `POST /v1/upload`
 
-Run text recognition on an input image.
+Run text recognition on an input image. You can test the API with the following command:
+```
+curl -X POST \
+     -H "Content-Type: image/png" \
+     --data-binary @"~/path/to/mspaint.png" \
+     https://662uaw6eqb.execute-api.us-east-1.amazonaws.com
+```
+
+##### Further explanation
 
 *Header required: Content-Type*
 
