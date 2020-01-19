@@ -109,12 +109,15 @@ class Todo extends Component {
         };
         if (newState.text !== '') {
             let item = [...this.state.answerItems, newState];
+            this.createPost(this.state.currentText);
             this.setState({ currentAnswer: newState, answerItems: item, currentText: '' })
         }
         else { alert('Wrong Input') }
     }
     render() {
         let d = new Date()
+        let post  = this.state.messages.filter(msgs=>{return msgs.type === 0})
+        let answers = this.state.messages.filter(msgs=>{ return msgs.type === 1})
         if (this.state.user === this.state.poster) { 
         return (
             <div className='todolist' >
@@ -142,7 +145,8 @@ class Todo extends Component {
                 <form onSubmit={this.addItem}>
                     <Listmaker
                         answers={this.state.answerItems}
-                        entries={this.state.messages}
+                        post = {post}
+                        answers = {answers}
                         deleteItem={this.deleteItem.bind(this)}
                         user={atob(localStorage.getItem('token').split('.')[0])}
                         upvoteAnswer={this.upvoteAnswer.bind(this)}
@@ -188,7 +192,8 @@ class Todo extends Component {
         <form onSubmit={this.addItem}>
             <Listmaker
                 answers={this.state.answerItems}
-                entries={this.state.items}
+                posts={post}
+                answers = {answers}
                 deleteItem={this.deleteItem.bind(this)}
                 user={this.props.user}
                 upvoteAnswer={this.upvoteAnswer.bind(this)}
