@@ -3,8 +3,8 @@ import './DiscApp.css';
 import './discindex.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Button } from 'antd';
-import { Tabs, Icon, Divider, Input, Select, message } from 'antd';
-import { useHistory} from 'react-router-dom';
+import { Tabs, Icon, Divider, Input, Select, message, Upload } from 'antd';
+import { useHistory } from 'react-router-dom';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -15,6 +15,24 @@ var FormInput = [
 ]
 var clicked = false
 var token = "";
+
+const props = {
+    name: 'file',
+    action: window.baseURL + '/v1/upload',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 
 function Redirect() { //Special hook function in order to use React Router's history.push 
     const history = useHistory();
@@ -34,11 +52,11 @@ function Redirect() { //Special hook function in order to use React Router's his
         }).then((results) => {
             return results.json(); //return data in JSON (since its JSON data)
         }).then((data) => {
-            
+
 
             if (data.success === true) {
-                message.success({ content: "Post successfully created with id " + data.id  });
-                history.push({pathname: "/DiscApp/" + data.id});
+                message.success({ content: "Post successfully created with id " + data.id });
+                history.push({ pathname: "/DiscApp/" + data.id });
             }
             else {
                 message.error({ content: "Oops... Form fields cannot be left blank" });
@@ -50,7 +68,7 @@ function Redirect() { //Special hook function in order to use React Router's his
             clicked = false;
             message.error({ content: "Oops, connection error" });
         })
-        
+
     }
 
     return (
@@ -70,6 +88,7 @@ export default class CreatePost extends Component {
             user: 'Bob',
             title: '',
             topic: '',
+            file: null,
 
 
         } //For storing text for post
@@ -95,6 +114,7 @@ export default class CreatePost extends Component {
         })
     }
     componentDidUpdate() {
+
         // create a variable to check if the thingy is open
         // if it is not and user is poster, create editor
         var self = this;
@@ -117,7 +137,7 @@ export default class CreatePost extends Component {
             FormInput[2] = this.state.topic
             console.log(FormInput)
         }
-        
+
     }
 
     handleTitle(e) {
@@ -127,6 +147,17 @@ export default class CreatePost extends Component {
     topicOnChange(e) {
         this.setState({ topic: e })
     }
+
+    handleSubmit(event) {
+        alert(this.state.value);
+        event.preventDefault();
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+        console.log(this.state.value)
+    }
+
 
     render() {
         let ifPosted = ''
@@ -146,7 +177,7 @@ export default class CreatePost extends Component {
                             Posting
                         </span>
                     }
-                    key='1'>
+                        key='1'>
                         <div className="tabcontainer">
                             <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                                 <span>Your post</span>
@@ -154,8 +185,8 @@ export default class CreatePost extends Component {
                             </Divider>
 
                             <div className="post-title-label">Title: </div>
-                            <Input className="post-title-input" onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." /> 
-                            <br/>
+                            <Input className="post-title-input" onChange={this.handleTitle.bind(this)} value={this.state.title} placeholder="Enter question title..." />
+                            <br />
                             <div className="post-title-label">Topic: </div>
                             <Select className="post-title-input" value={this.state.topic} onChange={this.topicOnChange.bind(this)} defaultValue="Mathematics" style={{ width: "20vw" }}>
                                 <Option value="Mathematics">Mathematics</Option>
@@ -169,6 +200,9 @@ export default class CreatePost extends Component {
                             <Redirect />
                             {ifPosted}
                         </div>
+
+                        <SimpleReactFileUpload></SimpleReactFileUpload>
+
                     </TabPane>
 
                     <TabPane tab={
@@ -177,7 +211,7 @@ export default class CreatePost extends Component {
                             Preview
                         </span>
                     }
-                    key='2'>
+                        key='2'>
                         <div class="tabcontainer">
                             <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                                 <span>Preview </span>
@@ -188,9 +222,72 @@ export default class CreatePost extends Component {
                         </div>
                     </TabPane>
                 </Tabs>
+
+
             </div>
 
         )
     }
 }
 
+class SimpleReactFileUpload extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            file: null
+        }
+        this.onFormSubmit = this.onFormSubmit.bind(this)
+        this.onChange = this.onChange.bind(this)
+        this.fileUpload = this.fileUpload.bind(this)
+    }
+    onFormSubmit(e) {
+        e.preventDefault() // Stop form submit
+        this.fileUpload(this.state.file);
+    }
+    onChange(e) {
+        this.setState({ file: e.target.files[0] })
+        console.log("1" + e.target.files[0])
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+            // The file's text will be printed here
+            console.log(ev.target.result)
+            fetch("https://662uaw6eqb.execute-api.us-east-1.amazonaws.com" + '/v1/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'image/jpg' },
+                body: ev.target.result
+            }).then((results) => {
+                return results.json(); //return data in JSON (since its JSON data)
+            }).then((data) => {
+                console.log(data)
+            }).catch((error) => {
+                message.error({ content: "Oops, connection error" });
+            })
+        };
+
+        var rawBinary = reader.readAsBinaryString(file);
+
+    }
+    fileUpload(file) {
+        const url = 'http://example.com/file-upload';
+        var formData = new FormData();
+        formData.append('file', file)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        console.log(file)
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.onFormSubmit}>
+                <h1>File Upload</h1>
+                <input type="file" onChange={this.onChange} />
+                <button type="submit">Upload</button>
+            </form>
+        )
+    }
+}
