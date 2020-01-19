@@ -262,7 +262,8 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   data.channel_id = Long.fromString(data.channel_id);
   data.author = Long.fromString(data.author);
 
-  if (channel.members.indexOf(data.author) == -1) {
+  const membs = [...channel.members].map(v => v.toString());
+  if (membs.indexOf(data.author.toString()) == -1) {
     channel.members.push(data.author);
     await db.collection('channels').updateOne({id: channel.id}, {'$set': {members: channel.members}});
   }
