@@ -147,7 +147,7 @@ class ExploreTopicPage extends React.Component {
                                         <Meta
                                             title={
                                                 <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                    <Avatar style={{ backgroundColor: "#1890ff" }} size={25}>
                                                         Tkai
                                                     </Avatar>
                                                     <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
