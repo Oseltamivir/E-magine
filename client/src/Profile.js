@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
 import './index.css';
+import isEqual from 'lodash/isEqual';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import { NavLink } from 'react-router-dom';
@@ -22,6 +23,7 @@ class Profile extends React.Component {
 
         this.state = {
             profileData: null,
+            last10Posts: ["Placeholder"],
             yourPostsData: [],
             yourSolutionsData: [],
             token: this.props.token,
@@ -39,7 +41,7 @@ class Profile extends React.Component {
     cardClick() {
         alert("Live chat in development...")
     }
-
+    
     fetchPostsData() { //Fetch user's posts
         fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=0', {
             method: 'get',
@@ -47,22 +49,31 @@ class Profile extends React.Component {
         }).then((results) => {
             return results.json(); //return data in JSON (since its JSON data)
         }).then((data) => {
-
+            console.log("got to data")
             if (data.success === true) {
                 const retrievedData = data.posts
-                const currentData = this.state.yourPostsData
-                this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
-                this.setState({ loading: false, }) //Done loading, set loading state to false
 
-                console.log(data.posts)
+                if (isEqual(retrievedData, this.state.last10Posts) === true) {//No more posts
+                    message.warning({ content: "All posts loaded" });
+                    this.setState({ loading: false, hasMore: false }) //Done loading, set loading state to false    
+                }
+                else { 
+                    this.setState({ last10Posts: retrievedData })
+                    const currentData = this.state.yourPostsData
+                    this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
+                    this.setState({ loading: false, }) //Done loading, set loading state to false
+
+                }
+
             }
         }).catch((error) => {
+            console.log(error)
             message.error({ content: "Oops, posts loading connection failed" })
         })
     }
 
-    fetchSolutionsData() { //Fetch user's posts
-        fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=2', {
+    fetchSolutionsData() { //Fetch user's solutions
+        fetch(window.baseURL + '/api/v1/posts/me?limit=100&type=2', {
             method: 'get',
             headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
         }).then((results) => {
@@ -77,7 +88,8 @@ class Profile extends React.Component {
 
             }
         }).catch((error) => {
-            message.error({ content: "Oops, posts loading connection failed" })
+            console.log(error)
+            message.error({ content: "Oops, solutions loading connection failed" })
         })
     }
 
@@ -92,7 +104,7 @@ class Profile extends React.Component {
 
             if (data.success === true) {
                 this.setState({ profileData: data.profile })
-                
+
             }
             else {
                 message.error({ content: "Oops, connection failed" })
@@ -298,8 +310,7 @@ class Profile extends React.Component {
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Icon type="folder-open" />
-                                                        <h1 style={{color: "white", fontSize: "5vw"}}>It seems rather empty in here...</h1>
+                                                        <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -360,7 +371,7 @@ class Profile extends React.Component {
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <h1 style={{color: "white", fontSize: "2vw"}}><Icon type="folder-open" /> It seems rather empty in here...</h1>
+                                                        <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -387,7 +398,7 @@ class Profile extends React.Component {
                                         />
 
                                         {this.state.loading && this.state.hasMore && (
-                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                                                 <Spin size="large" />
                                             </div>
                                         )}

@@ -5,33 +5,26 @@ import { useHistory } from 'react-router-dom';
 const { Search, TextArea } = Input;
 const { Option } = Select;
 
-const selectBefore = (
-    <Select defaultValue="https://www.youtube.com/" style={{ width: "18vw" }}>
-        <Option value="https://www.youtube.com/">https://www.youtube.com/</Option>
-        <Option value="https://www.twitch.tv/">https://www.twitch.tv/</Option>
-    </Select>
-);
-
 var inputValues = {
     Link: "",
     Title: "",
     Desc: "",
     Topic: "",
+    addon: "",
 }
 
-var sub
 function OkModal() { //Special hook function in order to use React Router's history.push 
     const history = useHistory();
 
     function HandleClick() {
-
+        console.log(inputValues)
         fetch(window.baseURL + '/api/v1/channels', {
             method: 'post',
             headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
             body: JSON.stringify({
                 "type": 1,
                 "timestamp": Date.now(),
-                "streamURL": inputValues.Link,
+                "streamURL": inputValues.addon + inputValues.Link,
                 "title": inputValues.Title,
                 "description": inputValues.Desc,
                 "topic": inputValues.Topic
@@ -42,8 +35,8 @@ function OkModal() { //Special hook function in order to use React Router's hist
 
 
             if (data.success === true) {
-                message.success({content: "Stream created with id: " + data.id})
-                //history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
+                message.success({ content: "Stream created with id: " + data.id })
+                history.push({ pathname: "/StreamsDiscussion/" + data.id });
             }
             else {
                 message.error({ content: "Oops... Form fields cannot be left blank" });
@@ -71,9 +64,10 @@ class StreamsTopBar extends React.Component {
             Title: "",
             Desc: "",
             Topic: "",
+            addOnLink: "",
         };
     }
-    
+
     linkOnChange(e) {
         this.setState({ Link: e.target.value })
         inputValues.Link = e.target.value
@@ -89,6 +83,10 @@ class StreamsTopBar extends React.Component {
     topicOnChange(e) {
         this.setState({ Topic: e })
         inputValues.Topic = e
+    }
+    addOnOnChange(e) {
+        this.setState({ addOnLink: e})
+        inputValues.addon = e
     }
 
     showModal() {
@@ -124,7 +122,12 @@ class StreamsTopBar extends React.Component {
                 >
                     <h3>Youtube/Twitch Stream Link</h3>
                     <Tooltip placement="bottomRight" title={<p>Paste the end part of the YouTube/Twitch stream link <br />(E.g watch?v=SIGQSgifs6s or twitchChannelName )</p>}>
-                        <Input onChange={this.linkOnChange.bind(this)} value={this.state.Link} addonBefore={selectBefore} placeholder="Enter end part" />
+                        <Input onChange={this.linkOnChange.bind(this)} value={this.state.Link} addonBefore={(
+                            <Select value={this.state.addOnLink} onChange={this.addOnOnChange.bind(this)} defaultValue="https://www.youtube.com/" style={{ width: "18vw" }}>
+                                <Option value="https://www.youtube.com/">https://www.youtube.com/</Option>
+                                <Option value="https://www.twitch.tv/">https://www.twitch.tv/</Option>
+                            </Select>
+                        )} placeholder="Enter end part" />
                     </Tooltip>
 
                     <h3 style={{ marginTop: "3vh" }}>Stream Title</h3>
@@ -143,7 +146,7 @@ class StreamsTopBar extends React.Component {
                         <Option value="Computing">Computing</Option>
                     </Select>
 
-                    <div id="okButton" style={{marginTop: "3vh"}}>
+                    <div id="okButton" style={{ marginTop: "3vh" }}>
                         <OkModal />
                     </div>
 
