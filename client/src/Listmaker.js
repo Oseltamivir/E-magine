@@ -74,7 +74,7 @@ class Listmaker extends Component {
                                 <Icon type="up-circle" theme="twoTone" />
                             </Button>
                             <p class='whittencounter'>
-                                {items.counter}
+                                {0}
                             </p>
                             <Button
                                 onClick={() => { this.props.downvoteAnswer(items.id) }} type='primary'>
@@ -110,8 +110,10 @@ class Listmaker extends Component {
         }
     }
     render() {
+        console.log(this.props.post)
+        console.log(this.props.answers)
         const toDoEntries = this.props.post;
-        const toDoAnswers = this.props.answers
+        const toDoAnswers = this.props.answers;
         const listItems = toDoEntries.map(this.createItem);
         const listAnswers = toDoAnswers.map(this.createAnswers)
         return (
