@@ -175,7 +175,7 @@ router.get('/channels/:channelID', async (req, res) => {
     res.status(404).json({success: false, error: 'Channel not found!'});
     return;
   }
-  
+
   delete info._id;
   info.id = info.id.toString();
   info.author = info.author.toString();
