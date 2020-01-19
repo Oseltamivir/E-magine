@@ -21,12 +21,14 @@ class Todo extends Component {
         }
     }
 
-    componentDidUpdate () {
+    componentDidMount () {
         this.fetchPostsData();
     }
 
     fetchPostsData() {
-        console.log(this.state.messages);
+        if (this.state.messages.length == 0) {
+            this.props.fetchMessageFromChannel(this.state.data.channel.id);
+        }
     }
 
     createPost(text) {
