@@ -16,7 +16,12 @@ export default class DirectMessagesMessages extends Component {
         return (
             <li key={items.key}>
                 <div>
-                    <p onClick={() => { this.props.deleteItem(items.key) }} style = {{marginLeft:'-20px', color:'#ff4422',fontSize:'120%', float:"left"}}>X</p>
+                <Icon onClick={() => { this.props.deleteItem(items.key) }}
+                            style={{ marginLeft: '-20px', color: '#ff4422', float: "left" }}
+                            type="close-circle"
+                            theme="twoTone"
+                            twoToneColor='red'>
+                        </Icon>
                     <p className='timetext'>{this.postTime(items)}</p>
                     <p className='replytext'>{items.text}</p>
                 </div>
