@@ -90,6 +90,7 @@ class Todo extends Component {
         };
         if (newState.text !== '') {
             let item = [...this.state.items, newState];
+            this.createPost(this.state.currentText);
             this.setState({ currentState: newState, items: item, currentText: '' })
         }
         else { alert('Wrong Input') }
@@ -139,9 +140,9 @@ class Todo extends Component {
                 <form onSubmit={this.addItem}>
                     <Listmaker
                         answers={this.state.answerItems}
-                        entries={this.state.items}
+                        entries={this.state.messages}
                         deleteItem={this.deleteItem.bind(this)}
-                        user={this.props.user}
+                        user={atob(localStorage.getItem('token').split('.')[0])}
                         upvoteAnswer={this.upvoteAnswer.bind(this)}
                         downvoteAnswer={this.downvoteAnswer.bind(this)}
                     />
