@@ -129,7 +129,7 @@ class App extends React.Component {
       notifies: 0,
       token: tokenStatus,
       isRegister: false,
-      messages: null,
+      messages: {},
     };
   }
 
@@ -420,7 +420,7 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
 
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
-                  <Route exact path='/DiscApp/:channel_id' component={DiscApp} />
+                  <Route exact path='/DiscApp/:channel_id' component={(props) => <DiscApp {...props} messages={this.state.messages} />} />
 
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/CreatePost' render={(props) => <CreatePost {...props} token={this.state.token} />} />
