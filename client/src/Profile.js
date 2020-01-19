@@ -305,7 +305,7 @@ class Profile extends React.Component {
                                             }}
                                             renderItem={item => (
                                                 <List.Item key={item.id}>
-                                                    <NavLink to={"/DiscApp/" + item.channel_id}>
+                                                    <NavLink to={"/DiscApp/" + item.id}>
                                                         <Card
                                                             hoverable
                                                             type="inner"
