@@ -18,24 +18,13 @@ class Streams extends React.Component {
             data: [],
             hasMore: true,
             loading: false,
+            streamsPosts: [],
         };
     }
 
 
     componentDidMount() { //Fetch data once first when component loads
-        this.fetchData();
-    }
-
-    fetchData() {
-        fetch("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo") //Fetch data from webpage
-            .then((results) => {
-                return results.json(); //return data in JSON (since its JSON data)
-            }).then((data) => {
-                const retrievedData = data.results
-                const currentData = this.state.data
-                this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
-                this.setState({ loading: false, }) //Done loading, set loading state to false
-            })
+        this.fetchExploreData();
     }
 
 
@@ -54,10 +43,31 @@ class Streams extends React.Component {
 
         }
         else {
-            this.fetchData();
+            this.fetchExploreData();
         }
 
     };
+
+    fetchExploreData() { //Fetch user's posts
+        fetch(window.baseURL + '/api/v1/explore', {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                const retrievedData = data.explore.streams
+                const currentData = this.state.streamsPosts
+                this.setState({ streamsPosts: currentData.concat(retrievedData) }) //Concat newly retrieved data
+                this.setState({ loading: false, }) //Done loading, set loading state to false
+
+                console.log(this.state.streamsPosts)
+            }
+        }).catch((error) => {
+            message.error({ content: "Oops, posts loading connection failed" })
+        })
+    }
 
     render() {
         return (
@@ -118,7 +128,7 @@ class Streams extends React.Component {
                 >
                     <List
                         grid={{ gutter: 30, column: 3 }}
-                        dataSource={this.state.data}
+                        dataSource={this.state.streamsPosts}
                         locale={{
                             emptyText: (
                                 <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
@@ -129,31 +139,29 @@ class Streams extends React.Component {
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <div key={item.id}>
-                                    <NavLink to = '/StreamsDiscussion'>
+                                    <NavLink to = {'/StreamsDiscussion/' + item.id}>
                                         <Card
                                             hoverable
                                             type="inner"
                                             bordered={false}
-                                            title="Video Title"
+                                            title={item.title}
                                             headStyle={{ backgroundColor: "#1890ff", color: "white", }}
                                             bodyStyle={{ backgroundColor: "#001529" }}
                                             style={{ boxShadow: "8px 0px 12px" }}
-                                            cover={<img alt="example" src={require('./assets/questionexample.jpeg')} />}
                                         >
                                             <Meta
                                                 title={
                                                     <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                                                        <Avatar style={{ backgroundColor: "#1890ff" }} size={25}>
-                                                            Tkai
+                                                        <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
+                                                            
                                                     </Avatar>
-                                                        <h1 style={{ marginLeft: "1vw", color: "white", fontSize: "1.5vw" }}>{item.name.first}</h1>
-                                                        <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button>
+                                                        <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button>
                                                     </div>
                                                 }
                                                 description={
                                                     <div id="Description">
                                                         <p style={{ marginTop: "2vh", color: "white", fontSize: "1.3vw", fontWeight: "bold" }}>{this.props.viewers} Viewing Now <Icon type="eye" theme="twoTone" twoToneColor="red" /></p>
-                                                        <p style={{ color: "white" }}>{item.name.title}</p>
+                                                        <p style={{ color: "white" }}>{item.description}</p>
                                                     </div>
                                                 }
                                             />
