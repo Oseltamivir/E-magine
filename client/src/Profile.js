@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, message, Avatar, Divider, Button, Icon, List, Spin, Tabs } from 'antd';
 import './index.css';
+import isEqual from 'lodash/isEqual';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import { NavLink } from 'react-router-dom';
@@ -22,6 +23,7 @@ class Profile extends React.Component {
 
         this.state = {
             profileData: null,
+            last10Posts: ["Placeholder"],
             yourPostsData: [],
             yourSolutionsData: [],
             token: this.props.token,
@@ -40,6 +42,68 @@ class Profile extends React.Component {
         alert("Live chat in development...")
     }
 
+    checkSame(value, other) {
+
+        // Get the value type
+        var type = Object.prototype.toString.call(value);
+
+        // If the two objects are not the same type, return false
+        if (type !== Object.prototype.toString.call(other)) return false;
+
+        // If items are not an object or array, return false
+        if (['[object Array]', '[object Object]'].indexOf(type) < 0) return false;
+
+        // Compare the length of the length of the two items
+        var valueLen = type === '[object Array]' ? value.length : Object.keys(value).length;
+        var otherLen = type === '[object Array]' ? other.length : Object.keys(other).length;
+        if (valueLen !== otherLen) return false;
+
+        // Compare two items
+        var compare = function (item1, item2) {
+
+            // Get the object type
+            var itemType = Object.prototype.toString.call(item1);
+
+            // If an object or array, compare recursively
+            if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+                if (!isEqual(item1, item2)) return false;
+            }
+
+            // Otherwise, do a simple comparison
+            else {
+
+                // If the two items are not the same type, return false
+                if (itemType !== Object.prototype.toString.call(item2)) return false;
+
+                // Else if it's a function, convert to a string and compare
+                // Otherwise, just compare
+                if (itemType === '[object Function]') {
+                    if (item1.toString() !== item2.toString()) return false;
+                } else {
+                    if (item1 !== item2) return false;
+                }
+
+            };
+
+            // Compare properties
+            if (type === '[object Array]') {
+                for (var i = 0; i < valueLen; i++) {
+                    if (compare(value[i], other[i]) === false) return false;
+                }
+            } else {
+                for (var key in value) {
+                    if (value.hasOwnProperty(key)) {
+                        if (compare(value[key], other[key]) === false) return false;
+                    }
+                }
+            }
+
+            // If nothing failed, return true
+            return true;
+
+        };
+    }
+
     fetchPostsData() { //Fetch user's posts
         fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=0', {
             method: 'get',
@@ -47,22 +111,31 @@ class Profile extends React.Component {
         }).then((results) => {
             return results.json(); //return data in JSON (since its JSON data)
         }).then((data) => {
-
+            console.log("got to data")
             if (data.success === true) {
                 const retrievedData = data.posts
-                const currentData = this.state.yourPostsData
-                this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
-                this.setState({ loading: false, }) //Done loading, set loading state to false
 
-                console.log(data.posts)
+                if (isEqual(retrievedData, this.state.last10Posts) === true) {//No more posts
+                    message.warning({ content: "All posts loaded" });
+                    this.setState({ loading: false, hasMore: false }) //Done loading, set loading state to false    
+                }
+                else { 
+                    this.setState({ last10Posts: retrievedData })
+                    const currentData = this.state.yourPostsData
+                    this.setState({ yourPostsData: currentData.concat(retrievedData) }) //Concat newly retrieved data
+                    this.setState({ loading: false, }) //Done loading, set loading state to false
+
+                }
+
             }
         }).catch((error) => {
+            console.log(error)
             message.error({ content: "Oops, posts loading connection failed" })
         })
     }
 
-    fetchSolutionsData() { //Fetch user's posts
-        fetch(window.baseURL + '/api/v1/posts/me?limit=10&type=2', {
+    fetchSolutionsData() { //Fetch user's solutions
+        fetch(window.baseURL + '/api/v1/posts/me?limit=100&type=2', {
             method: 'get',
             headers: { 'Content-Type': 'application/json', 'Authorization': this.state.token },
         }).then((results) => {
@@ -77,7 +150,8 @@ class Profile extends React.Component {
 
             }
         }).catch((error) => {
-            message.error({ content: "Oops, posts loading connection failed" })
+            console.log(error)
+            message.error({ content: "Oops, solutions loading connection failed" })
         })
     }
 
@@ -92,7 +166,7 @@ class Profile extends React.Component {
 
             if (data.success === true) {
                 this.setState({ profileData: data.profile })
-                
+
             }
             else {
                 message.error({ content: "Oops, connection failed" })
@@ -298,8 +372,7 @@ class Profile extends React.Component {
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <Icon type="folder-open" />
-                                                        <h1 style={{color: "white", fontSize: "5vw"}}>It seems rather empty in here...</h1>
+                                                        <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -360,7 +433,7 @@ class Profile extends React.Component {
                                             locale={{
                                                 emptyText: (
                                                     <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                                        <h1 style={{color: "white", fontSize: "2vw"}}><Icon type="folder-open" /> It seems rather empty in here...</h1>
+                                                        <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                                     </div>
                                                 )
                                             }}
@@ -387,7 +460,7 @@ class Profile extends React.Component {
                                         />
 
                                         {this.state.loading && this.state.hasMore && (
-                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                            <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                                                 <Spin size="large" />
                                             </div>
                                         )}
