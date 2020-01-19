@@ -302,6 +302,7 @@ router.post('/channels', async (req, res) => {
   const id = simpleflake().toString();
   data.id = Long.fromString(id);
   data.author = Long.fromString(req.user);
+  data.members = [data.author];
 
   await db.collection('channels').insertOne(data);
   res.json({success: true, id});
