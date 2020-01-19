@@ -1,6 +1,7 @@
 # Internal text recognition API documentation
-#### Main URL: https://662uaw6eqb.execute-api.us-east-1.amazonaws.com
-`POST /v1/upload`
+### Main URL: https://662uaw6eqb.execute-api.us-east-1.amazonaws.com
+
+#### `POST /v1/upload`
 
 Run text recognition on an input image.
 
