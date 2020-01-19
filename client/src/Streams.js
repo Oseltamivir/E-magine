@@ -90,16 +90,16 @@ class Streams extends React.Component {
                     </Divider>
                     <Carousel dotPosition="right">
                         <div>
-                            <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
+                            <CarouselSlide username="Tkai" url="https://www.youtube.com/watch?v=OGzPmgsI-pQ" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Today, we will start off with insertion sort, one of the 'most efficient' sorting methods for the ordinary newcomer :D" />
                         </div>
                         <div>
-                            <CarouselSlide username="William" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
+                            <CarouselSlide username="William" url="https://www.youtube.com/watch?v=OGzPmgsI-pQ" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Today, we will start off with insertion sort, one of the 'most efficient' sorting methods for the ordinary newcomer :D" />
                         </div>
                         <div>
-                            <CarouselSlide username="Warren" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
+                            <CarouselSlide username="Warren" url="https://www.youtube.com/watch?v=OGzPmgsI-pQ" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Today, we will start off with insertion sort, one of the 'most efficient' sorting methods for the ordinary newcomer :D" />
                         </div>
                         <div>
-                            <CarouselSlide username="Sherman" url="https://www.youtube.com/watch?v=dATuq8O3920" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Totally not trying to extend the break jfjwefijnsdvkjgwdjneaghegherhjeghueguheguiauhaegeajgegjhiiiiiiiiljllllllllllllllllllllllllllllllllllifsafcasa38374732893129372173721382173394judfchiawebgvuqhwevyguhgvurhufgwqerugvhwqughuqhguqeghhwq3rgiyow3yuhgwuh" />
+                            <CarouselSlide username="Sherman" url="https://www.youtube.com/watch?v=OGzPmgsI-pQ" viewers={156} desc="Join me in reviewing computing... an amazing subject everyone will love, I am serious about this. Today, we will start off with insertion sort, one of the 'most efficient' sorting methods for the ordinary newcomer :D" />
                         </div>
                     </Carousel>
                 </div>
@@ -139,7 +139,7 @@ class Streams extends React.Component {
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <div key={item.id}>
-                                    <NavLink to = {'/StreamsDiscussion/' + item.id}>
+                                    <NavLink to={'/StreamsDiscussion/' + item.id}>
                                         <Card
                                             hoverable
                                             type="inner"
@@ -153,8 +153,8 @@ class Streams extends React.Component {
                                                 title={
                                                     <div id="Title" style={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
                                                         <Avatar style={{ backgroundColor: "#1890ff" }} size={45}>
-                                                            
-                                                    </Avatar>
+
+                                                        </Avatar>
                                                         <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>{item.topic}</Button>
                                                     </div>
                                                 }
