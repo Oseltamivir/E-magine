@@ -304,7 +304,7 @@ class App extends React.Component {
     return (
       <div>
         {this.state.token && (
-          <Layout style={{ height: '100vh' }}>
+          <Layout style={{ maxHeight: '100vh' }}>
 
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} width="15vw" style={{ boxShadow: "3px 0px 10px" }}>
               <Menu
@@ -389,7 +389,7 @@ class App extends React.Component {
                   <Route exact path='/Explore/:topic' component={ExploreTopicPage} />
 
                   <Route exact path='/Profile' render={(props) => <Profile {...props} token={this.state.token} />} />
-                  <Route exact path='/DiscApp' component={DiscApp} />
+                  <Route exact path='/DiscApp/:channel_id' component={DiscApp} />
 
                   <Route exact path='/StreamsDiscussion' component={StreamDisc} />
                   <Route exact path='/CreatePost' render={(props) => <CreatePost {...props} token={this.state.token} />} />

@@ -37,8 +37,8 @@ function Redirect() { //Special hook function in order to use React Router's his
             
 
             if (data.success === true) {
-                alert("Post Created")
-                history.push({pathname: "/DiscApp", state: { channel_id: data.id, token: token}});
+                message.success({ content: "Post successfully created with id " + data.id  });
+                history.push({pathname: "/DiscApp/" + data.id});
             }
             else {
                 message.error({ content: "Oops... Form fields cannot be left blank" });

@@ -39,7 +39,7 @@ class Login extends React.Component {
 
 
                     if (data.success === true) {
-                        message.success({ content: "Successfully Logged In!" });
+                        message.success({ content: "Successfully Logged In! Welcome back to Exegesis" });
                         this.props.loginHandler(data.token)
                     }
                     else { 

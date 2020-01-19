@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, message, Spin, List, Divider, Button, Icon } from 'antd';
-import { NavHashLink as NavLinkHash } from 'react-router-hash-link';
+import { NavLink } from 'react-router-dom';
 import './index.css';
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -27,6 +27,7 @@ class Feed extends React.Component {
 
     componentDidMount() { //Fetch data once first when component loads
         this.fetchData();
+        this.fetchPostsData();
     }
 
     fetchData() {
@@ -38,10 +39,6 @@ class Feed extends React.Component {
                 const currentData = this.state.data
                 this.setState({ data: currentData.concat(retrievedData) }) //Concat newly retrieved data
                 this.setState({ loading: false, }) //Done loading, set loading state to false
-
-                if (this.state.yourPostsData.length === 0) {
-                    this.setState({ yourPostsData: retrievedData })
-                }
             })
     }
 
@@ -66,11 +63,27 @@ class Feed extends React.Component {
 
     };
 
+    fetchPostsData() { //Fetch user's posts
+        fetch(window.baseURL + '/api/v1/posts/me?limit=4&type=0', {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') },
+        }).then((results) => {
+            return results.json(); //return data in JSON (since its JSON data)
+        }).then((data) => {
+
+            if (data.success === true) {
+                this.setState({ yourPostsData: data.posts }) 
+            }
+        }).catch((error) => {
+            message.error({ content: "Oops, connection failed" })
+        })
+    }
+
     render() {
         return (
             <div className="feedContainer" style={{
                 overflow: "auto",
-                height: "87vh",
+                height: "86vh",
                 width: "82vw",
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
@@ -83,45 +96,43 @@ class Feed extends React.Component {
                 <div id="yourPostsContainer" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
 
                     <List
-                        grid={{ gutter: 20, column: 5 }}
+                        grid={{ gutter: 20, column: 4 }}
                         itemLayout={"vertical"}
                         dataSource={this.state.yourPostsData}
                         locale={{
                             emptyText: (
-                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", marginRight: "10vw" }}>
-                                    <Spin size="large" />
+                                <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                                    <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                 </div>
                             )
                         }}
-                        style={{ marginRight: "-5vw" }}
+                        style={{ minWidth: "60vw"}}
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <div onClick={this.cardClick} key={item.id}>
                                     <Card
-
                                         hoverable
                                         type="inner"
                                         bordered={false}
-                                        title="Mathematics - Differential Equations"
+                                        title={item.title}
                                         headStyle={{ backgroundColor: "#1890ff", color: "white" }}
-                                        bodyStyle={{ backgroundColor: "#001529" }}
+                                        bodyStyle={{ backgroundColor: "#001529", height: "20vh" }}
                                         style={{ boxShadow: "8px 0px 12px" }}
-                                        cover={<img alt="example" src={require('.//assets/questionexample.jpeg')} />}
                                     >
                                         <Meta
-                                            title={<div><p style={{ color: "white" }}>First Name: {item.name.first}</p> <Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button></div>}
-                                            description={<p style={{ color: "white" }}>Title: {item.name.title}</p>}
+                                            title={<div><Button style={{ marginLeft: "auto", backgroundColor: "#fffb8f" }}>Mathematics</Button></div>}
+                                            description={<div dangerouslySetInnerHTML={{ __html: item.description }} style={{ color: "#cccccc" }}></div>}
                                         />
                                     </Card>
                                 </div>
                             </List.Item>
                         )}
                     />
-                    <NavLinkHash smooth to="/Profile/#yourPosts">
-                        <Button type="primary" shape="round" icon="right" size="large" style={{ marginLeft: "-5vw" }}>
+                    <NavLink to="/Profile">
+                        <Button type="primary" shape="round" icon="right" size="large" style={{marginLeft: "3vw"}}>
                             Show All
                         </Button>
-                    </NavLinkHash>
+                    </NavLink>
                 </div>
                 <Divider orientation="left" style={{ color: "white", fontSize: "2vw" }}>
                     <span>Recommended Questions </span>
@@ -140,7 +151,7 @@ class Feed extends React.Component {
                         locale={{
                             emptyText: (
                                 <div className="demo-loading-container" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                                    <Spin size="large" />
+                                    <h1 style={{ color: "white", fontSize: "2vw" }}><Icon type="folder-open" /> It seems rather empty in here...</h1>
                                 </div>
                             )
                         }}
