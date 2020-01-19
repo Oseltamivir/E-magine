@@ -262,7 +262,7 @@ class App extends React.Component {
 
   checkWS() {
     if (this.GatewayClient == null && window.localStorage.getItem('token') != null) {
-      this.GatewayClient = new WebSocket((env.prod ? 'wss://' : 'ws://') + window.baseHost);
+      this.GatewayClient = new WebSocket((env.prod ? 'wss://' : 'ws://') + window.baseHost + (env.prod ? '/gateway' : ''));
       this.GatewayClient.onopen = (e) => {
         console.log('[GATEWAY] Connected to gateway server!');
       };
