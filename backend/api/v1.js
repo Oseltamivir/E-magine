@@ -249,6 +249,12 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   data.channel_id = channelID;
   data.author = req.user;
 
+  const membs = [...channel.members].map(v => v.toString());
+  if (membs.indexOf(data.author) == -1) {
+    channel.members.push(Long.fromString(data.author));
+    await db.collection('channels').updateOne({id: channel.id}, {'$set': {members: channel.members}});
+  }
+
   const gateway = req.app.get('gateway');
   channel.members.forEach(member => {
     const memberID = member.toString();
@@ -264,12 +270,6 @@ router.post('/channels/:channelID/posts', async (req, res) => {
   data.id = Long.fromString(data.id);
   data.channel_id = Long.fromString(data.channel_id);
   data.author = Long.fromString(data.author);
-
-  const membs = [...channel.members].map(v => v.toString());
-  if (membs.indexOf(data.author.toString()) == -1) {
-    channel.members.push(data.author);
-    await db.collection('channels').updateOne({id: channel.id}, {'$set': {members: channel.members}});
-  }
 
   await db.collection('posts').insertOne(data);
   res.json({success: true, id});
