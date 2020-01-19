@@ -357,8 +357,8 @@ router.post('/auth/register', async (req, res) => {
 router.get('/explore', async (req, res) => {
   if (!apiAuth(req, res)) return;
 
-  const questions = await db.collection('channels').find({type: 0}).limit(10).toArray();
-  const streams = await db.collection('channels').find({type: 1}).limit(10).toArray();
+  const questions = await db.collection('channels').find({type: 0}).sort( { id: -1 } ).limit(10).toArray();
+  const streams = await db.collection('channels').find({type: 1}).sort( { id: -1 } ).limit(10).toArray();
 
   questions.forEach(question => {
     question.id = question.id.toString();
