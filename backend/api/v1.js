@@ -204,7 +204,7 @@ router.get('/channels/:channelID/posts', async (req, res) => {
   // clean results by removing Long data formats
   results.forEach(res => {
     res.id = res.id.toString();
-    res.author = res.id.toString();
+    res.author = res.author.toString();
     res.channel_id = res.channel_id.toString();
     delete res._id;
   });
