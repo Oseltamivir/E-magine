@@ -1,0 +1,29 @@
+{
+  "name": "e-magine-backend",
+  "version": "0.0.1",
+  "description": "E-magine Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8man4life/E-magine.git"
+  },
+  "author": "willi123yao",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/8man4life/E-magine/issues"
+  },
+  "homepage": "https://github.com/8man4life/E-magine#readme",
+  "dependencies": {
+    "@discordjs/uws": "^11.149.1",
+    "aws-sdk": "^2.601.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "mongodb": "^3.4.1",
+    "reallydangerous": "^2.1.0",
+    "simpleflakes": "^2.1.0"
+  }
+}
