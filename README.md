@@ -4,11 +4,11 @@ A simple E-Learning platform with features such as live chat and live streaming 
 
 *App is no longer maintained since the competition ended and may very well be unusable, but we hope it will find some use in the future.* :smile:
 
-![](C:\Users\Tkaixiang\Documents\GitHub\E-magine\2.jpg)
+![](2.jpg)
 
 *Profile page*
 
-![](C:\Users\Tkaixiang\Documents\GitHub\E-magine\1.jpg)
+![](1.jpg)
 
 *Old screenshot of the original name of the app.*
 
